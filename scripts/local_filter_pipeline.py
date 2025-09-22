@@ -300,5 +300,5 @@ class LocalThreadExtractor:
 
 if __name__ == "__main__":
     # Run it!
-    extractor = LocalThreadExtractor("twitter-archives")
+    extractor = LocalThreadExtractor("source")
     extractor.run_pipeline()

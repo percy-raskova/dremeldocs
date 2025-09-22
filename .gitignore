@@ -1,3 +1,4 @@
 .zk
 .venv
 .env
+.serena/cache
