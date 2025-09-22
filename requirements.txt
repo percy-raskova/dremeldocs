@@ -1,29 +1,27 @@
-# Core dependencies
-python-dotenv>=1.0.0
-pyyaml>=6.0.1
-click>=8.1.7
+# Core dependencies for astradocs
+# Generated from pyproject.toml
 
-# Data processing
-pandas>=2.1.3
-ijson>=3.2.3  # For streaming large JSON
+# Core processing
+ijson>=3.2.3              # Streaming JSON parser for large files
 
-# AI/ML
-anthropic>=0.7.0  # For Claude API
-openai>=1.3.0  # Alternative
-aiohttp>=3.9.0  # For async API calls
-tiktoken>=0.5.1  # Token counting
-
-# Text processing
-nltk>=3.8.1
-textstat>=0.7.3  # Readability metrics
-
-# MkDocs
-mkdocs>=1.5.3
-mkdocs-material>=9.4.0
-mkdocs-minify-plugin>=0.7.1
-pymdown-extensions>=10.4
+# MkDocs and documentation
+mkdocs>=1.5.3             # Static site generator
+mkdocs-material>=9.4.0    # Material theme for MkDocs
+mkdocs-minify-plugin>=0.7.1  # Minification plugin
+pymdown-extensions>=10.4  # Markdown extensions
 
 # Utilities
-tqdm>=4.66.1  # Progress bars
-loguru>=0.7.2  # Better logging
-python-dateutil>=2.8.2
+click>=8.1.7              # CLI framework (future CLI support)
+python-dateutil>=2.8.2    # Date parsing utilities
+pyyaml>=6.0.1             # YAML configuration support
+
+# Note: Removed obsolete dependencies:
+# - anthropic, openai, tiktoken (AI/LLM - switched to local processing)
+# - pandas, nltk, textstat (unused data processing)
+# - aiohttp (unnecessary HTTP client)
+# - loguru, tqdm, python-dotenv (moved to optional dependencies)
+#
+# To install optional dependencies:
+# pip install astradocs[dev]     # Development tools
+# pip install astradocs[logging]  # Enhanced logging
+# pip install astradocs[extras]   # Progress bars and dotenv

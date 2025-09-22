@@ -1,0 +1,18 @@
+# Development dependencies for astradocs
+# Install with: pip install -r requirements-dev.txt
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Code formatting and linting
+black>=23.0.0
+ruff>=0.1.0
+
+# Type checking
+mypy>=1.5.0
+
+# Optional development extras
+loguru>=0.7.2           # Enhanced logging for debugging
+tqdm>=4.66.1            # Progress bars for long operations
+python-dotenv>=1.0.0    # Environment variable management

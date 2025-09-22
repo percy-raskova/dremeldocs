@@ -1,26 +1,66 @@
 [project]
 name = "astradocs"
 version = "0.1.0"
-description = "Add your description here"
+description = "Pipeline for transforming Twitter/X archive into curated MkDocs knowledge base"
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "aiohttp>=3.9.0",
-    "anthropic>=0.7.0",
-    "click>=8.1.7",
-    "ijson>=3.2.3",
-    "loguru>=0.7.2",
-    "mkdocs>=1.5.3",
-    "mkdocs-material>=9.4.0",
-    "mkdocs-minify-plugin>=0.7.1",
-    "nltk>=3.8.1",
-    "openai>=1.3.0",
-    "pandas>=2.1.3",
-    "pymdown-extensions>=10.4",
-    "python-dateutil>=2.8.2",
-    "python-dotenv>=1.0.0",
-    "pyyaml>=6.0.1",
-    "textstat>=0.7.3",
-    "tiktoken>=0.5.1",
-    "tqdm>=4.66.1",
+authors = [{name = "@BmoreOrganized"}]
+license = {text = "MIT"}
+requires-python = ">=3.8"
+keywords = ["twitter", "archive", "mkdocs", "documentation", "philosophy", "politics"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
+
+dependencies = [
+    # Core processing
+    "ijson>=3.2.3",           # Streaming JSON parser for large files
+
+    # MkDocs and documentation
+    "mkdocs>=1.5.3",          # Static site generator
+    "mkdocs-material>=9.4.0", # Material theme for MkDocs
+    "mkdocs-minify-plugin>=0.7.1",  # Minification plugin
+    "pymdown-extensions>=10.4",      # Markdown extensions
+
+    # Utilities (minimal set)
+    "click>=8.1.7",           # CLI framework (future CLI support)
+    "python-dateutil>=2.8.2", # Date parsing utilities
+    "pyyaml>=6.0.1",          # YAML configuration support
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+]
+
+logging = [
+    "loguru>=0.7.2",          # Enhanced logging
+]
+
+extras = [
+    "tqdm>=4.66.1",           # Progress bars
+    "python-dotenv>=1.0.0",   # Environment variables
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/astradocs"
+"Bug Tracker" = "https://github.com/yourusername/astradocs/issues"
+"Documentation" = "https://yourusername.github.io/astradocs"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["scripts", "src"]
