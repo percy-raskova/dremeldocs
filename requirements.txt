@@ -1,0 +1,29 @@
+# Core dependencies
+python-dotenv>=1.0.0
+pyyaml>=6.0.1
+click>=8.1.7
+
+# Data processing
+pandas>=2.1.3
+ijson>=3.2.3  # For streaming large JSON
+
+# AI/ML
+anthropic>=0.7.0  # For Claude API
+openai>=1.3.0  # Alternative
+aiohttp>=3.9.0  # For async API calls
+tiktoken>=0.5.1  # Token counting
+
+# Text processing
+nltk>=3.8.1
+textstat>=0.7.3  # Readability metrics
+
+# MkDocs
+mkdocs>=1.5.3
+mkdocs-material>=9.4.0
+mkdocs-minify-plugin>=0.7.1
+pymdown-extensions>=10.4
+
+# Utilities
+tqdm>=4.66.1  # Progress bars
+loguru>=0.7.2  # Better logging
+python-dateutil>=2.8.2
