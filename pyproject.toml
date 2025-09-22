@@ -21,18 +21,16 @@ classifiers = [
 
 dependencies = [
     # Core processing
-    "ijson>=3.2.3",           # Streaming JSON parser for large files
-
+    "ijson>=3.2.3", # Streaming JSON parser for large files
     # MkDocs and documentation
-    "mkdocs>=1.5.3",          # Static site generator
+    "mkdocs>=1.5.3", # Static site generator
     "mkdocs-material>=9.4.0", # Material theme for MkDocs
-    "mkdocs-minify-plugin>=0.7.1",  # Minification plugin
-    "pymdown-extensions>=10.4",      # Markdown extensions
-
+    "mkdocs-minify-plugin>=0.7.1", # Minification plugin
+    "pymdown-extensions>=10.4", # Markdown extensions
     # Utilities (minimal set)
-    "click>=8.1.7",           # CLI framework (future CLI support)
+    "click>=8.1.7", # CLI framework (future CLI support)
     "python-dateutil>=2.8.2", # Date parsing utilities
-    "pyyaml>=6.0.1",          # YAML configuration support
+    "pyyaml>=6.0.1", # YAML configuration support
 ]
 
 [project.optional-dependencies]
