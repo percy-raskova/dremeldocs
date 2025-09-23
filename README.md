@@ -46,8 +46,11 @@ git clone https://github.com/yourusername/astradocs.git
 cd astradocs
 
 # Install dependencies
-uv pip install -e .
-# or with pip
+uv sync
+# Install SpaCy model (required for NLP processing)
+./install_spacy_model.sh
+# or manually:
+# uv pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl
 pip install -e .
 
 # Install SpaCy language model

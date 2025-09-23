@@ -10,17 +10,66 @@ import re
 from pathlib import Path
 from collections import defaultdict
 from datetime import datetime
-from typing import List, Dict, Any, Generator
+from typing import List, Dict, Any, Generator, Optional, Set
 import ijson
 
 class LocalThreadExtractor:
-    def __init__(self, archive_path: Path):
+    def __init__(self, archive_path: Path) -> None:
         self.archive_path = Path(archive_path)
+
+        # Validate archive directory structure
+        self._validate_archive_structure()
+
         self.tweets_file = self.archive_path / "data" / "tweets.js"
-        self.tweets_by_id = {}
-        self.reply_map = defaultdict(list)
-        self.threads = []
-        self.filtered_tweets = []
+        self.tweets_by_id: Dict[str, Dict[str, Any]] = {}
+        self.reply_map: Dict[str, List[str]] = defaultdict(list)
+        self.threads: List[List[Dict[str, Any]]] = []
+        self.filtered_tweets: List[Dict[str, Any]] = []
+
+    def _validate_archive_structure(self) -> None:
+        """Validate that the archive directory has the expected structure."""
+        if not self.archive_path.exists():
+            raise ValueError(f"❌ Archive directory does not exist: {self.archive_path}")
+
+        if not self.archive_path.is_dir():
+            raise ValueError(f"❌ Archive path is not a directory: {self.archive_path}")
+
+        # Check for required files and directories
+        required_paths = [
+            self.archive_path / "data",
+            self.archive_path / "data" / "tweets.js",
+            self.archive_path / "Your archive.html"
+        ]
+
+        missing_paths = []
+        for path in required_paths:
+            if not path.exists():
+                missing_paths.append(path)
+
+        if missing_paths:
+            print("❌ Missing required files/directories in archive:")
+            for path in missing_paths:
+                print(f"   - {path}")
+            print("\n💡 This should be a Twitter/X data export directory containing:")
+            print("   - data/ directory with tweets.js")
+            print("   - Your archive.html file")
+            raise ValueError("Invalid archive structure - see missing files above")
+
+        # Validate tweets.js file
+        tweets_file = self.archive_path / "data" / "tweets.js"
+        if tweets_file.stat().st_size == 0:
+            raise ValueError(f"❌ tweets.js file is empty: {tweets_file}")
+
+        # Quick validation that it looks like a tweets.js file
+        try:
+            with open(tweets_file, 'r', encoding='utf-8') as f:
+                first_line = f.readline()
+                if not first_line.startswith('window.YTD.tweets.part0'):
+                    raise ValueError(f"❌ tweets.js does not appear to be a valid Twitter archive file")
+        except UnicodeDecodeError:
+            raise ValueError(f"❌ tweets.js file appears to be corrupted or not a text file")
+
+        print(f"✅ Archive structure validated: {self.archive_path}")
 
     def stream_tweets(self) -> Generator[Dict[str, Any], None, None]:
         """Stream tweets from the JS file without loading it all into memory"""
@@ -54,12 +103,12 @@ class LocalThreadExtractor:
 
         print(f"✅ Streamed {count} total tweets")
 
-    def apply_stage1_filter(self, tweet: Dict) -> bool:
+    def apply_stage1_filter(self, tweet: Dict[str, Any]) -> bool:
         """Stage 1: Length filter - must be >100 chars"""
         text = tweet.get('full_text', '')
         return len(text) > 100
 
-    def apply_stage2_filter(self, tweet: Dict) -> bool:
+    def apply_stage2_filter(self, tweet: Dict[str, Any]) -> bool:
         """Stage 2: Thread detection - must be part of a conversation"""
         # It's in a thread if it's either a reply OR has replies to it
         tweet_id = tweet.get('id_str')
@@ -71,7 +120,7 @@ class LocalThreadExtractor:
             return True
         return False
 
-    def process_tweets(self):
+    def process_tweets(self) -> None:
         """Apply the two-stage filter"""
         print("\n🎯 Applying two-stage filter...")
         stage1_passed = 0
@@ -108,10 +157,10 @@ class LocalThreadExtractor:
         print(f"  Stage 2 (thread detection): {stage2_passed} tweets passed")
         print(f"  Reduction: {21723} → {stage2_passed} ({stage2_passed/21723*100:.1f}% remaining)")
 
-    def reconstruct_threads(self):
+    def reconstruct_threads(self) -> None:
         """Reconstruct conversation threads from filtered tweets"""
         print("\n🔨 Reconstructing threads...")
-        processed = set()
+        processed: Set[str] = set()
 
         # Find thread roots (tweets that are not replies but have replies)
         thread_roots = []
@@ -147,9 +196,9 @@ class LocalThreadExtractor:
         # Sort threads by first tweet date
         self.threads.sort(key=lambda t: t[0].get('created_at', ''), reverse=True)
 
-    def _build_thread(self, root_id: str, processed: set) -> List[Dict]:
+    def _build_thread(self, root_id: str, processed: Set[str]) -> List[Dict[str, Any]]:
         """Build a thread starting from root"""
-        thread = []
+        thread: List[Dict[str, Any]] = []
         to_process = [root_id]
 
         while to_process:
@@ -167,10 +216,10 @@ class LocalThreadExtractor:
 
         return thread
 
-    def _build_partial_thread(self, start_id: str, processed: set) -> List[Dict]:
+    def _build_partial_thread(self, start_id: str, processed: Set[str]) -> List[Dict[str, Any]]:
         """Build a thread from any starting point"""
-        thread = []
-        current_id = start_id
+        thread: List[Dict[str, Any]] = []
+        current_id: Optional[str] = start_id
 
         # Go up to find the root we have
         while current_id and current_id in self.tweets_by_id:
@@ -188,11 +237,11 @@ class LocalThreadExtractor:
 
         return thread
 
-    def generate_json_output(self):
+    def generate_json_output(self) -> Dict[str, Any]:
         """Generate JSON output optimized for Claude"""
         print("\n📝 Generating JSON output...")
 
-        output = {
+        output: Dict[str, Any] = {
             "metadata": {
                 "total_original_tweets": 21723,
                 "filtered_tweets": len(self.filtered_tweets),
@@ -228,7 +277,7 @@ class LocalThreadExtractor:
         print(f"✅ Saved JSON to {output_file}")
         return output
 
-    def generate_sample_markdown(self, sample_count: int = 5):
+    def generate_sample_markdown(self, sample_count: int = 5) -> None:
         """Generate a few sample markdown files to see what they look like"""
         print(f"\n📄 Generating {sample_count} sample markdown files...")
 
@@ -273,7 +322,7 @@ class LocalThreadExtractor:
 
         print(f"✅ Sample markdowns in {md_dir}")
 
-    def run_pipeline(self):
+    def run_pipeline(self) -> Dict[str, Any]:
         """Run the complete local filtering pipeline"""
         print("🚀 Starting local filtering pipeline...")
         print("=" * 50)
@@ -300,5 +349,5 @@ class LocalThreadExtractor:
 
 if __name__ == "__main__":
     # Run it!
-    extractor = LocalThreadExtractor("source")
+    extractor = LocalThreadExtractor(Path("source"))
     extractor.run_pipeline()

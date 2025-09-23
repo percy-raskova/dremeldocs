@@ -24,7 +24,7 @@ from text_processing import (
 # SpaCy-enhanced text processing functions are now imported from text_processing module
 # clean_filename is no longer needed as we use generate_filename from text_processing
 
-def generate_navigation_links(current_index, total_threads):
+def generate_navigation_links(current_index: int, total_threads: int) -> str:
     """Generate navigation links with proper file references based on expected filenames."""
     prev_link = ""
     next_link = ""
@@ -45,13 +45,26 @@ def generate_navigation_links(current_index, total_threads):
 
     return f'{prev_link} | [Index](index.md) | {next_link}'
 
-def generate_heavy_hitter_markdowns():
+def generate_heavy_hitter_markdowns() -> List[Dict[str, Any]]:
     """Generate markdown files for threads with 500+ words"""
     print("🏋️ Generating markdown for heavy-hitter threads (500+ words)...")
 
     # Load the filtered threads
-    with open('data/filtered_threads.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    data_file = Path('data/filtered_threads.json')
+    if not data_file.exists():
+        print(f"❌ Error: Required data file not found: {data_file}")
+        print("   Please run the filter pipeline first to generate this file")
+        return []
+
+    try:
+        with open(data_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"❌ Error: Invalid JSON in {data_file}: {e}")
+        return []
+    except Exception as e:
+        print(f"❌ Error reading {data_file}: {e}")
+        return []
 
     # Create output directory
     output_dir = Path('docs/heavy_hitters')
@@ -74,7 +87,8 @@ def generate_heavy_hitter_markdowns():
             # Twitter date format: "Sat Apr 26 15:30:45 +0000 2025"
             date_obj = datetime.strptime(date_str, '%a %b %d %H:%M:%S %z %Y')
             date_display = date_obj.strftime('%B %d, %Y')
-        except:
+        except Exception as e:
+            print(f"Warning: Could not parse date '{date_str}': {e}")
             date_display = 'Date unknown'
 
         # Generate standardized filename
@@ -140,8 +154,12 @@ def generate_heavy_hitter_markdowns():
         content = '\n'.join(frontmatter_lines) + '\n'.join(content_lines)
 
         # Write the file
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content)
+        try:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(content)
+        except Exception as e:
+            print(f"❌ Error writing file {filepath}: {e}")
+            continue
 
         # Track for index
         generated_files.append({
@@ -217,7 +235,7 @@ These are the substantial threads with 500+ words - the philosophical and politi
 
     return generated_files
 
-def generate_theme_template():
+def generate_theme_template() -> None:
     """Generate a template for manual theme extraction"""
     print("\n📝 Generating theme extraction template...")
 

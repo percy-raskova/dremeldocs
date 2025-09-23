@@ -5,7 +5,13 @@ Shows before/after comparison of tag quality.
 """
 
 import json
+import sys
 from pathlib import Path
+
+# Add scripts directory to path to import modules
+scripts_dir = Path(__file__).parent.parent.parent / "scripts"
+sys.path.insert(0, str(scripts_dir))
+
 from text_processing import (
     extract_entities,
     extract_entities_basic,

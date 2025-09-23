@@ -3,6 +3,13 @@
 TEST THE TRANSFORMER POWER! 🚀🔥⚡
 """
 
+import sys
+from pathlib import Path
+
+# Add scripts directory to path to import modules
+scripts_dir = Path(__file__).parent.parent.parent / "scripts"
+sys.path.insert(0, str(scripts_dir))
+
 from text_processing import generate_title, extract_entities, MODEL_TYPE, nlp
 
 print("=" * 80)

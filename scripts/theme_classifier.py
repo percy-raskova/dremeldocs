@@ -7,7 +7,7 @@ Uses human-extracted themes from heavy hitters to classify the full archive
 import json
 import re
 from pathlib import Path
-from typing import Dict, List, Set, Tuple, TypedDict
+from typing import Dict, List, Set, Tuple, TypedDict, Optional, Any
 from collections import defaultdict
 from datetime import datetime
 
@@ -34,11 +34,11 @@ class Thread(TypedDict):
     tweets: List[Dict]  # Added for full tweet access
 
 class ThemeClassifier:
-    def __init__(self, themes_file: str = 'docs/heavy_hitters/THEMES_EXTRACTED.md'):
+    def __init__(self, themes_file: str = 'docs/heavy_hitters/THEMES_EXTRACTED.md') -> None:
         self.themes_file = Path(themes_file)
-        self.themes = {}
-        self.keywords = {}
-        self.thread_theme_map = {}
+        self.themes: Dict[str, int] = {}
+        self.keywords: Dict[str, str] = {}
+        self.thread_theme_map: Dict[str, List[int]] = {}
 
     def load_human_themes(self) -> bool:
         """Load the human-extracted themes from your manual review"""
@@ -61,7 +61,7 @@ class ThemeClassifier:
 
         return True
 
-    def _parse_theme_sections(self, content: str):
+    def _parse_theme_sections(self, content: str) -> None:
         """Extract theme categories and weights from the document"""
         # This will be customized based on your actual format
         # For now, a flexible parser that looks for patterns
@@ -75,7 +75,7 @@ class ThemeClassifier:
             self.themes[theme] = weight
             print(f"  Found theme: {theme} (weight: {weight})")
 
-    def _parse_keywords(self, content: str):
+    def _parse_keywords(self, content: str) -> None:
         """Extract your actual vocabulary from the Keywords section"""
         keywords_section = re.search(
             r'Keywords/Phrases You Actually Use.*?\n(.*?)(?=\n##|\Z)',
@@ -93,7 +93,7 @@ class ThemeClassifier:
                     self.keywords[keyword.lower()] = keyword
                     print(f"  Found keyword: {keyword}")
 
-    def _parse_thread_mappings(self, content: str):
+    def _parse_thread_mappings(self, content: str) -> None:
         """Extract which threads exemplify which themes"""
         mapping_section = re.search(
             r'Thread-Theme Mapping.*?\n(.*?)(?=\n##|\Z)',
@@ -112,14 +112,14 @@ class ThemeClassifier:
                     self.thread_theme_map[theme] = [int(n) for n in thread_nums]
                     print(f"  Mapped {theme} to threads: {thread_nums}")
 
-    def classify_thread(self, thread: Dict) -> Tuple[List[str], float]:
+    def classify_thread(self, thread: Dict[str, Any]) -> Tuple[List[str], float]:
         """
         Classify a single thread based on learned themes
         Returns: (list of themes, confidence score)
         """
         text = thread['smushed_text'].lower()
-        detected_themes = []
-        scores = defaultdict(float)
+        detected_themes: List[str] = []
+        scores: defaultdict[str, float] = defaultdict(float)
 
         # Check for keyword matches
         for keyword in self.keywords:
@@ -153,21 +153,35 @@ class ThemeClassifier:
         # This will be customized based on your actual themes
 
         # For now, simple keyword density
-        theme_keywords = self.keywords.get(theme, [])
-        for keyword in theme_keywords:
-            score += text.count(keyword) * 0.1
+        # Check if any keywords match this theme (currently keywords are just a flat dict)
+        for keyword in self.keywords.values():
+            if keyword.lower() in text:
+                score += 0.1
 
         return min(score, 1.0)
 
-    def process_all_threads(self):
+    def process_all_threads(self) -> Optional[Dict[str, Any]]:
         """Process all 1,363 threads using human-extracted themes"""
         print("\n🚀 Processing all threads with theme classifier...")
 
         # Load the full thread data
-        with open('data/filtered_threads.json', 'r', encoding='utf-8') as f:
-            data = json.load(f)
+        data_file = Path('data/filtered_threads.json')
+        if not data_file.exists():
+            print(f"❌ Error: Required data file not found: {data_file}")
+            print("   Please run the filter pipeline first to generate this file")
+            return None
 
-        classified_threads = {
+        try:
+            with open(data_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except json.JSONDecodeError as e:
+            print(f"❌ Error: Invalid JSON in {data_file}: {e}")
+            return None
+        except Exception as e:
+            print(f"❌ Error reading {data_file}: {e}")
+            return None
+
+        classified_threads: Dict[str, List[Dict[str, Any]]] = {
             'philosophical': [],
             'political': [],
             'both': [],
@@ -175,7 +189,7 @@ class ThemeClassifier:
             'other': []
         }
 
-        theme_counts = defaultdict(int)
+        theme_counts: defaultdict[str, int] = defaultdict(int)
 
         for i, thread in enumerate(data['threads']):
             # Classify thread
@@ -264,7 +278,7 @@ class ThemeClassifier:
     # Use the SpaCy-enhanced functions from text_processing module
     # These are now imported at the top of the file
 
-    def generate_final_markdown(self, category: str = 'both', limit: int = None):
+    def generate_final_markdown(self, category: str = 'both', limit: Optional[int] = None) -> None:
         """Generate markdown files for classified threads with proper frontmatter."""
         print(f"\n📝 Generating markdown for '{category}' threads with frontmatter...")
 
@@ -295,7 +309,8 @@ class ThemeClassifier:
             try:
                 created_date = datetime.fromisoformat(thread['first_tweet_date'].replace('Z', '+00:00'))
                 date_str = created_date.strftime('%Y-%m-%d')
-            except:
+            except Exception as e:
+                print(f"Warning: Could not parse date '{thread['first_tweet_date']}': {e}")
                 date_str = thread['first_tweet_date'][:10] if thread['first_tweet_date'] else '2025-01-01'
 
             # Build frontmatter

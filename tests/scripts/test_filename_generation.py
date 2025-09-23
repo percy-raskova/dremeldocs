@@ -3,6 +3,13 @@
 Test script for the new filename generation functionality.
 """
 
+import sys
+from pathlib import Path
+
+# Add scripts directory to path to import modules
+scripts_dir = Path(__file__).parent.parent.parent / "scripts"
+sys.path.insert(0, str(scripts_dir))
+
 from text_processing import generate_filename, parse_to_yyyymmdd, generate_brief_title
 
 def test_filename_generation():
