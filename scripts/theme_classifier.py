@@ -7,8 +7,31 @@ Uses human-extracted themes from heavy hitters to classify the full archive
 import json
 import re
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Set, Tuple, TypedDict
 from collections import defaultdict
+from datetime import datetime
+
+# Import our SpaCy-enhanced text processing utilities
+from text_processing import (
+    generate_title,
+    generate_description,
+    calculate_reading_time,
+    format_frontmatter_value,
+    extract_entities,
+    generate_filename  # New filename generation function
+)
+
+# Type definitions for better structure
+class Thread(TypedDict):
+    thread_id: str
+    themes: List[str]
+    confidence: float
+    category: str
+    word_count: int
+    tweet_count: int
+    first_tweet_date: str
+    smushed_text: str
+    tweets: List[Dict]  # Added for full tweet access
 
 class ThemeClassifier:
     def __init__(self, themes_file: str = 'docs/heavy_hitters/THEMES_EXTRACTED.md'):
@@ -161,7 +184,7 @@ class ThemeClassifier:
             # Categorize based on themes
             category = self._categorize_thread(themes)
 
-            # Store classified thread
+            # Store classified thread with full tweet data
             classified_thread = {
                 'thread_id': thread['thread_id'],
                 'themes': themes,
@@ -170,7 +193,8 @@ class ThemeClassifier:
                 'word_count': thread['word_count'],
                 'tweet_count': thread['tweet_count'],
                 'first_tweet_date': thread['first_tweet_date'],
-                'smushed_text': thread['smushed_text']
+                'smushed_text': thread['smushed_text'],
+                'tweets': thread.get('tweets', [])  # Include full tweets for frontmatter generation
             }
 
             classified_threads[category].append(classified_thread)
@@ -237,9 +261,12 @@ class ThemeClassifier:
         else:
             return 'other'
 
+    # Use the SpaCy-enhanced functions from text_processing module
+    # These are now imported at the top of the file
+
     def generate_final_markdown(self, category: str = 'both', limit: int = None):
-        """Generate markdown files for classified threads"""
-        print(f"\n📝 Generating markdown for '{category}' threads...")
+        """Generate markdown files for classified threads with proper frontmatter."""
+        print(f"\n📝 Generating markdown for '{category}' threads with frontmatter...")
 
         with open('data/classified_threads.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -249,40 +276,84 @@ class ThemeClassifier:
         if limit:
             threads = threads[:limit]
 
-        output_dir = Path(f'docs/{category}_threads')
+        output_dir = Path(f'markdown/{category}')
         output_dir.mkdir(parents=True, exist_ok=True)
 
         for i, thread in enumerate(threads):
-            # Generate clean filename
-            date = thread['first_tweet_date'][:10] if thread['first_tweet_date'] else 'undated'
-            preview = re.sub(r'[^\w\s]', '', thread['smushed_text'][:50])
-            filename = f"{i+1:03d}_{date}_{preview[:30].replace(' ', '_')}.md"
+            # Generate clean filename using standardized format
+            filename = generate_filename(i + 1, thread['first_tweet_date'], thread['smushed_text'])
 
-            # Create markdown content
-            content = f"""# {category.title()} Thread #{i+1}
+            # Generate title and description using SpaCy-enhanced functions
+            title = generate_title(thread['smushed_text'])
+            description = generate_description(thread['smushed_text'])
+            reading_time = calculate_reading_time(thread['smushed_text'])  # Now uses actual text for accurate count
 
-## Metadata
+            # Extract entities for potential tags
+            entities = extract_entities(thread['smushed_text'])
 
-- **Themes**: {', '.join(thread['themes'])}
-- **Confidence**: {thread['confidence']:.2%}
-- **Word count**: {thread['word_count']}
-- **Tweet count**: {thread['tweet_count']}
-- **Date**: {thread['first_tweet_date']}
+            # Format date properly
+            try:
+                created_date = datetime.fromisoformat(thread['first_tweet_date'].replace('Z', '+00:00'))
+                date_str = created_date.strftime('%Y-%m-%d')
+            except:
+                date_str = thread['first_tweet_date'][:10] if thread['first_tweet_date'] else '2025-01-01'
 
-## Content
+            # Build frontmatter
+            frontmatter_lines = [
+                '---',
+                f'title: {format_frontmatter_value(title)}',
+                'date:',
+                f'  created: {date_str}',
+                f'categories: {format_frontmatter_value([category])}',
+                f'thread_id: {format_frontmatter_value(thread["thread_id"])}',
+                f'word_count: {thread["word_count"]}',
+                f'reading_time: {reading_time}',
+                f'description: {format_frontmatter_value(description)}'
+            ]
 
-{thread['smushed_text']}
+            # Add themes as tags if available
+            if thread.get('themes'):
+                frontmatter_lines.append(f'tags: {format_frontmatter_value(thread["themes"])}')
 
----
+            # Add extracted entities as additional metadata
+            if entities:
+                frontmatter_lines.append(f'entities: {format_frontmatter_value(entities)}')
 
-*Thread ID: {thread['thread_id']}*
-"""
+            # Add original URL if we have tweet ID
+            # Since we don't have individual tweet IDs in this structure, we'll skip for now
+            # Could be added if tweet data is preserved
+
+            # Add engagement metrics if available
+            # These would need to be calculated from the original tweets
+
+            # Add confidence score as custom metadata
+            if thread.get('confidence'):
+                frontmatter_lines.append(f'confidence_score: {thread["confidence"]:.2f}')
+
+            frontmatter_lines.append(f'tweet_count: {thread["tweet_count"]}')
+            frontmatter_lines.append(f'author: "@BmoreOrganized"')
+            frontmatter_lines.append('---')
+            frontmatter_lines.append('')  # Empty line after frontmatter
+
+            # Create main content
+            content_lines = [
+                f'# {title}',
+                '',
+                thread['smushed_text'],
+                '',
+                '---',
+                '',
+                f'*Thread ID: {thread["thread_id"]}*'
+            ]
+
+            # Combine frontmatter and content
+            full_content = '\n'.join(frontmatter_lines) + '\n'.join(content_lines)
 
             filepath = output_dir / filename
             with open(filepath, 'w', encoding='utf-8') as f:
-                f.write(content)
+                f.write(full_content)
 
-        print(f"✅ Generated {len(threads)} markdown files in {output_dir}")
+        print(f"✅ Generated {len(threads)} markdown files with frontmatter in {output_dir}")
 
 
 if __name__ == "__main__":

@@ -51,37 +51,26 @@ def spacy_model():
     except (ImportError, OSError):
         pytest.skip("spaCy model 'en_core_web_sm' not available")
 
-# Markers for test categorization
-def pytest_configure(config):
-    """Configure custom pytest markers."""
-    config.addinivalue_line(
-        "markers", "unit: marks tests as unit tests (fast, isolated)"
-    )
-    config.addinivalue_line(
-        "markers", "integration: marks tests as integration tests (slower, multiple components)"
-    )
-    config.addinivalue_line(
-        "markers", "slow: marks tests as slow (may take several seconds)"
-    )
-    config.addinivalue_line(
-        "markers", "performance: marks tests as performance tests"
-    )
-
 # Pytest collection hooks
 def pytest_collection_modifyitems(config, items):
-    """Modify test collection to add markers automatically."""
+    """Modify test collection to add markers automatically.
+
+    NOTE: This causes PytestUnknownMarkWarning warnings even though marks are registered
+    in pytest.ini. This is a known pytest behavior - the warnings are harmless and can be
+    ignored or suppressed with --disable-warnings flag.
+    """
     for item in items:
         # Add unit marker to tests in unit/ directory
         if "unit" in str(item.fspath):
-            item.add_marker(pytest.mark.unit)
+            item.add_marker("unit")
 
         # Add integration marker to tests in integration/ directory
         if "integration" in str(item.fspath):
-            item.add_marker(pytest.mark.integration)
+            item.add_marker("integration")
 
         # Add slow marker to tests that likely take time
-        if any(keyword in item.name.lower() for keyword in ["end_to_end", "performance", "large", "complete"]):
-            item.add_marker(pytest.mark.slow)
+        if any(keyword in item.name.lower() for keyword in ["end_to_end", "large", "complete"]):
+            item.add_marker("slow")
 
 # Test data validation
 @pytest.fixture(autouse=True, scope="session")
