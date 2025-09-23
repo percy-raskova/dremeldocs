@@ -116,3 +116,6 @@ claude-session-*__pycache__
 *.pyc
 .serena
 .notes
+coverage.json
+.serena/cache
+scripts/__pycache__

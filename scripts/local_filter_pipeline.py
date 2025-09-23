@@ -37,14 +37,22 @@ class LocalThreadExtractor:
         # Check for required files and directories
         required_paths = [
             self.archive_path / "data",
-            self.archive_path / "data" / "tweets.js",
-            self.archive_path / "Your archive.html"
+            self.archive_path / "data" / "tweets.js"
         ]
+
+        # Check for either "Your archive.html" or "archive.html"
+        archive_html_exists = (
+            (self.archive_path / "Your archive.html").exists() or
+            (self.archive_path / "archive.html").exists()
+        )
 
         missing_paths = []
         for path in required_paths:
             if not path.exists():
                 missing_paths.append(path)
+
+        if not archive_html_exists:
+            missing_paths.append("archive.html or Your archive.html")
 
         if missing_paths:
             print("❌ Missing required files/directories in archive:")
@@ -52,7 +60,7 @@ class LocalThreadExtractor:
                 print(f"   - {path}")
             print("\n💡 This should be a Twitter/X data export directory containing:")
             print("   - data/ directory with tweets.js")
-            print("   - Your archive.html file")
+            print("   - archive.html or Your archive.html file")
             raise ValueError("Invalid archive structure - see missing files above")
 
         # Validate tweets.js file
@@ -62,12 +70,24 @@ class LocalThreadExtractor:
 
         # Quick validation that it looks like a tweets.js file
         try:
-            with open(tweets_file, 'r', encoding='utf-8') as f:
-                first_line = f.readline()
-                if not first_line.startswith('window.YTD.tweets.part0'):
-                    raise ValueError(f"❌ tweets.js does not appear to be a valid Twitter archive file")
-        except UnicodeDecodeError:
-            raise ValueError(f"❌ tweets.js file appears to be corrupted or not a text file")
+            with open(tweets_file, 'rb') as f:
+                # Check if it's binary data first
+                data = f.read(100)
+                # Check for binary content (non-text bytes)
+                if any(b < 9 or (b > 13 and b < 32) or b > 126 for b in data[:4]):
+                    raise ValueError(f"❌ tweets.js file appears to be corrupted or not a text file")
+
+                # Try to decode as UTF-8 and check for valid header
+                try:
+                    header = data.decode('utf-8')
+                    if not header.startswith('window.YTD.tweets.part0'):
+                        raise ValueError(f"❌ tweets.js does not appear to be a valid Twitter archive file")
+                except UnicodeDecodeError:
+                    raise ValueError(f"❌ tweets.js file appears to be corrupted or not a text file")
+        except ValueError:
+            raise  # Re-raise our specific errors
+        except Exception as e:
+            raise ValueError(f"❌ Error reading tweets.js file: {e}")
 
         print(f"✅ Archive structure validated: {self.archive_path}")
 
@@ -79,7 +99,7 @@ class LocalThreadExtractor:
             # Read first 100 bytes to find where JSON starts
             header = f.read(100)
 
-            # Find the opening bracket
+            # Find the opening bracket - header is bytes, so we search for bytes
             json_start = header.find(b'[')
             if json_start == -1:
                 raise ValueError("Could not find JSON array start")

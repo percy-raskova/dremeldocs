@@ -121,5 +121,5 @@ if __name__ == "__main__":
 
     print("✅ Testing complete!")
     print("\n💡 To see the enhanced extraction in action:")
-    print("   cd /home/percy/projects/dremeldocs/scripts")
+    print("   cd scripts/")
     print("   python text_processing.py")
