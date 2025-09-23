@@ -119,3 +119,4 @@ claude-session-*__pycache__
 coverage.json
 .serena/cache
 scripts/__pycache__
+data/filtered_threads.json

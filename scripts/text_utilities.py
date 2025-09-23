@@ -283,6 +283,21 @@ def generate_description(text: str, max_length: int = 160) -> str:
     truncated = first_cleaned[:max_length].rsplit(' ', 1)[0]
     return truncated + '...'
 
+def calculate_reading_time(text: str, words_per_minute: int = 200) -> int:
+    """
+    Calculate estimated reading time in minutes.
+    
+    Args:
+        text: The text to calculate reading time for
+        words_per_minute: Average reading speed (default 200)
+        
+    Returns:
+        Estimated reading time in minutes (minimum 1)
+    """
+    word_count = len(text.split())
+    minutes = max(1, round(word_count / words_per_minute))
+    return minutes
+
 
 def extract_entities(text: str, limit: int = 5) -> List[str]:
     """

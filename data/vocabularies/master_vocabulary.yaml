@@ -1,0 +1,858 @@
+name: DremelDocs Political Vocabulary
+version: '1.0'
+description: Extracted from 59 heavy hitter threads using the mass line method
+categories:
+  marxism_communism:
+    category: marxism_communism
+    description: Marxist theory and communist organizing
+    weight: 2.0
+    terms:
+      communist organization:
+        canonical: communist organization
+        variations:
+        - communist organization
+        - communist organizations
+        - ML organization
+        weight: 2.0
+      communist party:
+        canonical: communist party
+        variations:
+        - communist party
+        - ML party
+        - communist partys
+        weight: 2.0
+      cadre formation:
+        canonical: cadre formation
+        variations:
+        - cadre formations
+        - cadre formation
+        weight: 2.0
+      mass work:
+        canonical: mass work
+        variations:
+        - mass work
+        - mass works
+        weight: 2.0
+      political education:
+        canonical: political education
+        variations:
+        - political education
+        - political educations
+        weight: 2.0
+      reproduction of communists:
+        canonical: reproduction of communists
+        variations:
+        - reproduction of communist
+        - reproduction of MLs
+        - reproduction of communists
+        weight: 2.0
+      organizing committee:
+        canonical: organizing committee
+        variations:
+        - organizing committees
+        - organizing committee
+        weight: 2.0
+      social investigation:
+        canonical: social investigation
+        variations:
+        - social investigations
+        - social investigation
+        weight: 2.0
+      cross-pollination:
+        canonical: cross-pollination
+        variations:
+        - cross-pollination
+        - crosspollination
+        - cross pollination
+        - cross-pollinations
+        weight: 2.0
+      party formation:
+        canonical: party formation
+        variations:
+        - party formation
+        - party formations
+        weight: 2.0
+      organizational development:
+        canonical: organizational development
+        variations:
+        - organizational development
+        - organizational developments
+        weight: 2.0
+      principled marxists:
+        canonical: principled marxists
+        variations:
+        - principled marxists
+        - principled marxist
+        - principled MLs
+        weight: 2.0
+      class consciousness:
+        canonical: class consciousness
+        variations:
+        - class consciousness
+        weight: 2.0
+      means of production:
+        canonical: means of production
+        variations:
+        - means of production
+        - means of productions
+        weight: 2.0
+      dialectical materialism:
+        canonical: dialectical materialism
+        variations:
+        - dialectical materialisms
+        - dialectical materialism
+        weight: 2.0
+      historical materialism:
+        canonical: historical materialism
+        variations:
+        - historical materialism
+        - historical materialisms
+        weight: 2.0
+      praxis:
+        canonical: praxis
+        variations:
+        - praxi
+        - praxis
+        weight: 2.0
+      base and superstructure:
+        canonical: base and superstructure
+        variations:
+        - base and superstructure
+        - base and superstructures
+        weight: 2.0
+      surplus value:
+        canonical: surplus value
+        variations:
+        - surplus value
+        - surplus values
+        weight: 2.0
+      wage labor:
+        canonical: wage labor
+        variations:
+        - wage labor
+        - wage labors
+        weight: 2.0
+      proletariat:
+        canonical: proletariat
+        variations:
+        - proletariat
+        - proletariats
+        weight: 2.0
+      bourgeoisie:
+        canonical: bourgeoisie
+        variations:
+        - bourgeoisies
+        - bourgeoisie
+        weight: 2.0
+      petit bourgeois:
+        canonical: petit bourgeois
+        variations:
+        - petit bourgeois
+        - petit bourgeoi
+        weight: 2.0
+      class struggle:
+        canonical: class struggle
+        variations:
+        - class struggle
+        - class struggles
+        weight: 2.0
+      class war:
+        canonical: class war
+        variations:
+        - class war
+        - class wars
+        weight: 2.0
+      working class:
+        canonical: working class
+        variations:
+        - working class
+        weight: 2.0
+      ruling class:
+        canonical: ruling class
+        variations:
+        - ruling class
+        weight: 2.0
+      owning class:
+        canonical: owning class
+        variations:
+        - owning class
+        weight: 2.0
+  fascism_analysis:
+    category: fascism_analysis
+    description: Fascism theory and resistance
+    weight: 1.8
+    terms:
+      great-nation consciousness:
+        canonical: great-nation consciousness
+        variations:
+        - great nation consciousness
+        - great-nation consciousness
+        - greatnation consciousness
+        weight: 1.8
+      national consciousness:
+        canonical: national consciousness
+        variations:
+        - national consciousness
+        weight: 1.8
+      bourgeois hegemony:
+        canonical: bourgeois hegemony
+        variations:
+        - bourgeois hegemonys
+        - bourgeois hegemony
+        weight: 1.8
+      liberal regime:
+        canonical: liberal regime
+        variations:
+        - liberal regimes
+        - liberal regime
+        weight: 1.8
+      fascist hegemony:
+        canonical: fascist hegemony
+        variations:
+        - fascist hegemonys
+        - fascist hegemony
+        weight: 1.8
+      national relation:
+        canonical: national relation
+        variations:
+        - national relation
+        - national relations
+        weight: 1.8
+      oppressor nation:
+        canonical: oppressor nation
+        variations:
+        - oppressor nations
+        - oppressor nation
+        weight: 1.8
+      national hierarchy:
+        canonical: national hierarchy
+        variations:
+        - national hierarchys
+        - national hierarchy
+        weight: 1.8
+      class collaboration:
+        canonical: class collaboration
+        variations:
+        - class collaboration
+        - class collaborations
+        weight: 1.8
+      false consciousness:
+        canonical: false consciousness
+        variations:
+        - false consciousness
+        weight: 1.8
+      liberal decay:
+        canonical: liberal decay
+        variations:
+        - liberal decay
+        - liberal decays
+        weight: 1.8
+      capitalism in decay:
+        canonical: capitalism in decay
+        variations:
+        - capitalism in decays
+        - capitalism in decay
+        weight: 1.8
+      colonialism applied to metropole:
+        canonical: colonialism applied to metropole
+        variations:
+        - colonialism applied to metropoles
+        - colonialism applied to metropole
+        weight: 1.8
+      proto-fascism:
+        canonical: proto-fascism
+        variations:
+        - proto fascism
+        - protofascism
+        - proto-fascisms
+        - proto-fascism
+        weight: 1.8
+      neo-fascism:
+        canonical: neo-fascism
+        variations:
+        - neofascism
+        - neo-fascisms
+        - neo-fascism
+        - neo fascism
+        weight: 1.8
+      fascist violence:
+        canonical: fascist violence
+        variations:
+        - fascist violence
+        - fascist violences
+        weight: 1.8
+      national chauvinism:
+        canonical: national chauvinism
+        variations:
+        - national chauvinism
+        - national chauvinisms
+        weight: 1.8
+  imperialism_colonialism:
+    category: imperialism_colonialism
+    description: Imperial and colonial analysis
+    weight: 1.8
+    terms:
+      settler colonialism:
+        canonical: settler colonialism
+        variations:
+        - settler colonialism
+        - settler colonialisms
+        weight: 1.8
+      national oppression:
+        canonical: national oppression
+        variations:
+        - national oppression
+        - national oppressions
+        weight: 1.8
+      national liberation:
+        canonical: national liberation
+        variations:
+        - national liberations
+        - national liberation
+        weight: 1.8
+      imperial core:
+        canonical: imperial core
+        variations:
+        - imperial cores
+        - imperial core
+        weight: 1.8
+      imperial periphery:
+        canonical: imperial periphery
+        variations:
+        - imperial periphery
+        - imperial peripherys
+        weight: 1.8
+      global north:
+        canonical: global north
+        variations:
+        - global norths
+        - global north
+        weight: 1.8
+      global south:
+        canonical: global south
+        variations:
+        - global south
+        - global souths
+        weight: 1.8
+      comprador bourgeoisie:
+        canonical: comprador bourgeoisie
+        variations:
+        - comprador bourgeoisie
+        - comprador bourgeoisies
+        weight: 1.8
+      colonial extraction:
+        canonical: colonial extraction
+        variations:
+        - colonial extraction
+        - colonial extractions
+        weight: 1.8
+      resource extraction:
+        canonical: resource extraction
+        variations:
+        - resource extraction
+        - resource extractions
+        weight: 1.8
+      palestine:
+        canonical: palestine
+        variations:
+        - palestine
+        - palestines
+        weight: 1.8
+      zionist entity:
+        canonical: zionist entity
+        variations:
+        - zionist entity
+        - zionist entitys
+        weight: 1.8
+      us empire:
+        canonical: us empire
+        variations:
+        - us empires
+        - us empire
+        weight: 1.8
+      imperial interests:
+        canonical: imperial interests
+        variations:
+        - imperial interests
+        - imperial interest
+        weight: 1.8
+      anti-imperialism:
+        canonical: anti-imperialism
+        variations:
+        - anti-imperialism
+        - anti imperialism
+        - antiimperialism
+        - anti-imperialisms
+        weight: 1.8
+      internal colonialism:
+        canonical: internal colonialism
+        variations:
+        - internal colonialisms
+        - internal colonialism
+        weight: 1.8
+  public_health_politics:
+    category: public_health_politics
+    description: Pandemic and public health as class struggle
+    weight: 1.6
+    terms:
+      long covid:
+        canonical: long covid
+        variations:
+        - long covids
+        - long coronavirus
+        - long covid
+        weight: 1.6
+      covid wave:
+        canonical: covid wave
+        variations:
+        - covid wave
+        - coronavirus wave
+        - covid waves
+        weight: 1.6
+      pandemic erasure:
+        canonical: pandemic erasure
+        variations:
+        - pandemic erasure
+        - pandemic erasures
+        weight: 1.6
+      public health:
+        canonical: public health
+        variations:
+        - public health
+        - public healths
+        weight: 1.6
+      collective care:
+        canonical: collective care
+        variations:
+        - collective care
+        - collective cares
+        weight: 1.6
+      disability justice:
+        canonical: disability justice
+        variations:
+        - disability justices
+        - disability justice
+        weight: 1.6
+      exercise intolerance:
+        canonical: exercise intolerance
+        variations:
+        - exercise intolerance
+        - exercise intolerances
+        weight: 1.6
+      immune system:
+        canonical: immune system
+        variations:
+        - immune system
+        - immune systems
+        weight: 1.6
+      variant:
+        canonical: variant
+        variations:
+        - variant
+        - variants
+        weight: 1.6
+      mask:
+        canonical: mask
+        variations:
+        - masks
+        - mask
+        weight: 1.6
+      n95:
+        canonical: n95
+        variations:
+        - n95
+        - n95s
+        weight: 1.6
+      kn95:
+        canonical: kn95
+        variations:
+        - kn95s
+        - kn95
+        weight: 1.6
+      viral persistence:
+        canonical: viral persistence
+        variations:
+        - viral persistences
+        - viral persistence
+        weight: 1.6
+      cumulative risk:
+        canonical: cumulative risk
+        variations:
+        - cumulative risks
+        - cumulative risk
+        weight: 1.6
+      vascular damage:
+        canonical: vascular damage
+        variations:
+        - vascular damages
+        - vascular damage
+        weight: 1.6
+      neurological effects:
+        canonical: neurological effects
+        variations:
+        - neurological effects
+        - neurological effect
+        weight: 1.6
+  political_economy:
+    category: political_economy
+    description: Economic analysis and critique
+    weight: 1.7
+    terms:
+      primitive accumulation:
+        canonical: primitive accumulation
+        variations:
+        - primitive accumulation
+        - primitive accumulations
+        weight: 1.7
+      capital accumulation:
+        canonical: capital accumulation
+        variations:
+        - capital accumulations
+        - capital accumulation
+        weight: 1.7
+      debt mechanics:
+        canonical: debt mechanics
+        variations:
+        - debt mechanics
+        - debt mechanic
+        weight: 1.7
+      money creation:
+        canonical: money creation
+        variations:
+        - money creation
+        - money creations
+        weight: 1.7
+      labor exploitation:
+        canonical: labor exploitation
+        variations:
+        - labor exploitation
+        - labor exploitations
+        weight: 1.7
+      prison labor:
+        canonical: prison labor
+        variations:
+        - prison labors
+        - prison labor
+        weight: 1.7
+      slave labor:
+        canonical: slave labor
+        variations:
+        - slave labor
+        - slave labors
+        weight: 1.7
+      wealth inequality:
+        canonical: wealth inequality
+        variations:
+        - wealth inequality
+        - wealth inequalitys
+        weight: 1.7
+      effective altruism:
+        canonical: effective altruism
+        variations:
+        - effective altruism
+        - effective altruisms
+        weight: 1.7
+      noblesse oblige:
+        canonical: noblesse oblige
+        variations:
+        - noblesse obliges
+        - noblesse oblige
+        weight: 1.7
+      economic hegemony:
+        canonical: economic hegemony
+        variations:
+        - economic hegemony
+        - economic hegemonys
+        weight: 1.7
+      financial imperialism:
+        canonical: financial imperialism
+        variations:
+        - financial imperialisms
+        - financial imperialism
+        weight: 1.7
+      rent extraction:
+        canonical: rent extraction
+        variations:
+        - rent extractions
+        - rent extraction
+        weight: 1.7
+      surplus extraction:
+        canonical: surplus extraction
+        variations:
+        - surplus extractions
+        - surplus extraction
+        weight: 1.7
+      labor aristocracy:
+        canonical: labor aristocracy
+        variations:
+        - labor aristocracy
+        - labor aristocracys
+        weight: 1.7
+  dialectical_historical_materialism:
+    category: dialectical_historical_materialism
+    description: Philosophical method and analysis
+    weight: 1.8
+    terms:
+      dialectical materialism:
+        canonical: dialectical materialism
+        variations:
+        - dialectical materialisms
+        - dialectical materialism
+        weight: 1.8
+      historical materialism:
+        canonical: historical materialism
+        variations:
+        - historical materialism
+        - historical materialisms
+        weight: 1.8
+      material conditions:
+        canonical: material conditions
+        variations:
+        - material condition
+        - material conditions
+        weight: 1.8
+      material basis:
+        canonical: material basis
+        variations:
+        - material basi
+        - material basis
+        weight: 1.8
+      objective reality:
+        canonical: objective reality
+        variations:
+        - objective reality
+        - objective realitys
+        weight: 1.8
+      contradictions:
+        canonical: contradictions
+        variations:
+        - contradictions
+        - contradiction
+        weight: 1.8
+      thesis antithesis synthesis:
+        canonical: thesis antithesis synthesis
+        variations:
+        - thesis antithesis synthesis
+        - thesis antithesis synthesi
+        weight: 1.8
+      negation of the negation:
+        canonical: negation of the negation
+        variations:
+        - negation of the negations
+        - negation of the negation
+        weight: 1.8
+      quantity into quality:
+        canonical: quantity into quality
+        variations:
+        - quantity into quality
+        - quantity into qualitys
+        weight: 1.8
+      scientific socialism:
+        canonical: scientific socialism
+        variations:
+        - scientific socialisms
+        - scientific socialism
+        weight: 1.8
+      idealism:
+        canonical: idealism
+        variations:
+        - idealisms
+        - idealism
+        weight: 1.8
+      metaphysics:
+        canonical: metaphysics
+        variations:
+        - metaphysic
+        - metaphysics
+        weight: 1.8
+      empiricism:
+        canonical: empiricism
+        variations:
+        - empiricism
+        - empiricisms
+        weight: 1.8
+      vulgar materialism:
+        canonical: vulgar materialism
+        variations:
+        - vulgar materialism
+        - vulgar materialisms
+        weight: 1.8
+  social_criticism:
+    category: social_criticism
+    description: Media and cultural critique
+    weight: 1.5
+    terms:
+      cultural hegemony:
+        canonical: cultural hegemony
+        variations:
+        - cultural hegemonys
+        - cultural hegemony
+        weight: 1.5
+      manufacturing consent:
+        canonical: manufacturing consent
+        variations:
+        - manufacturing consent
+        - manufacturing consents
+        weight: 1.5
+      media manipulation:
+        canonical: media manipulation
+        variations:
+        - media manipulations
+        - media manipulation
+        weight: 1.5
+      statistical manipulation:
+        canonical: statistical manipulation
+        variations:
+        - statistical manipulations
+        - statistical manipulation
+        weight: 1.5
+      ideological apparatus:
+        canonical: ideological apparatus
+        variations:
+        - ideological apparatus
+        - ideological apparatu
+        weight: 1.5
+      false consciousness:
+        canonical: false consciousness
+        variations:
+        - false consciousness
+        weight: 1.5
+      commodity fetishism:
+        canonical: commodity fetishism
+        variations:
+        - commodity fetishism
+        - commodity fetishisms
+        weight: 1.5
+      alienation:
+        canonical: alienation
+        variations:
+        - alienations
+        - alienation
+        weight: 1.5
+      reification:
+        canonical: reification
+        variations:
+        - reifications
+        - reification
+        weight: 1.5
+      spectacle:
+        canonical: spectacle
+        variations:
+        - spectacle
+        - spectacles
+        weight: 1.5
+      propaganda:
+        canonical: propaganda
+        variations:
+        - propagandas
+        - propaganda
+        weight: 1.5
+      social reproduction:
+        canonical: social reproduction
+        variations:
+        - social reproductions
+        - social reproduction
+        weight: 1.5
+      individualization of oppression:
+        canonical: individualization of oppression
+        variations:
+        - individualization of oppressions
+        - individualization of oppression
+        weight: 1.5
+  operational_organizational_theory:
+    category: operational_organizational_theory
+    description: Revolutionary organizing and strategy
+    weight: 1.9
+    terms:
+      democratic centralism:
+        canonical: democratic centralism
+        variations:
+        - democratic centralisms
+        - democratic centralism
+        weight: 1.9
+      party line:
+        canonical: party line
+        variations:
+        - party line
+        - party lines
+        weight: 1.9
+      party discipline:
+        canonical: party discipline
+        variations:
+        - party disciplines
+        - party discipline
+        weight: 1.9
+      mass line:
+        canonical: mass line
+        variations:
+        - mass lines
+        - mass line
+        weight: 1.9
+      vanguard party:
+        canonical: vanguard party
+        variations:
+        - vanguard party
+        - vanguard partys
+        weight: 1.9
+      base building:
+        canonical: base building
+        variations:
+        - base buildings
+        - base building
+        weight: 1.9
+      cadre development:
+        canonical: cadre development
+        variations:
+        - cadre developments
+        - cadre development
+        weight: 1.9
+      united front:
+        canonical: united front
+        variations:
+        - united front
+        - united fronts
+        weight: 1.9
+      dual power:
+        canonical: dual power
+        variations:
+        - dual powers
+        - dual power
+        weight: 1.9
+      revolutionary strategy:
+        canonical: revolutionary strategy
+        variations:
+        - revolutionary strategy
+        - revolutionary strategys
+        weight: 1.9
+      protracted peoples war:
+        canonical: protracted peoples war
+        variations:
+        - protracted peoples wars
+        - protracted peoples war
+        weight: 1.9
+      serve the people:
+        canonical: serve the people
+        variations:
+        - serve the peoples
+        - serve the people
+        weight: 1.9
+      criticism and self-criticism:
+        canonical: criticism and self-criticism
+        variations:
+        - criticism and selfcriticism
+        - criticism and self-criticism
+        - criticism and self criticism
+        - criticism and self-criticisms
+        weight: 1.9
+      social investigation:
+        canonical: social investigation
+        variations:
+        - social investigations
+        - social investigation
+        weight: 1.9
+      from the masses to the masses:
+        canonical: from the masses to the masses
+        variations:
+        - from the masses to the masses
+        - from the masses to the masse
+        weight: 1.9

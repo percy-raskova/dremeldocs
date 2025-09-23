@@ -1,0 +1,102 @@
+category: public_health_politics
+description: Pandemic and public health as class struggle
+weight: 1.6
+terms:
+  long covid:
+    canonical: long covid
+    variations:
+    - long covids
+    - long coronavirus
+    - long covid
+    weight: 1.6
+  covid wave:
+    canonical: covid wave
+    variations:
+    - covid wave
+    - coronavirus wave
+    - covid waves
+    weight: 1.6
+  pandemic erasure:
+    canonical: pandemic erasure
+    variations:
+    - pandemic erasure
+    - pandemic erasures
+    weight: 1.6
+  public health:
+    canonical: public health
+    variations:
+    - public health
+    - public healths
+    weight: 1.6
+  collective care:
+    canonical: collective care
+    variations:
+    - collective care
+    - collective cares
+    weight: 1.6
+  disability justice:
+    canonical: disability justice
+    variations:
+    - disability justices
+    - disability justice
+    weight: 1.6
+  exercise intolerance:
+    canonical: exercise intolerance
+    variations:
+    - exercise intolerance
+    - exercise intolerances
+    weight: 1.6
+  immune system:
+    canonical: immune system
+    variations:
+    - immune system
+    - immune systems
+    weight: 1.6
+  variant:
+    canonical: variant
+    variations:
+    - variant
+    - variants
+    weight: 1.6
+  mask:
+    canonical: mask
+    variations:
+    - masks
+    - mask
+    weight: 1.6
+  n95:
+    canonical: n95
+    variations:
+    - n95
+    - n95s
+    weight: 1.6
+  kn95:
+    canonical: kn95
+    variations:
+    - kn95s
+    - kn95
+    weight: 1.6
+  viral persistence:
+    canonical: viral persistence
+    variations:
+    - viral persistences
+    - viral persistence
+    weight: 1.6
+  cumulative risk:
+    canonical: cumulative risk
+    variations:
+    - cumulative risks
+    - cumulative risk
+    weight: 1.6
+  vascular damage:
+    canonical: vascular damage
+    variations:
+    - vascular damages
+    - vascular damage
+    weight: 1.6
+  neurological effects:
+    canonical: neurological effects
+    variations:
+    - neurological effects
+    - neurological effect
+    weight: 1.6

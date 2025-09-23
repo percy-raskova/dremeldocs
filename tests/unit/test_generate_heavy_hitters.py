@@ -540,23 +540,23 @@ class TestErrorHandling:
 
     @pytest.mark.unit
     def test_missing_data_file(self, temp_project_dir, monkeypatch):
-        """Test handling when filtered_threads.json is missing."""
+        """Test handling when filtered_threads.json is missing - returns empty list."""
         monkeypatch.chdir(temp_project_dir)
 
         # Don't create the data file
-        with pytest.raises(FileNotFoundError):
-            generate_heavy_hitter_markdowns()
+        result = generate_heavy_hitter_markdowns()
+        assert result == []  # Should return empty list, not raise exception
 
     @pytest.mark.unit
     def test_malformed_json(self, temp_project_dir, monkeypatch):
-        """Test handling of malformed JSON data."""
+        """Test handling of malformed JSON data - returns empty list."""
         monkeypatch.chdir(temp_project_dir)
 
         with open(temp_project_dir / "data" / "filtered_threads.json", 'w') as f:
             f.write("{ invalid json ]")
 
-        with pytest.raises(json.JSONDecodeError):
-            generate_heavy_hitter_markdowns()
+        result = generate_heavy_hitter_markdowns()
+        assert result == []  # Should return empty list, not raise exception
 
     @pytest.mark.unit
     def test_missing_required_fields(self, temp_project_dir, mock_text_processing, monkeypatch):

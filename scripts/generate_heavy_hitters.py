@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import List, Dict, Any
 
 # Import our SpaCy-enhanced text processing utilities
-from text_processing import (
+from text_utilities import (
     generate_title,
     generate_description,
     calculate_reading_time,

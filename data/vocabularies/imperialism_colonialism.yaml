@@ -1,0 +1,102 @@
+category: imperialism_colonialism
+description: Imperial and colonial analysis
+weight: 1.8
+terms:
+  settler colonialism:
+    canonical: settler colonialism
+    variations:
+    - settler colonialism
+    - settler colonialisms
+    weight: 1.8
+  national oppression:
+    canonical: national oppression
+    variations:
+    - national oppression
+    - national oppressions
+    weight: 1.8
+  national liberation:
+    canonical: national liberation
+    variations:
+    - national liberations
+    - national liberation
+    weight: 1.8
+  imperial core:
+    canonical: imperial core
+    variations:
+    - imperial cores
+    - imperial core
+    weight: 1.8
+  imperial periphery:
+    canonical: imperial periphery
+    variations:
+    - imperial periphery
+    - imperial peripherys
+    weight: 1.8
+  global north:
+    canonical: global north
+    variations:
+    - global norths
+    - global north
+    weight: 1.8
+  global south:
+    canonical: global south
+    variations:
+    - global south
+    - global souths
+    weight: 1.8
+  comprador bourgeoisie:
+    canonical: comprador bourgeoisie
+    variations:
+    - comprador bourgeoisie
+    - comprador bourgeoisies
+    weight: 1.8
+  colonial extraction:
+    canonical: colonial extraction
+    variations:
+    - colonial extraction
+    - colonial extractions
+    weight: 1.8
+  resource extraction:
+    canonical: resource extraction
+    variations:
+    - resource extraction
+    - resource extractions
+    weight: 1.8
+  palestine:
+    canonical: palestine
+    variations:
+    - palestine
+    - palestines
+    weight: 1.8
+  zionist entity:
+    canonical: zionist entity
+    variations:
+    - zionist entity
+    - zionist entitys
+    weight: 1.8
+  us empire:
+    canonical: us empire
+    variations:
+    - us empires
+    - us empire
+    weight: 1.8
+  imperial interests:
+    canonical: imperial interests
+    variations:
+    - imperial interests
+    - imperial interest
+    weight: 1.8
+  anti-imperialism:
+    canonical: anti-imperialism
+    variations:
+    - anti-imperialism
+    - anti imperialism
+    - antiimperialism
+    - anti-imperialisms
+    weight: 1.8
+  internal colonialism:
+    canonical: internal colonialism
+    variations:
+    - internal colonialisms
+    - internal colonialism
+    weight: 1.8

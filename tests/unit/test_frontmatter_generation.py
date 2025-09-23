@@ -14,7 +14,7 @@ from datetime import datetime
 # Add the scripts directory to Python path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
 
-from text_processing import (
+from text_utilities import (
     format_frontmatter_value,
     parse_to_yyyymmdd,
     generate_title,

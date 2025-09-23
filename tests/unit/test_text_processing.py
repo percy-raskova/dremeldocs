@@ -17,7 +17,7 @@ from pathlib import Path
 # Add the scripts directory to Python path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
 
-from text_processing import (
+from text_utilities import (
     generate_title,
     generate_description,
     generate_filename,

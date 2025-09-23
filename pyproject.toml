@@ -41,6 +41,7 @@ dependencies = [
   "click>=8.1.7", # CLI framework (future CLI support)
   "python-dateutil>=2.8.2", # Date parsing utilities
   "pyyaml>=6.0.1", # YAML configuration support
+  "psutil>=7.1.0",
 ]
 
 [project.optional-dependencies]

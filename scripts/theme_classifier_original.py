@@ -11,14 +11,14 @@ from typing import Dict, List, Tuple, TypedDict, Optional, Any
 from collections import defaultdict
 from datetime import datetime
 
-# Import our enhanced text processing utilities from the new modular files
-from text_utilities import (
+# Import our SpaCy-enhanced text processing utilities
+from text_processing import (
     generate_title,
     generate_description,
     calculate_reading_time,
     format_frontmatter_value,
     extract_entities,
-    generate_filename
+    generate_filename  # New filename generation function
 )
 
 # Type definitions for better structure
@@ -39,12 +39,6 @@ class ThemeClassifier:
         self.themes: Dict[str, int] = {}
         self.keywords: Dict[str, str] = {}
         self.thread_theme_map: Dict[str, List[int]] = {}
-        
-        # New enhanced features
-        self.vocabulary: Dict[str, Any] = {}
-        self.confidence_scores: Dict[str, float] = {}
-        self.matched_terms: Dict[str, int] = defaultdict(int)
-        self.pattern_matchers: Dict[str, List] = {}
 
     def load_human_themes(self) -> bool:
         """Load the human-extracted themes from your manual review"""
@@ -66,85 +60,6 @@ class ThemeClassifier:
         self._parse_thread_mappings(content)
 
         return True
-
-    def load_vocabulary(self, vocab_file: Path) -> None:
-        """Load vocabulary from YAML file for enhanced classification"""
-        import yaml
-        
-        if not vocab_file.exists():
-            print(f"⚠️  Vocabulary file not found: {vocab_file}")
-            return
-        
-        with open(vocab_file, 'r', encoding='utf-8') as f:
-            self.vocabulary = yaml.safe_load(f)
-        
-        # Compile regex patterns for efficient matching
-        for category, data in self.vocabulary.items():
-            if 'patterns' in data:
-                self.pattern_matchers[category] = [
-                    re.compile(pattern, re.IGNORECASE) 
-                    for pattern in data['patterns']
-                ]
-        
-        print(f"✅ Loaded vocabulary with {len(self.vocabulary)} categories")
-
-    def classify_with_patterns(self, text: str) -> List[str]:
-        """Classify text using pattern matching and vocabulary"""
-        themes = []
-        self.confidence_scores.clear()
-        self.matched_terms.clear()
-        
-        text_lower = text.lower()
-        
-        # Check each category in vocabulary
-        for category, data in self.vocabulary.items():
-            score = 0.0
-            matches = 0
-            
-            # Check terms
-            if 'terms' in data:
-                for term in data['terms']:
-                    if term.lower() in text_lower:
-                        matches += 1
-                        score += 1.0
-            
-            # Check patterns
-            if category in self.pattern_matchers:
-                for pattern in self.pattern_matchers[category]:
-                    if pattern.search(text):
-                        matches += 1
-                        score += 0.8  # Patterns slightly less weight than exact terms
-            
-            # Calculate confidence
-            if matches > 0:
-                # Normalize score based on text length and matches
-                word_count = len(text.split())
-                confidence = min(score / (word_count / 100), 1.0)
-                
-                # Apply threshold
-                threshold = data.get('score_threshold', 0.3)
-                if confidence >= threshold:
-                    themes.append(category)
-                    self.confidence_scores[category] = confidence
-                    self.matched_terms[category] = matches
-        
-        # Map to existing theme categories if needed
-        theme_mapping = {
-            'marxism': 'marxism',
-            'colonialism': 'imperialism', 
-            'philosophy': 'philosophy',
-            'organizing': 'organizing',
-            'race': 'race'
-        }
-        
-        # Ensure we return recognized themes
-        recognized_themes = []
-        for theme in themes:
-            mapped = theme_mapping.get(theme, theme)
-            if mapped not in recognized_themes:
-                recognized_themes.append(mapped)
-        
-        return recognized_themes
 
     def _parse_theme_sections(self, content: str) -> None:
         """Extract theme categories and weights from the document"""
@@ -199,46 +114,36 @@ class ThemeClassifier:
 
     def classify_thread(self, thread: Dict[str, Any]) -> Tuple[List[str], float]:
         """
-        Classify a single thread based on learned themes and patterns
+        Classify a single thread based on learned themes
         Returns: (list of themes, confidence score)
         """
-        text = thread.get('smushed_text', '')
+        text = thread['smushed_text'].lower()
         detected_themes: List[str] = []
         scores: defaultdict[str, float] = defaultdict(float)
-        
-        # Method 1: Use enhanced pattern classification if vocabulary loaded
-        if self.vocabulary:
-            pattern_themes = self.classify_with_patterns(text)
-            for theme in pattern_themes:
+
+        # Check for keyword matches
+        for keyword in self.keywords:
+            if keyword in text:
+                # Boost score for this keyword's associated themes
+                # (You'll map keywords to themes based on your review)
+                scores['detected'] += 1
+
+        # Check for theme patterns learned from heavy hitters
+        for theme, weight in self.themes.items():
+            theme_score = self._calculate_theme_score(text, theme)
+            if theme_score > 0:
+                scores[theme] = theme_score * weight
+
+        # Select top themes above threshold
+        threshold = 0.3  # Adjust based on your preferences
+        for theme, score in scores.items():
+            if score > threshold:
                 detected_themes.append(theme)
-                scores[theme] = self.confidence_scores.get(theme, 0.5)
-        
-        # Method 2: Original keyword-based classification (fallback)
-        if not detected_themes:  # Only use if patterns didn't find anything
-            text_lower = text.lower()
-            
-            # Check for keyword matches
-            for keyword in self.keywords:
-                if keyword in text_lower:
-                    scores['detected'] += 1
-            
-            # Check for theme patterns learned from heavy hitters
-            for theme, weight in self.themes.items():
-                theme_score = self._calculate_theme_score(text_lower, theme)
-                if theme_score > 0:
-                    scores[theme] = theme_score * weight
-            
-            # Select top themes above threshold
-            threshold = 0.3
-            for theme, score in scores.items():
-                if score > threshold:
-                    detected_themes.append(theme)
-        
-        # Calculate overall confidence
-        confidence = min(sum(scores.values()) / 10, 1.0) if scores else 0.0
-        
-        # For backwards compatibility - ensure we return list even if empty
-        return detected_themes if detected_themes else [], confidence
+
+        # Calculate confidence based on match strength
+        confidence = min(sum(scores.values()) / 10, 1.0)  # Normalize to 0-1
+
+        return detected_themes, confidence
 
     def _calculate_theme_score(self, text: str, theme: str) -> float:
         """Calculate how strongly a text matches a theme"""
