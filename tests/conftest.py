@@ -1,0 +1,155 @@
+"""
+Shared pytest configuration and fixtures for the Twitter archive processing pipeline tests.
+"""
+
+import pytest
+import sys
+import tempfile
+import shutil
+from pathlib import Path
+
+# Add the scripts directory to Python path for all tests
+sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
+
+@pytest.fixture(scope="session")
+def test_data_dir():
+    """Fixture providing path to test data directory."""
+    return Path(__file__).parent / "fixtures"
+
+@pytest.fixture
+def temp_dir():
+    """Fixture providing a temporary directory for test operations."""
+    temp_path = tempfile.mkdtemp()
+    yield Path(temp_path)
+    shutil.rmtree(temp_path)
+
+@pytest.fixture
+def sample_workspace(temp_dir):
+    """Fixture providing a complete workspace structure for testing."""
+    workspace = {
+        'root': temp_dir,
+        'data': temp_dir / 'data',
+        'docs': temp_dir / 'docs',
+        'heavy_hitters': temp_dir / 'docs' / 'heavy_hitters',
+        'scripts': temp_dir / 'scripts'
+    }
+
+    # Create all directories
+    for dir_path in workspace.values():
+        if isinstance(dir_path, Path):
+            dir_path.mkdir(parents=True, exist_ok=True)
+
+    return workspace
+
+@pytest.fixture(scope="session")
+def spacy_model():
+    """Fixture to ensure spaCy model is available for tests."""
+    try:
+        import spacy
+        nlp = spacy.load("en_core_web_sm")
+        return nlp
+    except (ImportError, OSError):
+        pytest.skip("spaCy model 'en_core_web_sm' not available")
+
+# Markers for test categorization
+def pytest_configure(config):
+    """Configure custom pytest markers."""
+    config.addinivalue_line(
+        "markers", "unit: marks tests as unit tests (fast, isolated)"
+    )
+    config.addinivalue_line(
+        "markers", "integration: marks tests as integration tests (slower, multiple components)"
+    )
+    config.addinivalue_line(
+        "markers", "slow: marks tests as slow (may take several seconds)"
+    )
+    config.addinivalue_line(
+        "markers", "performance: marks tests as performance tests"
+    )
+
+# Pytest collection hooks
+def pytest_collection_modifyitems(config, items):
+    """Modify test collection to add markers automatically."""
+    for item in items:
+        # Add unit marker to tests in unit/ directory
+        if "unit" in str(item.fspath):
+            item.add_marker(pytest.mark.unit)
+
+        # Add integration marker to tests in integration/ directory
+        if "integration" in str(item.fspath):
+            item.add_marker(pytest.mark.integration)
+
+        # Add slow marker to tests that likely take time
+        if any(keyword in item.name.lower() for keyword in ["end_to_end", "performance", "large", "complete"]):
+            item.add_marker(pytest.mark.slow)
+
+# Test data validation
+@pytest.fixture(autouse=True, scope="session")
+def validate_test_environment():
+    """Validate that the test environment is properly set up."""
+    # Check that required directories exist
+    project_root = Path(__file__).parent.parent
+    scripts_dir = project_root / "scripts"
+
+    if not scripts_dir.exists():
+        pytest.exit("Scripts directory not found. Tests require access to pipeline scripts.")
+
+    # Check for required Python modules (non-critical)
+    missing_modules = []
+    try:
+        import yaml
+    except ImportError:
+        missing_modules.append("yaml")
+
+    try:
+        import spacy
+    except ImportError:
+        missing_modules.append("spacy")
+
+    if missing_modules:
+        print(f"Warning: Missing optional modules: {missing_modules}")
+        print("Some tests may be skipped.")
+
+# Skip conditions
+def pytest_runtest_setup(item):
+    """Setup hook to skip tests based on conditions."""
+    # Skip spaCy-dependent tests if spaCy is not available
+    if "spacy" in item.keywords:
+        try:
+            import spacy
+            spacy.load("en_core_web_sm")
+        except (ImportError, OSError):
+            pytest.skip("spaCy with en_core_web_sm model required")
+
+    # Skip slow tests if --fast option is used (custom option)
+    if item.config.getoption("--fast", default=False):
+        if "slow" in item.keywords:
+            pytest.skip("Skipping slow test due to --fast option")
+
+def pytest_addoption(parser):
+    """Add custom command line options."""
+    parser.addoption(
+        "--fast",
+        action="store_true",
+        default=False,
+        help="Skip slow tests"
+    )
+    parser.addoption(
+        "--integration-only",
+        action="store_true",
+        default=False,
+        help="Run only integration tests"
+    )
+    parser.addoption(
+        "--unit-only",
+        action="store_true",
+        default=False,
+        help="Run only unit tests"
+    )
+
+def pytest_configure(config):
+    """Configure test collection based on options."""
+    if config.getoption("--integration-only"):
+        config.option.markexpr = "integration"
+    elif config.getoption("--unit-only"):
+        config.option.markexpr = "unit"
