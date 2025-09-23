@@ -1,61 +1,68 @@
 [project]
-name = "astradocs"
-version = "0.1.0"
+name = "dremeldocs"
+version = "0.8.1"
 description = "Pipeline for transforming Twitter/X archive into curated MkDocs knowledge base"
 readme = "README.md"
-authors = [{name = "@BmoreOrganized"}]
-license = {text = "MIT"}
+authors = [{ name = "@BmoreOrganized" }]
+license = { text = "MIT" }
 requires-python = ">=3.8"
-keywords = ["twitter", "archive", "mkdocs", "documentation", "philosophy", "politics"]
+keywords = [
+  "twitter",
+  "archive",
+  "mkdocs",
+  "documentation",
+  "philosophy",
+  "politics",
+]
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
 ]
 
 dependencies = [
-    # Core processing
-    "ijson>=3.2.3", # Streaming JSON parser for large files
-    "spacy>=3.7.0", # NLP library for linguistic text processing
-    # MkDocs and documentation
-    "mkdocs>=1.5.3", # Static site generator
-    "mkdocs-material>=9.4.0", # Material theme for MkDocs
-    "mkdocs-minify-plugin>=0.7.1", # Minification plugin
-    "pymdown-extensions>=10.4", # Markdown extensions
-    # Utilities (minimal set)
-    "click>=8.1.7", # CLI framework (future CLI support)
-    "python-dateutil>=2.8.2", # Date parsing utilities
-    "pyyaml>=6.0.1", # YAML configuration support
+  # Core processing
+  "ijson>=3.2.3", # Streaming JSON parser for large files
+  "spacy>=3.7.0", # NLP library for linguistic text processing
+  # MkDocs and documentation
+  "mkdocs>=1.5.3",               # Static site generator
+  "mkdocs-material>=9.4.0",      # Material theme for MkDocs
+  "mkdocs-minify-plugin>=0.7.1", # Minification plugin
+  "pymdown-extensions>=10.4",    # Markdown extensions
+  # Utilities (minimal set)
+  "click>=8.1.7",           # CLI framework (future CLI support)
+  "python-dateutil>=2.8.2", # Date parsing utilities
+  "pyyaml>=6.0.1",          # YAML configuration support
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.4.0",
-    "pytest-cov>=4.1.0",
-    "black>=23.0.0",
-    "ruff>=0.1.0",
-    "mypy>=1.5.0",
+  "pytest>=7.4.0",
+  "pytest-cov>=4.1.0",
+  "black>=23.0.0",
+  "ruff>=0.1.0",
+  "mypy>=1.5.0",
 ]
 
 logging = [
-    "loguru>=0.7.2",          # Enhanced logging
+  "loguru>=0.7.2", # Enhanced logging
 ]
 
 extras = [
-    "tqdm>=4.66.1",           # Progress bars
-    "python-dotenv>=1.0.0",   # Environment variables
+  "tqdm>=4.66.1",         # Progress bars
+  "python-dotenv>=1.0.0", # Environment variables
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/yourusername/astradocs"
-"Bug Tracker" = "https://github.com/yourusername/astradocs/issues"
-"Documentation" = "https://yourusername.github.io/astradocs"
+"Homepage" = "https://github.com/percy-raskova/astradocs"
+"Bug Tracker" = "https://github.com/percy-raskova/dremeldocs/issues"
+"Documentation" = "https://yourusername.github.io/dremeldocs"
 
 [build-system]
 requires = ["hatchling"]

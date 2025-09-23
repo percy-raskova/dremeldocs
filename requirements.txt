@@ -1,4 +1,4 @@
-# Core dependencies for astradocs
+# Core dependencies for DremelDocs
 # Generated from pyproject.toml
 
 # Core processing
@@ -22,6 +22,6 @@ pyyaml>=6.0.1             # YAML configuration support
 # - loguru, tqdm, python-dotenv (moved to optional dependencies)
 #
 # To install optional dependencies:
-# pip install astradocs[dev]     # Development tools
-# pip install astradocs[logging]  # Enhanced logging
-# pip install astradocs[extras]   # Progress bars and dotenv
+# pip install DremelDocs[dev]     # Development tools
+# pip install DremelDocs[logging]  # Enhanced logging
+# pip install DremelDocs[extras]   # Progress bars and dotenv

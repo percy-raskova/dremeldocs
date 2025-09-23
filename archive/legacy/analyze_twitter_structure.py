@@ -8,7 +8,7 @@ import re
 
 def analyze_twitter_archive():
     # Read first 10KB of the file to understand structure
-    with open('/home/percy/projects/astradocs/twitter-archives/data/tweets.js', 'r', encoding='utf-8') as f:
+    with open('/home/percy/projects/DremelDocs/twitter-archives/data/tweets.js', 'r', encoding='utf-8') as f:
         content = f.read(10000)  # First 10KB
         
     print("First 10KB of tweets.js:")

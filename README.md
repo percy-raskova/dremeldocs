@@ -1,4 +1,4 @@
-# AstraDocs 🌟
+# DremelDocs 🌟
 
 > Transform your Twitter/X archive into a curated MkDocs knowledge base
 
@@ -8,7 +8,7 @@
 
 ## 🚀 Overview
 
-AstraDocs is a local-first pipeline that transforms your Twitter/X archive into a beautifully organized MkDocs knowledge base. It intelligently extracts philosophical and political threads from thousands of tweets, organizing them by themes for easy navigation and reference.
+DremelDocs is a local-first pipeline that transforms your Twitter/X archive into a beautifully organized MkDocs knowledge base. It intelligently extracts philosophical and political threads from thousands of tweets, organizing them by themes for easy navigation and reference.
 
 ### Key Features
 
@@ -57,16 +57,19 @@ python -m spacy download en_core_web_sm
 ### Usage
 
 1. **Place your Twitter archive**:
+
    ```bash
    unzip twitter-archive.zip -d source/
    ```
 
 2. **Run the filtering pipeline**:
+
    ```bash
    python scripts/filter_pipeline.py
    ```
 
 3. **Generate heavy hitter threads**:
+
    ```bash
    python scripts/generate_heavy_hitters.py
    ```
@@ -78,11 +81,13 @@ python -m spacy download en_core_web_sm
    - Save as `THEMES_EXTRACTED.md`
 
 5. **Classify all threads**:
+
    ```bash
    python scripts/theme_classifier.py
    ```
 
 6. **Build MkDocs site**:
+
    ```bash
    mkdocs serve  # Preview locally
    mkdocs build  # Generate static site
@@ -92,19 +97,19 @@ python -m spacy download en_core_web_sm
 
 From a real Twitter archive (September 2025):
 
-| Metric | Value |
-|--------|-------|
-| Input tweets | 21,723 |
-| Filtered threads | 1,363 |
-| Heavy hitters | 59 |
-| Processing time | ~2 minutes |
-| Memory usage | 50MB peak |
-| Cost savings | $108 (vs. GPT-4) |
+| Metric           | Value            |
+| ---------------- | ---------------- |
+| Input tweets     | 21,723           |
+| Filtered threads | 1,363            |
+| Heavy hitters    | 59               |
+| Processing time  | ~2 minutes       |
+| Memory usage     | 50MB peak        |
+| Cost savings     | $108 (vs. GPT-4) |
 
 ## 🗂️ Project Structure
 
 ```
-astradocs/
+dremeldocs/
 ├── scripts/              # Processing pipeline scripts
 │   ├── filter_pipeline.py      # Stage 1: Filter tweets
 │   ├── generate_heavy_hitters.py # Stage 2: Extract heavy threads
@@ -169,6 +174,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📚 Documentation
 
 For detailed documentation, see:
+
 - [Architecture](docs/ARCHITECTURE.md)
 - [API Reference](docs/API.md)
 - [Development Guide](docs/INDEX.md)
@@ -177,3 +183,4 @@ For detailed documentation, see:
 ---
 
 Made with ❤️ for preserving radical thought and revolutionary discourse
+
