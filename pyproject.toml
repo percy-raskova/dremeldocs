@@ -22,6 +22,7 @@ classifiers = [
 dependencies = [
     # Core processing
     "ijson>=3.2.3", # Streaming JSON parser for large files
+    "spacy>=3.7.0", # NLP library for linguistic text processing
     # MkDocs and documentation
     "mkdocs>=1.5.3", # Static site generator
     "mkdocs-material>=9.4.0", # Material theme for MkDocs
@@ -61,4 +62,4 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["scripts", "src"]
+packages = ["scripts"]
