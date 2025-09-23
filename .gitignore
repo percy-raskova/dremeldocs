@@ -115,3 +115,4 @@ claude-session-*__pycache__
 **/__pycache__
 *.pyc
 .serena
+.notes
