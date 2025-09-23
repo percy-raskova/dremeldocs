@@ -1,6 +1,6 @@
-# AstraDocs API Reference 📚
+# DremelDocs API Reference 📚
 
-Complete API documentation for all scripts and modules in the AstraDocs pipeline.
+Complete API documentation for all scripts and modules in the DremelDocs pipeline.
 
 ## Scripts Overview
 
