@@ -1,0 +1,33 @@
+---
+title: "elegant and straightforward engineering"
+date:
+  created: 2025-02-14
+categories: [heavy_hitters]
+thread_id: "thread_1317"
+word_count: 800
+reading_time: 4
+description: "Rice cookers are a marvel of elegant and straightforward engineering !"
+tweet_count: 17
+thread_number: 18
+author: "@BmoreOrganized"
+tags: ["occasionally 'the Curie point", "an 'MLG trickshot", "The second trick", "The grains", "the 'starch cage"]
+---
+# Thread #18: elegant and straightforward engineering
+
+*February 14, 2025 • 800 words • 17 tweets • ~4 min read*
+
+---
+
+Rice cookers are a marvel of elegant and straightforward engineering! They take advantage of several different quirks of physics to work consistently and deliver the perfect rice every time, with no effort on the part of the user. 🧵 https://t.co/WLQtU07kqj The first trick in the rice cooker arsenal is latent heat of vaporization. Essentially, in order for a liquid -- in this case water -- to turn into a gas, it needs energy. As the rice cooker heats up the water, the first chunk of heat goes into the water to raise its temperature However, past the boiling point, any *additional* heat being added to it instead goes toward letting molecules escape the liquid as vapor. This means that, under normal conditions, liquid water *cannot* get above 100°C. If you try to heat it more, you'll just boil it *faster*. This also means that, since the water is sucking up all the heat energy it can from its surroundings, the *entire cooking vessel* will stay at that temperature as well! It'll never get above 100°C as long as there is still liquid water to soak up the heat and vaporize. The second trick relies on the properties of rice itself. The grains are made up of mostly carbohydrates, arranged into a sort of complex lattice of tightly-bound starch molecules. As they sit in the hot water, their structure loosens up, and water molecules slip into the gaps. The grains soften and expand as they cook, letting more and more water enter until they're full, like little sponges. Past this point, cooking adds more heat that, rather than deforming the "starch cage" any more, causes the starches to get *so* soft that the rice gets mushy. Luckily, the bulk of the heat energy is still going toward the vaporization of water. As long as the vapor can escape and take that energy with it, the cooking will largely only progress to a certain point of perfect fluffiness. The next trick is something physicists refer to as an "MLG trickshot," or occasionally "the Curie point."
+
+Magnets get less and less powerful as they heat up, due to what is essentially the individual pieces of the magnet jiggling around and getting disorganized. Above the Curie point, a magnet will lose its ability to attract metals -- metals like, for example, the pot of a rice cooker. When you press "on" on your rice cooker, the cool vessel is brought into contact with a magnet, which then holds it directly against the heating element. At this point, a somewhat less impressive physics trick engages, where the electrical circuit driving the heating is only complete while in this position. If you physically lift the pot out of the main body, the heat will turn off. Now that the heat is on, the magnet is attached to a metal pot that is quickly heating up. And remember, if it gets too hot, the magnet will stop working!
+
+Luckily, it won't get too hot, because of -- say it with me! -- latent heat of vaporization 😊 The heating element will continue to pour energy into the cooking vessel, which will get transferred into the water, which then simultaneously transfers some energy to cook the rice and embezzles most of it to vaporize. Everything stays at 100°C, and the magnet stays in business. Until the water is done, that is. Once all of the water is either absorbed into the starch cage or evaporated away, there is no longer any free water to stall the heating process. From that point on, any extra heat energy will finally start to make things *hotter* than 100°C. This would ordinarily be bad news for your rice. If it continues to cook at this point, the starch lattice will collapse into mush! The rice at the bottom of the pot will receive the burnt of the heat and instead of mush, will BURN! This is where stove cooking usually goes wrong. Luckily, there's something else that also starts getting hotter, right in the nick of time: the magnet! Almost as soon as the water has finished evaporating, the magnet crosses its Curie point, and stops pulling on the pot. A built in spring pushes the pot up, away from the heat. The cooking circuit is broken, and the secondary circuit comes back on, putting out just enough heat to keep everything warm. A soothing orange LED lights up to inform you that your perfectly cooked rice is being gently cradled at low heat, ready whenever you are. Without any fancy digital programs, thermostats, or even so much as a timer, this humble, dirt cheap miracle device is able to provide a billion people around the globe with an efficient, foolproof method to prepare the most popular food item in the world.
+
+---
+
+### Tweet IDs
+1890241088671347149, 1890241090961191188, 1890241093142475134, 1890241095038304523, 1890241096703439164, 1890241098486038703, 1890241100549615813, 1890241103775109463, 1890241105897353675, 1890241108019704009, 1890241110553031167, 1890241113023516825, 1890241115418497094, 1890241117221974528, 1890241119767904590, 1890241121860878745, 1890241123983273992
+
+### Navigation
+[← Previous](017-*.md) | [Index](index.md) | [Next →](019-*.md)

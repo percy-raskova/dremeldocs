@@ -1,0 +1,39 @@
+---
+title: "my biochemistry brain"
+date:
+  created: 2024-02-19
+categories: [heavy_hitters]
+thread_id: "thread_1114"
+word_count: 960
+reading_time: 4
+description: "OK , this is triggering my biochemistry brain , so I got ta weigh in ."
+tweet_count: 23
+thread_number: 8
+author: "@BmoreOrganized"
+tags: ["this person's methods", "your body's protections", "the concept", "the reasons", "spoiled food"]
+---
+# Thread #8: my biochemistry brain
+
+*February 19, 2024 • 960 words • 23 tweets • ~4 min read*
+
+---
+
+OK, this is triggering my biochemistry brain, so I gotta weigh in.
+
+First of all, I want to get it out of the way: I am not against the concept of DIY HRT in and of itself, nor am I suggesting this person's methods are egregious. There are positive and negatives to highlight. https://t.co/VmJAeiuiw4 Starting with the positives:
+
+Ensuring everything is fully dissolved and filtered to minimize particulate matter (tiny, bits of solid stuff). Particulates can cause emboli, abscesses, inflammation, infections, and more, and this method is quite good at minimizing that. Various specific aspects of that process were also taken with proper care, such as heating in stages, agitating regularly, using a proper filter, priming it first to avoid loss, etc.
+
+Sterilizing the final product is also crucial for obvious reasons. That segues nicely into the negatives.
+
+First is the fact that heat treating to kill off any microbes is not sufficient to ensure safety. There is still a risk of contamination with endotoxins, which normal sterilization does not degrade. Bacteria constantly shed endotoxins, and even once you kill them, the endotoxins remain capable of causing harm. It's one of the reasons you can't just cook spoiled food to kill off the bacteria and expect it to be safe for consumption. Getting rid of endotoxins is really difficult, which is why medications and medical equipment -- especially those destined for injection, where it can bypass many of your body's protections -- need controlled preparation. Testing for the presence of endotoxins is almost always done using a special substance derived from the blood of horseshoe crabs, which visibly reacts with the toxins. This is mandated by regulation for all medical supplies destined for the inside of a patient. The syringes, filters, and vials used in the video should be medical grade already, and have likely all been tested with this assay. I can't say anything about the bottle she's using to prepare the batch, or the oil, alcohol, or estrogen. As far as the choice of estrogen, it is unclear where it came from or what its full chemical specifications are, and she doesn't seem to know either. "Estrogen enanthate, probably?" doesn't exactly inspire confidence in the manufacturer. Estradiol enanthate itself definitely should be suitable for HRT, as it is a prodrug of estradiol, and is considered bioidentical to endogenous estradiol. It has been studied for use in feminizing HRT, and although is currently not prescribed, I see no real risk to its use. But without manufacturer data, I can't assess the product being used for things like purity, degradation, additives, etc. This is honestly the biggest source of risk in DIY -- it's the part you yourself *aren't* doing yourself. As far as other quibbles, I definitely would prefer she use gloves and a respirator and be more precise in measurements. The dosing here is unpredictable, because "2 grams" included a bunch of the powder not making it into the mixture, and "100 mL" was completely eyeballed. That said, there is a lot of flexibility in HRT dosage anyway, with not a lot of consequences for being a bit off. I would be very concerned if this was a medication with significant side effects, or whose immediate effectiveness is highly dose-dependent. For HRT, there's already such huge variation in outcomes and timelines due to internal biology that being slightly over or under dosed is not make or break. However, for consistency, it's still best practice to be very deliberate in measurements. For example, say you prepare a mixture that is slightly too concentrated. Someone takes it for a while, and complains that the effect is not strong enough, and they'd like to start a higher dosage. You're already out of the first batch and make another. This time, you make it slightly too dilute. Your "customer" takes what they think is a higher dose, which could be exactly what they need -- but they're actually unknowingly taking about the same amount when you factor in the disparity in concentration. Again, for this particular drug, it's not the end of the world *medically speaking*, but it makes it hard to adjust around patient needs. I would be losing my shit if this was something like insulin, because you could absolutely kill someone with improper dosages. The "danger" of DIY HRT is not entirely overblown. Everyone who goes that route should be doing so with full knowledge that there are risks, especially stemming from the manufacturer of the drug itself, as well as the equipment used and your preparation and administration. It should not be your FIRST choice, but it's often the only option people feel they have, and it's certainly not as risky as people make it out to be if you can find a reliable source. Our attitude to the rising necessity of DIY in response to increasing legal and institutional restrictions on access to "legitimate" (i.e. highly regulated and tested) HRT should obviously not be to decry the practice itself, but to create a sustainable system to do so safely. That is to say, there is a pressing need for a centrally-organized, accountable system of acquisition, preparation, distribution, and information on hormones, using manufacturers we trust and processing/shipping processes that minimize risk. The same is true for more clinically-significant medications under pressure of increasing lack of access, such as abortifacients and insulin -- things with more dire consequences for poor practices.
+
+I'll say it again more clearly: NO FUCKING BATHTUB INSULIN The supply chains for the safe and effective production of medicines are necessarily vast and impossible to reproduce without essentially building a new state in the process. But we don't need to do that; we just need to be conscientious in how we use existing supply lines.
+
+---
+
+### Tweet IDs
+1759409780353794305, 1759409782417494498, 1759409783902290010, 1759409785437380854, 1759409786938880496, 1759409788494983496, 1759409790009151575, 1759409791468773885, 1759409793024803052, 1759409794648089003, 1759409796128669866, 1759409798557172192, 1759409800100626874, 1759409802638201258, 1759409804148138258, 1759409806564053319, 1759409808048804083, 1759409809449726172, 1759409811047743682, 1759409812515766782, 1759409814159929423, 1759409815661457764, 1759409817129545894
+
+### Navigation
+[← Previous](007-*.md) | [Index](index.md) | [Next →](009-*.md)

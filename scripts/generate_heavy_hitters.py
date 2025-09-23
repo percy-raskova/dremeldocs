@@ -8,17 +8,42 @@ import json
 import re
 from pathlib import Path
 from datetime import datetime
+from typing import List, Dict, Any
 
-def clean_filename(text: str, max_length: int = 50) -> str:
-    """Create a clean filename from tweet text"""
-    # Remove URLs
-    text = re.sub(r'https?://\S+', '', text)
-    # Remove special characters
-    text = re.sub(r'[^\w\s-]', '', text)
-    # Replace spaces with underscores
-    text = re.sub(r'\s+', '_', text)
-    # Truncate and clean up
-    return text[:max_length].strip('_')
+# Import our SpaCy-enhanced text processing utilities
+from text_processing import (
+    generate_title,
+    generate_description,
+    calculate_reading_time,
+    format_frontmatter_value,
+    extract_entities,
+    generate_filename,  # New filename generation function
+    parse_to_yyyymmdd  # Date parsing function
+)
+
+# SpaCy-enhanced text processing functions are now imported from text_processing module
+# clean_filename is no longer needed as we use generate_filename from text_processing
+
+def generate_navigation_links(current_index, total_threads):
+    """Generate navigation links with proper file references based on expected filenames."""
+    prev_link = ""
+    next_link = ""
+
+    # Previous link
+    if current_index > 0:
+        # Generate the previous filename pattern (no # symbol)
+        prev_link = f"[← Previous]({current_index:03d}-*.md)"
+    else:
+        prev_link = "← Previous"
+
+    # Next link
+    if current_index < total_threads - 1:
+        # Generate the next filename pattern (no # symbol)
+        next_link = f"[Next →]({current_index + 2:03d}-*.md)"
+    else:
+        next_link = "Next →"
+
+    return f'{prev_link} | [Index](index.md) | {next_link}'
 
 def generate_heavy_hitter_markdowns():
     """Generate markdown files for threads with 500+ words"""
@@ -43,44 +68,76 @@ def generate_heavy_hitter_markdowns():
     generated_files = []
 
     for i, thread in enumerate(heavy_threads):
-        # Parse the date
+        # Parse the date for display
         date_str = thread['first_tweet_date']
         try:
             # Twitter date format: "Sat Apr 26 15:30:45 +0000 2025"
             date_obj = datetime.strptime(date_str, '%a %b %d %H:%M:%S %z %Y')
-            date_formatted = date_obj.strftime('%Y-%m-%d')
             date_display = date_obj.strftime('%B %d, %Y')
         except:
-            date_formatted = 'undated'
             date_display = 'Date unknown'
 
-        # Create filename
-        first_words = thread['smushed_text'][:100]
-        clean_text = clean_filename(first_words)
-        filename = f"{i+1:03d}_{date_formatted}_{clean_text}.md"
+        # Generate standardized filename
+        filename = generate_filename(i + 1, thread['first_tweet_date'], thread['smushed_text'])
         filepath = output_dir / filename
 
+        # Generate title and description using SpaCy-enhanced functions
+        title = generate_title(thread['smushed_text'])
+        description = generate_description(thread['smushed_text'])
+        reading_time = calculate_reading_time(thread['smushed_text'])  # Now uses actual text
+
+        # Extract entities for additional metadata
+        entities = extract_entities(thread['smushed_text'])
+
+        # Get date in YYYY-MM-DD format for frontmatter
+        date_for_frontmatter = parse_to_yyyymmdd(thread['first_tweet_date'])
+        date_for_frontmatter = f"{date_for_frontmatter[:4]}-{date_for_frontmatter[4:6]}-{date_for_frontmatter[6:8]}"
+
+        # Build frontmatter with enhanced metadata
+        frontmatter_lines = [
+            '---',
+            f'title: {format_frontmatter_value(title)}',
+            'date:',
+            f'  created: {date_for_frontmatter}',
+            f'categories: [heavy_hitters]',
+            f'thread_id: {format_frontmatter_value(thread["thread_id"])}',
+            f'word_count: {thread["word_count"]}',
+            f'reading_time: {reading_time}',
+            f'description: {format_frontmatter_value(description)}',
+            f'tweet_count: {thread["tweet_count"]}',
+            f'thread_number: {i+1}',
+            f'author: "@BmoreOrganized"'
+        ]
+
+        # Add tags (extracted entities) if found
+        if entities:
+            frontmatter_lines.append(f'tags: {format_frontmatter_value(entities)}')
+        else:
+            frontmatter_lines.append('tags: []')
+
+        frontmatter_lines.extend(['---', ''])
+
         # Generate markdown content
-        content = f"""# Thread #{i+1}: {date_display}
+        content_lines = [
+            f'# Thread #{i+1}: {title}',
+            '',
+            f'*{date_display} • {thread["word_count"]} words • {thread["tweet_count"]} tweets • ~{reading_time} min read*',
+            '',
+            '---',
+            '',
+            thread['smushed_text'],
+            '',
+            '---',
+            '',
+            '### Tweet IDs',
+            ', '.join(thread['tweet_ids']),
+            '',
+            '### Navigation',
+            generate_navigation_links(i, len(heavy_threads))
+        ]
 
-## Metadata
-- **Word count**: {thread['word_count']} words
-- **Tweet count**: {thread['tweet_count']} tweets
-- **Thread ID**: {thread['thread_id']}
-- **Date**: {thread['first_tweet_date']}
-
-## Content
-
-{thread['smushed_text']}
-
----
-
-### Tweet IDs
-{', '.join(thread['tweet_ids'])}
-
-### Navigation
-[← Previous](#{i:03d}) | [Index](index.md) | [Next →](#{i+2:03d})
-"""
+        # Combine frontmatter and content
+        content = '\n'.join(frontmatter_lines) + '\n'.join(content_lines)
 
         # Write the file
         with open(filepath, 'w', encoding='utf-8') as f:
@@ -98,9 +155,31 @@ def generate_heavy_hitter_markdowns():
 
         print(f"  [{i+1:3d}/{len(heavy_threads)}] {filename}")
 
-    # Generate index file
-    print("\n📚 Generating index file...")
-    index_content = """# Heavy Hitter Threads Index
+    # Generate index file with frontmatter
+    print("\n📚 Generating index file with frontmatter...")
+
+    # Calculate total stats
+    total_words = sum(t['word_count'] for t in heavy_threads)
+    avg_words = total_words / len(heavy_threads) if heavy_threads else 0
+    max_words = max(t['word_count'] for t in heavy_threads) if heavy_threads else 0
+    # Calculate total reading time based on word count
+    total_reading_time = max(1, round(total_words / 225))  # Simple calculation for total
+
+    index_frontmatter = [
+        '---',
+        'title: "Heavy Hitter Threads Index"',
+        'date:',
+        f'  created: {datetime.now().strftime("%Y-%m-%d")}',
+        'categories: [index]',
+        f'total_threads: {len(heavy_threads)}',
+        f'total_words: {total_words}',
+        f'total_reading_time: {total_reading_time}',
+        'description: "Substantial threads with 500+ words - the philosophical and political meat of the archive"',
+        '---',
+        ''
+    ]
+
+    index_content = '\n'.join(index_frontmatter) + """# Heavy Hitter Threads Index
 
 These are the substantial threads with 500+ words - the philosophical and political meat of the archive.
 
@@ -115,8 +194,8 @@ These are the substantial threads with 500+ words - the philosophical and politi
 """.format(
         len(heavy_threads),
         sum(t['word_count'] for t in heavy_threads),
-        sum(t['word_count'] for t in heavy_threads) / len(heavy_threads),
-        max(t['word_count'] for t in heavy_threads)
+        sum(t['word_count'] for t in heavy_threads) / len(heavy_threads) if heavy_threads else 0,
+        max(t['word_count'] for t in heavy_threads) if heavy_threads else 0
     )
 
     # Add thread listing

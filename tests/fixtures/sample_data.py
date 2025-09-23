@@ -136,7 +136,7 @@ TEXT_PROCESSING_EDGE_CASES = [
 # Test cases for YAML frontmatter escaping
 YAML_ESCAPING_CASES = [
     ('Simple title', '"Simple title"'),
-    ('Title with "quotes"', '"Title with \\"quotes\\""'),
+    ('Title with "quotes"', "\"Title with 'quotes'\""),  # Now replaces inner double quotes with single
     ("Title with 'apostrophes'", "\"Title with 'apostrophes'\""),
     ('Title with: colons', '"Title with: colons"'),
     ('Title with [brackets]', '"Title with [brackets]"'),
@@ -164,8 +164,9 @@ def create_mock_twitter_data(num_threads: int = 3) -> List[Dict[str, Any]]:
     base_date = datetime(2023, 11, 15)
 
     for i in range(num_threads):
-        # Vary the date
-        date_obj = base_date.replace(day=base_date.day + i)
+        # Vary the date safely by adding days
+        from datetime import timedelta
+        date_obj = base_date + timedelta(days=i)
         date_str = date_obj.strftime("%a %b %d %H:%M:%S +0000 %Y")
 
         thread = {

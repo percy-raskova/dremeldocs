@@ -1,0 +1,189 @@
+# NLP Configuration for Enhanced Tag Extraction
+# AstraDocs Twitter Archive Processing
+
+# Filename Generation Settings
+filename:
+  skip_starters:
+    - "i"
+    - "we"
+    - "you"
+    - "they"
+    - "it"
+    - "he"
+    - "she"
+    - "that"
+    - "this"
+    - "these"
+    - "those"
+    - "the"
+    - "a"
+    - "an"
+    - "so"
+    - "but"
+    - "and"
+    - "or"
+    - "if"
+    - "when"
+    - "while"
+  min_meaningful_words: 3
+  max_length: 50
+
+# Enhanced Tag Extraction Settings
+tags:
+  # Chunk filtering
+  min_chunk_words: 2
+  max_chunk_words: 5
+  max_tags: 10
+
+  # Scoring weights
+  weights:
+    domain_term: 2.5
+    named_entity: 2.0
+    quoted_phrase: 1.8
+    proper_noun: 1.5
+    multi_word: 1.2
+    length_bonus: 0.1  # per word
+
+  # Domain vocabulary for political/philosophical content
+  domain_vocabulary:
+    political_theory:
+      - "dialectical materialism"
+      - "historical materialism"
+      - "class consciousness"
+      - "means of production"
+      - "primitive accumulation"
+      - "surplus value"
+      - "use value"
+      - "exchange value"
+      - "revolutionary praxis"
+      - "false consciousness"
+      - "class struggle"
+      - "bourgeois ideology"
+      - "proletarian revolution"
+      - "dictatorship of the proletariat"
+      - "withering of the state"
+      - "cultural hegemony"
+      - "manufactured consent"
+      - "ideological apparatus"
+
+    philosophy:
+      - "epistemology"
+      - "ontology"
+      - "phenomenology"
+      - "existentialism"
+      - "nihilism"
+      - "absurdism"
+      - "moral relativism"
+      - "ethical framework"
+      - "categorical imperative"
+      - "utilitarian calculus"
+      - "virtue ethics"
+      - "social contract"
+      - "natural law"
+      - "critical theory"
+      - "frankfurt school"
+      - "deconstruction"
+      - "postmodernism"
+
+    political_economy:
+      - "neoliberalism"
+      - "capitalism"
+      - "socialism"
+      - "communism"
+      - "anarchism"
+      - "imperialism"
+      - "colonialism"
+      - "globalization"
+      - "financialization"
+      - "commodification"
+      - "alienation"
+      - "reification"
+      - "fetishization"
+      - "economic determinism"
+      - "base and superstructure"
+      - "mode of production"
+
+    social_analysis:
+      - "social reproduction"
+      - "intersectionality"
+      - "systemic oppression"
+      - "structural violence"
+      - "institutional racism"
+      - "patriarchal structures"
+      - "gender performativity"
+      - "heteronormativity"
+      - "cisnormativity"
+      - "ableism"
+      - "classism"
+      - "solidarity"
+      - "mutual aid"
+      - "community organizing"
+      - "grassroots movement"
+
+    contemporary_issues:
+      - "climate change"
+      - "environmental justice"
+      - "degrowth"
+      - "sustainability"
+      - "anthropocene"
+      - "digital surveillance"
+      - "algorithmic bias"
+      - "platform capitalism"
+      - "gig economy"
+      - "precarity"
+      - "social media"
+      - "information warfare"
+      - "media manipulation"
+      - "echo chamber"
+      - "filter bubble"
+
+# Pattern Recognition Settings
+patterns:
+  # Common philosophical patterns
+  theory_patterns:
+    - r"theory of \w+"
+    - r"\w+ theory"
+    - r"\w+ vs\.? \w+"
+    - r"\w+ and \w+"
+    - r"critique of \w+"
+    - r"analysis of \w+"
+
+  # Quote patterns for important phrases
+  quote_patterns:
+    - r'"([^"]{10,100})"'
+    - r"'([^']{10,100})'"
+    - r"'([^']{10,100})'"
+    - r""([^"]{10,100})""
+
+  # Conceptual relationship patterns
+  relationship_patterns:
+    - r"\w+ is \w+"
+    - r"\w+ means \w+"
+    - r"\w+ requires \w+"
+    - r"\w+ produces \w+"
+    - r"\w+ undermines \w+"
+
+# Content filtering
+content_filters:
+  # Skip common generic phrases
+  skip_phrases:
+    - "the people"
+    - "the way"
+    - "the thing"
+    - "the time"
+    - "the fact"
+    - "the idea"
+    - "the point"
+    - "the problem"
+    - "the issue"
+    - "the question"
+    - "this stuff"
+    - "that stuff"
+    - "these things"
+    - "those things"
+
+  # Minimum character length for meaningful concepts
+  min_concept_length: 8
+
+  # Maximum frequency threshold (concepts appearing too often are likely generic)
+  max_frequency_threshold: 0.3  # 30% of documents
