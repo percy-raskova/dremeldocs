@@ -1,0 +1,17 @@
+# <type>(<scope>): <subject> (max 80 chars)
+
+# <body> (optional)
+
+# <footer> (optional)
+
+# Type: feat, fix, docs, style, refactor, test, chore, perf
+# Scope: component or area affected (e.g., nlp, tests, docs)
+# Subject: imperative mood, present tense: "add" not "added"
+# Body: explain what and why vs. how
+# Footer: reference issues, breaking changes
+#
+# Examples:
+#   feat(nlp): add semantic similarity scoring for tag extraction
+#   fix(tests): update expectations for improved NLP behavior
+#   docs: add comprehensive testing guide
+#   chore: update dependencies and clean up cache files

@@ -1,4 +1,114 @@
-.zk
-.venv
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+*.manifest
+*.spec
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment Variables
 .env
-.serena/cache
+.env.local
+.env.*.local
+
+# Testing
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.pytest_cache/
+.hypothesis/
+*.cover
+coverage.xml
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project Specific
+.zk/
+.serena/cache/
+.serena/memories/*.tmp
+work/
+archive/
+source/
+*.bak
+*.tmp
+
+# Data files (large Twitter archive)
+data/filtered_threads.json
+data/tweets_media/
+data/direct_messages_media/
+
+# Documentation builds
+site/
+docs/_build/
+docs/.doctrees/
+
+# Package managers
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+.directory
+.Trash-*
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# Debug files
+*.log
+logs/
+*.stackdump
+
+# Generated documentation metadata
+docs/heavy_hitters/*.bak
+docs/heavy_hitters/*_old.md
+
+# Claude/MCP related
+.mcp-cache/
+claude-session-*
