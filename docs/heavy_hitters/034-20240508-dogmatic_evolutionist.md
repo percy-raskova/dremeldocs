@@ -1,16 +1,21 @@
 ---
-title: "dogmatic evolutionist"
+title: dogmatic evolutionist
 date:
   created: 2024-05-08
-categories: [heavy_hitters]
-thread_id: "thread_0097"
+categories:
+- heavy_hitters
+thread_id: thread_0097
 word_count: 639
 reading_time: 3
-description: "The reason Marxists seem ' dogmatic ' to liberals is because we present ourselves with the confidence of those whose theories are empirically demonstrated ."
+description: The reason Marxists seem ' dogmatic ' to liberals is because we present
+  ourselves with the confidence of those whose theories are empirically demonstrated
+  .
 tweet_count: 15
 thread_number: 34
-author: "@BmoreOrganized"
-tags: ["A theoretical model", "The reason", "the object's past positions", "a 'dogmatic evolutionist", "a proven fact"]
+author: '@BmoreOrganized'
+tags:
+- fascism-analysis
+- social-criticism
 ---
 # Thread #34: dogmatic evolutionist
 

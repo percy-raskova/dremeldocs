@@ -1,16 +1,20 @@
 ---
-title: "both the public consciousness"
+title: both the public consciousness
 date:
   created: 2023-12-02
-categories: [heavy_hitters]
-thread_id: "thread_0951"
+categories:
+- heavy_hitters
+thread_id: thread_0951
 word_count: 1086
 reading_time: 5
-description: "A pernicious mythology that has flourished largely unchallenged in both the public consciousness and the medical profession is the concept of the immune system..."
+description: A pernicious mythology that has flourished largely unchallenged in both
+  the public consciousness and the medical profession is the concept of the immune
+  system...
 tweet_count: 25
 thread_number: 4
-author: "@BmoreOrganized"
-tags: ["A pernicious mythology", "both the public consciousness", "a highly specialized job", "any other cell type", "one task"]
+author: '@BmoreOrganized'
+tags:
+- public-health-politics
 ---
 # Thread #4: both the public consciousness
 

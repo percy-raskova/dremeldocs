@@ -1,16 +1,19 @@
 ---
-title: "The Energy Paradox"
+title: The Energy Paradox
 date:
   created: 2023-08-22
-categories: [heavy_hitters]
-thread_id: "thread_0392"
+categories:
+- heavy_hitters
+thread_id: thread_0392
 word_count: 1042
 reading_time: 5
-description: "The Energy Paradox We all know you need energy to survive ."
+description: The Energy Paradox We all know you need energy to survive .
 tweet_count: 24
 thread_number: 5
-author: "@BmoreOrganized"
-tags: ["The crux", "The Energy Paradox", "those food molecules", "substantially shorter lives", "a restricted diet"]
+author: '@BmoreOrganized'
+tags:
+- dialectical-historical-materialism
+- public-health-politics
 ---
 # Thread #5: The Energy Paradox
 

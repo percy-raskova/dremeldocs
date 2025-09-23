@@ -1,16 +1,19 @@
 ---
-title: "Let's have a little talk about the median and how to lie..."
+title: Let's have a little talk about the median and how to lie...
 date:
   created: 2024-02-08
-categories: [heavy_hitters]
-thread_id: "thread_0571"
+categories:
+- heavy_hitters
+thread_id: thread_0571
 word_count: 932
 reading_time: 4
-description: "Let 's have a little talk about the median and how to lie with statistics !"
+description: Let 's have a little talk about the median and how to lie with statistics
+  !
 tweet_count: 21
 thread_number: 11
-author: "@BmoreOrganized"
-tags: ["over SEVEN TIMES that", "OVER A MILLION DOLLARS", "The report", "the 25th percentile", "Table B.1"]
+author: '@BmoreOrganized'
+tags:
+- dialectical-historical-materialism
 ---
 # Thread #11: Let's have a little talk about the median and how to lie...
 

@@ -1,16 +1,22 @@
 ---
-title: "a persistent and troubling tendency"
+title: a persistent and troubling tendency
 date:
   created: 2024-05-18
-categories: [heavy_hitters]
-thread_id: "thread_0852"
+categories:
+- heavy_hitters
+thread_id: thread_0852
 word_count: 728
 reading_time: 3
-description: "There is a persistent and troubling tendency among the broad and vaguely - defined ' left , ' that decries education and intellectualism as ' bourgeois ' and '..."
+description: There is a persistent and troubling tendency among the broad and vaguely
+  - defined ' left , ' that decries education and intellectualism as ' bourgeois '
+  and '...
 tweet_count: 19
 thread_number: 25
-author: "@BmoreOrganized"
-tags: ["feudal Europe", "'Proper' schools", "a persistent and troubling tendency", "a valid critique", "its core"]
+author: '@BmoreOrganized'
+tags:
+- dialectical-historical-materialism
+- fascism-analysis
+- marxism-communism
 ---
 # Thread #25: a persistent and troubling tendency
 

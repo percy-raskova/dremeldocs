@@ -1,16 +1,20 @@
 ---
-title: "how all the US communists"
+title: how all the US communists
 date:
   created: 2024-06-07
-categories: [heavy_hitters]
-thread_id: "thread_1274"
+categories:
+- heavy_hitters
+thread_id: thread_1274
 word_count: 550
 reading_time: 2
-description: "I love how all the US communists in all their little One True Organizations always act so smug about the * other * organizations being failures , saying ' See..."
+description: I love how all the US communists in all their little One True Organizations
+  always act so smug about the * other * organizations being failures , saying ' See...
 tweet_count: 12
 thread_number: 50
-author: "@BmoreOrganized"
-tags: ["US hegemony", "Americanist orgs", "Yankee culture", "The instinct", "This error"]
+author: '@BmoreOrganized'
+tags:
+- marxism-communism
+- political-economy
 ---
 # Thread #50: how all the US communists
 

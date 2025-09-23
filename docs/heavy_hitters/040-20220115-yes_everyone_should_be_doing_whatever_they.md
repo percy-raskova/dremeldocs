@@ -1,16 +1,19 @@
 ---
-title: "Yes, everyone should be doing whatever they personally can..."
+title: Yes, everyone should be doing whatever they personally can...
 date:
   created: 2022-01-15
-categories: [heavy_hitters]
-thread_id: "thread_0913"
+categories:
+- heavy_hitters
+thread_id: thread_0913
 word_count: 602
 reading_time: 3
-description: "Yes , everyone should be doing whatever they personally can to avoid getting infected and infecting others . Most want to ."
+description: Yes , everyone should be doing whatever they personally can to avoid
+  getting infected and infecting others . Most want to .
 tweet_count: 13
 thread_number: 40
-author: "@BmoreOrganized"
-tags: ["some hidden, often huge, cost", "a cost-benefit analysis", "the vast majority", "every medical procedure", "every decision"]
+author: '@BmoreOrganized'
+tags:
+- public-health-politics
 ---
 # Thread #40: Yes, everyone should be doing whatever they personally can...
 

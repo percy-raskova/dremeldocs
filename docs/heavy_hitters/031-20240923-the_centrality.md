@@ -1,16 +1,21 @@
 ---
-title: "the centrality"
+title: the centrality
 date:
   created: 2024-09-23
-categories: [heavy_hitters]
-thread_id: "thread_0982"
+categories:
+- heavy_hitters
+thread_id: thread_0982
 word_count: 660
 reading_time: 3
-description: "You 'd think Palestine would clarify for people the centrality of national oppression in the stability of the regime as a whole ."
+description: You 'd think Palestine would clarify for people the centrality of national
+  oppression in the stability of the regime as a whole .
 tweet_count: 15
 thread_number: 31
-author: "@BmoreOrganized"
-tags: ["US imperialism", "the World Uyghur Congress", "Uncle Sam", "the DPRK", "US support"]
+author: '@BmoreOrganized'
+tags:
+- imperialism-colonialism
+- palestine
+- social-criticism
 ---
 # Thread #31: the centrality
 

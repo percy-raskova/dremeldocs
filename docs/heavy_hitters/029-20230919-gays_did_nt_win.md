@@ -1,16 +1,20 @@
 ---
-title: "Gays did n't ' win . '"
+title: Gays did n't ' win . '
 date:
   created: 2023-09-19
-categories: [heavy_hitters]
-thread_id: "thread_0221"
+categories:
+- heavy_hitters
+thread_id: thread_0221
 word_count: 698
 reading_time: 3
-description: "Gays did n't ' win . ' Pay attention ."
+description: Gays did n't ' win . ' Pay attention .
 tweet_count: 17
 thread_number: 29
-author: "@BmoreOrganized"
-tags: ["https://t.co/DS8D4lUHIw Liberal 'acceptance' movements", "the existing and growing expansion", "the economic and social cache", ", the bourgeois cultural notion", "the exact same pattern"]
+author: '@BmoreOrganized'
+tags:
+- dialectical-historical-materialism
+- fascism-analysis
+- marxism-communism
 ---
 # Thread #29: Gays did n't " win . "
 

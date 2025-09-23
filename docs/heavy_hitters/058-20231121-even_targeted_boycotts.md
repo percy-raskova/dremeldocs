@@ -1,16 +1,20 @@
 ---
-title: "Even targeted boycotts"
+title: Even targeted boycotts
 date:
   created: 2023-11-21
-categories: [heavy_hitters]
-thread_id: "thread_0259"
+categories:
+- heavy_hitters
+thread_id: thread_0259
 word_count: 514
 reading_time: 2
-description: "This , btw , is why PFLP has not asked us to boycott ."
+description: This , btw , is why PFLP has not asked us to boycott .
 tweet_count: 11
 thread_number: 58
-author: "@BmoreOrganized"
-tags: ["HP's revenues", "HP products", "Palestinian liberation", "Even targeted boycotts", "just a completely absurd prospect"]
+author: '@BmoreOrganized'
+tags:
+- imperialism-colonialism
+- palestine
+- social-criticism
 ---
 # Thread #58: Even targeted boycotts
 

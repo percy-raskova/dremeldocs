@@ -1,16 +1,20 @@
 ---
-title: "No, this isn't 'world war III"
+title: No, this isn't 'world war III
 date:
   created: 2025-06-13
-categories: [heavy_hitters]
-thread_id: "thread_1272"
+categories:
+- heavy_hitters
+thread_id: thread_1272
 word_count: 643
 reading_time: 3
-description: "No , this is n't ' world war III . ' That 's kind of the main point of Israel and why it 's been so valuable to the US ."
+description: No , this is n't ' world war III . ' That 's kind of the main point of
+  Israel and why it 's been so valuable to the US .
 tweet_count: 14
 thread_number: 33
-author: "@BmoreOrganized"
-tags: ["world war III", "NATO's hegemony", "the USSR", "Eastern Europe", "East Asia"]
+author: '@BmoreOrganized'
+tags:
+- imperialism-colonialism
+- palestine
 ---
 # Thread #33: No, this isn't "world war III
 

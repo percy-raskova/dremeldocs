@@ -1,16 +1,23 @@
 ---
-title: " hypothesis -- besides it being a rehashing of the same..."
+title: ' hypothesis -- besides it being a rehashing of the same...'
 date:
   created: 2023-11-30
-categories: [heavy_hitters]
-thread_id: "thread_0446"
+categories:
+- heavy_hitters
+thread_id: thread_0446
 word_count: 953
 reading_time: 4
-description: "The thing about Will 's ' media bias and TikTok teens ' hypothesis -- besides it being a rehashing of the same tired arguments that have around longer than any..."
+description: The thing about Will 's ' media bias and TikTok teens ' hypothesis --
+  besides it being a rehashing of the same tired arguments that have around longer
+  than any...
 tweet_count: 22
 thread_number: 9
-author: "@BmoreOrganized"
-tags: ["climate change", "Will's 'media bias", "the Democrats", "the annual leasing", "62 million acres"]
+author: '@BmoreOrganized'
+tags:
+- fascism-analysis
+- marxism-communism
+- political-economy
+- social-criticism
 ---
 # Thread #9:  hypothesis -- besides it being a rehashing of the same...
 

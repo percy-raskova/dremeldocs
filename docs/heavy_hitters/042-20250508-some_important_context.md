@@ -1,16 +1,19 @@
 ---
-title: "Some important context"
+title: Some important context
 date:
   created: 2025-05-08
-categories: [heavy_hitters]
-thread_id: "thread_0493"
+categories:
+- heavy_hitters
+thread_id: thread_0493
 word_count: 584
 reading_time: 3
-description: "Some important context to this headline : First , understand that ' world 's richest 10 % ' refers largely to the population of the global north ."
+description: 'Some important context to this headline : First , understand that ''
+  world ''s richest 10 % '' refers largely to the population of the global north .'
 tweet_count: 14
 thread_number: 42
-author: "@BmoreOrganized"
-tags: ["Taylor Swift's jet", "world's richest 10%", "The second thing", "an American company", "Third world labor"]
+author: '@BmoreOrganized'
+tags:
+- imperialism-colonialism
 ---
 # Thread #42: Some important context
 

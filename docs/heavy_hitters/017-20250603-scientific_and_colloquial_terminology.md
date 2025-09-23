@@ -1,16 +1,19 @@
 ---
-title: "scientific and colloquial terminology"
+title: scientific and colloquial terminology
 date:
   created: 2025-06-03
-categories: [heavy_hitters]
-thread_id: "thread_0321"
+categories:
+- heavy_hitters
+thread_id: thread_0321
 word_count: 810
 reading_time: 4
-description: "I always find the relationship between scientific and colloquial terminology fascinating ."
+description: I always find the relationship between scientific and colloquial terminology
+  fascinating .
 tweet_count: 20
 thread_number: 17
-author: "@BmoreOrganized"
-tags: ["'Natural' languages", "The tension", "vs constructed, systematic synthesis", "a long-standing term", "only surface-level similarities"]
+author: '@BmoreOrganized'
+tags:
+- dialectical-historical-materialism
 ---
 # Thread #17: scientific and colloquial terminology
 

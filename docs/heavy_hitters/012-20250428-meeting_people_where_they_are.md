@@ -1,16 +1,19 @@
 ---
-title: "Meeting people where they are"
+title: Meeting people where they are
 date:
   created: 2025-04-28
-categories: [heavy_hitters]
-thread_id: "thread_1157"
+categories:
+- heavy_hitters
+thread_id: thread_1157
 word_count: 911
 reading_time: 4
-description: "' Meeting people where they are ' does not mean letting them stay where they are ."
+description: ''' Meeting people where they are '' does not mean letting them stay
+  where they are .'
 tweet_count: 21
 thread_number: 12
-author: "@BmoreOrganized"
-tags: ["Our purpose", "a national or gender hierarchy", "a thin basis", "different races", "different psychologies"]
+author: '@BmoreOrganized'
+tags:
+- public-health-politics
 ---
 # Thread #12: Meeting people where they are
 

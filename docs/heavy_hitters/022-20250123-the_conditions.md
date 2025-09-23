@@ -1,16 +1,19 @@
 ---
-title: "The conditions"
+title: The conditions
 date:
   created: 2025-01-23
-categories: [heavy_hitters]
-thread_id: "thread_0532"
+categories:
+- heavy_hitters
+thread_id: thread_0532
 word_count: 756
 reading_time: 3
-description: "Accelerationism is reactionary and counterproductive . The conditions accelerate on their own : they do n't need our help ."
+description: 'Accelerationism is reactionary and counterproductive . The conditions
+  accelerate on their own : they do n''t need our help .'
 tweet_count: 17
 thread_number: 22
-author: "@BmoreOrganized"
-tags: ["1) Dogmatic misapplication", "the Industrial Proletariat", "The material strain", "The conditions", "The belief"]
+author: '@BmoreOrganized'
+tags:
+- marxism-communism
 ---
 # Thread #22: The conditions
 

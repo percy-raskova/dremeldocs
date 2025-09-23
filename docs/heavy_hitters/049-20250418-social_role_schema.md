@@ -1,16 +1,19 @@
 ---
-title: "social role schema"
+title: social role schema
 date:
   created: 2025-04-18
-categories: [heavy_hitters]
-thread_id: "thread_1357"
+categories:
+- heavy_hitters
+thread_id: thread_1357
 word_count: 554
 reading_time: 2
-description: "This line of thinking is a particularly alienating outgrowth of what I think of as the ' social role schema . '"
+description: This line of thinking is a particularly alienating outgrowth of what
+  I think of as the ' social role schema . '
 tweet_count: 13
 thread_number: 49
-author: "@BmoreOrganized"
-tags: ["this alienation", "This line", "This mindset", "a particularly alienating outgrowth", "the 'social role schema"]
+author: '@BmoreOrganized'
+tags:
+- social-criticism
 ---
 # Thread #49: social role schema
 

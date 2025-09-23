@@ -1,16 +1,20 @@
 ---
-title: "Just in case you're unaware, exercise is not automatically..."
+title: Just in case you're unaware, exercise is not automatically...
 date:
   created: 2025-02-13
-categories: [heavy_hitters]
-thread_id: "thread_0568"
+categories:
+- heavy_hitters
+thread_id: thread_0568
 word_count: 683
 reading_time: 3
-description: "Just in case you 're unaware , exercise is not automatically good for you ."
+description: Just in case you 're unaware , exercise is not automatically good for
+  you .
 tweet_count: 16
 thread_number: 30
-author: "@BmoreOrganized"
-tags: ["Ehlers-Danlos", "daily cardio", "(long COVID", "Large, well-funded studies", "The incidence"]
+author: '@BmoreOrganized'
+tags:
+- marxism-communism
+- public-health-politics
 ---
 # Thread #30: Just in case you're unaware, exercise is not automatically...
 

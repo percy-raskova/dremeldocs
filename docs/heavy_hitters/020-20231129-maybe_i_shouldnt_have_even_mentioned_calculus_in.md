@@ -1,16 +1,19 @@
 ---
-title: "Maybe I shouldn't have even mentioned calculus in this post"
+title: Maybe I shouldn't have even mentioned calculus in this post
 date:
   created: 2023-11-29
-categories: [heavy_hitters]
-thread_id: "thread_0051"
+categories:
+- heavy_hitters
+thread_id: thread_0051
 word_count: 793
 reading_time: 3
-description: "Maybe I should n't have even mentioned calculus in this post . I literally said you DON'T need calculus to understand what 's going on ."
+description: Maybe I should n't have even mentioned calculus in this post . I literally
+  said you DON'T need calculus to understand what 's going on .
 tweet_count: 17
 thread_number: 20
-author: "@BmoreOrganized"
-tags: ["a 'prototypical working class Jane", "social media", "The BEST liberalism", "the red area", "their bank accounts"]
+author: '@BmoreOrganized'
+tags:
+- marxism-communism
 ---
 # Thread #20: Maybe I shouldn't have even mentioned calculus in this post
 

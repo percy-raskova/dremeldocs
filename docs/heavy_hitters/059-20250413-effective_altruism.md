@@ -1,16 +1,19 @@
 ---
-title: "Effective altruism"
+title: Effective altruism
 date:
   created: 2025-04-13
-categories: [heavy_hitters]
-thread_id: "thread_0782"
+categories:
+- heavy_hitters
+thread_id: thread_0782
 word_count: 512
 reading_time: 2
-description: "' Effective altruism ' is such a hilarious rebranding of noblesse oblige ."
+description: ''' Effective altruism '' is such a hilarious rebranding of noblesse
+  oblige .'
 tweet_count: 11
 thread_number: 59
-author: "@BmoreOrganized"
-tags: ["one child", "noblesse oblige", "The classic 'effective altruism", "The supposed principle", "The dying children"]
+author: '@BmoreOrganized'
+tags:
+- political-economy
 ---
 # Thread #59: Effective altruism
 

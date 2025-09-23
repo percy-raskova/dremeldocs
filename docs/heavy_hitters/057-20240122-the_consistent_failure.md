@@ -1,16 +1,19 @@
 ---
-title: "the consistent failure"
+title: the consistent failure
 date:
   created: 2024-01-22
-categories: [heavy_hitters]
-thread_id: "thread_1099"
+categories:
+- heavy_hitters
+thread_id: thread_1099
 word_count: 515
 reading_time: 2
-description: "By 1932 , following the consistent failure of the ruling liberal government coalition to address the needs of the people , both the fascists and the communists..."
+description: By 1932 , following the consistent failure of the ruling liberal government
+  coalition to address the needs of the people , both the fascists and the communists...
 tweet_count: 12
 thread_number: 57
-author: "@BmoreOrganized"
-tags: ["the newly reinvigorated SA", "the Hindenburg-Papen government", "Incumbent president Paul Von Hindenburg", "Center Party chancellor Heinrich Brüning", "Franz von Papen"]
+author: '@BmoreOrganized'
+tags:
+- marxism-communism
 ---
 # Thread #57: the consistent failure
 

@@ -1,16 +1,19 @@
 ---
-title: "JANUS: What COVID variant JN.1 means for you"
+title: 'JANUS: What COVID variant JN.1 means for you'
 date:
   created: 2024-01-04
-categories: [heavy_hitters]
-thread_id: "thread_0550"
+categories:
+- heavy_hitters
+thread_id: thread_0550
 word_count: 847
 reading_time: 4
-description: "JANUS : What COVID variant JN.1 means for you . You 're probably aware that we are in a ' COVID wave ' right now ."
+description: 'JANUS : What COVID variant JN.1 means for you . You ''re probably aware
+  that we are in a '' COVID wave '' right now .'
 tweet_count: 21
 thread_number: 15
-author: "@BmoreOrganized"
-tags: ["a 'COVID wave", "This phrasing", "This trend", "the second highest point", "any other 'seasonal' illness"]
+author: '@BmoreOrganized'
+tags:
+- public-health-politics
 ---
 # Thread #15: JANUS: What COVID variant JN.1 means for you
 

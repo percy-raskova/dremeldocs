@@ -1,16 +1,21 @@
 ---
-title: "blue collar workers"
+title: blue collar workers
 date:
   created: 2025-02-19
-categories: [heavy_hitters]
-thread_id: "thread_0171"
+categories:
+- heavy_hitters
+thread_id: thread_0171
 word_count: 739
 reading_time: 3
-description: "Railing against ' intersectionality ' and ' postmodernism , ' by positioning them against ' blue collar workers , ' for whom we must ' become a better option..."
+description: Railing against ' intersectionality ' and ' postmodernism , ' by positioning
+  them against ' blue collar workers , ' for whom we must ' become a better option...
 tweet_count: 18
 thread_number: 23
-author: "@BmoreOrganized"
-tags: ["https://t.co/1wNGH94f7e Terms", "The strategy", "vague and infinitely flexible vibes", "an idealistic 'true working class", "blue collar workers"]
+author: '@BmoreOrganized'
+tags:
+- dialectical-historical-materialism
+- marxism-communism
+- political-economy
 ---
 # Thread #23: blue collar workers
 

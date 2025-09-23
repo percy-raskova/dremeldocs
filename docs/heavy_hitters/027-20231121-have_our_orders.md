@@ -1,16 +1,18 @@
 ---
-title: "HAVE OUR ORDERS "
+title: 'HAVE OUR ORDERS '
 date:
   created: 2023-11-21
-categories: [heavy_hitters]
-thread_id: "thread_0263"
+categories:
+- heavy_hitters
+thread_id: thread_0263
 word_count: 716
 reading_time: 3
-description: "WE HAVE OUR ORDERS ."
+description: WE HAVE OUR ORDERS .
 tweet_count: 16
 thread_number: 27
-author: "@BmoreOrganized"
-tags: ["the US global empire", "'Israel's' relationship", "the Middle East", "Palestinian Marxists", "Zionist imperialism"]
+author: '@BmoreOrganized'
+tags:
+- imperialism-colonialism
 ---
 # Thread #27: HAVE OUR ORDERS 
 

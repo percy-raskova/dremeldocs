@@ -1,16 +1,19 @@
 ---
-title: "How does the risk of long COVID differ from the myriad..."
+title: How does the risk of long COVID differ from the myriad...
 date:
   created: 2023-10-23
-categories: [heavy_hitters]
-thread_id: "thread_1000"
+categories:
+- heavy_hitters
+thread_id: thread_1000
 word_count: 724
 reading_time: 3
-description: "' How does the risk of long COVID differ from the myriad other risks humans tacitly accept ? '"
+description: ''' How does the risk of long COVID differ from the myriad other risks
+  humans tacitly accept ? '''
 tweet_count: 17
 thread_number: 26
-author: "@BmoreOrganized"
-tags: ["Lyme disease", "The main differences", "long COVID", "the myriad other risks", "a very important question"]
+author: '@BmoreOrganized'
+tags:
+- public-health-politics
 ---
 # Thread #26: How does the risk of long COVID differ from the myriad...
 

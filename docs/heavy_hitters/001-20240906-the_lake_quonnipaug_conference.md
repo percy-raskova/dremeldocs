@@ -1,16 +1,20 @@
 ---
-title: "the Lake Quonnipaug Conference"
+title: the Lake Quonnipaug Conference
 date:
   created: 2024-09-06
-categories: [heavy_hitters]
-thread_id: "thread_1189"
+categories:
+- heavy_hitters
+thread_id: thread_1189
 word_count: 1159
 reading_time: 5
-description: "I have been asked by multiple comrades to comment on the Lake Quonnipaug Conference ."
+description: I have been asked by multiple comrades to comment on the Lake Quonnipaug
+  Conference .
 tweet_count: 27
 thread_number: 1
-author: "@BmoreOrganized"
-tags: ["a Communist Organization", "the Lake Quonnipaug Conference", "your 6 study buddies meeting", "North America", "Principled Marxists"]
+author: '@BmoreOrganized'
+tags:
+- marxism-communism
+- operational-organizational-theory
 ---
 # Thread #1: the Lake Quonnipaug Conference
 

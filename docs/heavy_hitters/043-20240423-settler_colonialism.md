@@ -1,16 +1,22 @@
 ---
-title: "Settler colonialism"
+title: Settler colonialism
 date:
   created: 2024-04-23
-categories: [heavy_hitters]
-thread_id: "thread_0398"
+categories:
+- heavy_hitters
+thread_id: thread_0398
 word_count: 581
 reading_time: 3
-description: "Settler colonialism involves the de novo creation of a particular national identity explicitly for the purpose of social domination of the oppressed nations --..."
+description: Settler colonialism involves the de novo creation of a particular national
+  identity explicitly for the purpose of social domination of the oppressed nations
+  --...
 tweet_count: 14
 thread_number: 43
-author: "@BmoreOrganized"
-tags: ["the Polish-Lithuanian Jew", "a monolithic 'Jew", "the Ottoman Jew", "one singular 'Jewish nation", "a Marxist conception"]
+author: '@BmoreOrganized'
+tags:
+- fascism-analysis
+- imperialism-colonialism
+- social-criticism
 ---
 # Thread #43: Settler colonialism
 

@@ -1,16 +1,19 @@
 ---
-title: "the cultural hegemony"
+title: the cultural hegemony
 date:
   created: 2022-11-02
-categories: [heavy_hitters]
-thread_id: "thread_0072"
+categories:
+- heavy_hitters
+thread_id: thread_0072
 word_count: 530
 reading_time: 2
-description: "Of all the poisons inflicted on humanity by the cultural hegemony , none is more lethal to the human spirit than the individualization of oppression ."
+description: Of all the poisons inflicted on humanity by the cultural hegemony , none
+  is more lethal to the human spirit than the individualization of oppression .
 tweet_count: 12
 thread_number: 54
-author: "@BmoreOrganized"
-tags: ["the cultural hegemony", "the 'traditional' form", "diverse religious views", "the edifice", "the source"]
+author: '@BmoreOrganized'
+tags:
+- social-criticism
 ---
 # Thread #54: the cultural hegemony
 

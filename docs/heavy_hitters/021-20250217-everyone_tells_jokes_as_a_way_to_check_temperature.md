@@ -1,16 +1,18 @@
 ---
-title: "*Everyone* tells jokes as a way to check temperature"
+title: '*Everyone* tells jokes as a way to check temperature'
 date:
   created: 2025-02-17
-categories: [heavy_hitters]
-thread_id: "thread_1118"
+categories:
+- heavy_hitters
+thread_id: thread_1118
 word_count: 784
 reading_time: 3
-description: "* Everyone * tells jokes as a way to check temperature ."
+description: '* Everyone * tells jokes as a way to check temperature .'
 tweet_count: 18
 thread_number: 21
-author: "@BmoreOrganized"
-tags: ["a second", "Similarly, mere exposure", "a branching mental flowchart", "each individual's decision", "a canned laugh track"]
+author: '@BmoreOrganized'
+tags:
+- social-criticism
 ---
 # Thread #21: *Everyone* tells jokes as a way to check temperature
 

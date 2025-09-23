@@ -1,16 +1,20 @@
 ---
-title: "An often overlooked aspect"
+title: An often overlooked aspect
 date:
   created: 2023-11-08
-categories: [heavy_hitters]
-thread_id: "thread_0066"
+categories:
+- heavy_hitters
+thread_id: thread_0066
 word_count: 850
 reading_time: 4
-description: "An often overlooked aspect of world imperialism is the disempowering conveyor belt of international logistics ."
+description: An often overlooked aspect of world imperialism is the disempowering
+  conveyor belt of international logistics .
 tweet_count: 20
 thread_number: 14
-author: "@BmoreOrganized"
-tags: ["The vaunted Supply Chains", "NA and Euro markets", "world imperialism", "a 9 trillion dollar industry", "rather its unique ability"]
+author: '@BmoreOrganized'
+tags:
+- imperialism-colonialism
+- marxism-communism
 ---
 # Thread #14: An often overlooked aspect
 

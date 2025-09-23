@@ -1,16 +1,20 @@
 ---
-title: "The greatest lie"
+title: The greatest lie
 date:
   created: 2022-06-24
-categories: [heavy_hitters]
-thread_id: "thread_1258"
+categories:
+- heavy_hitters
+thread_id: thread_1258
 word_count: 940
 reading_time: 4
-description: "The greatest lie ever told by western ' democracies ' is that elections = democracy ."
+description: The greatest lie ever told by western ' democracies ' is that elections
+  = democracy .
 tweet_count: 22
 thread_number: 10
-author: "@BmoreOrganized"
-tags: ["a tiny 'Nein", "fascist Italy", "repressive, one-party regimes", "a giant 'Ja", "The greatest lie"]
+author: '@BmoreOrganized'
+tags:
+- marxism-communism
+- operational-organizational-theory
 ---
 # Thread #10: The greatest lie
 

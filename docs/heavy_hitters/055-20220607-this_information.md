@@ -1,16 +1,20 @@
 ---
-title: "this information"
+title: this information
 date:
   created: 2022-06-07
-categories: [heavy_hitters]
-thread_id: "thread_0320"
+categories:
+- heavy_hitters
+thread_id: thread_0320
 word_count: 521
 reading_time: 2
-description: "Since this information is not being communicated by governments or media , here is my COVID guide : EVERY time you get COVID , you have a small chance of dying..."
+description: 'Since this information is not being communicated by governments or media
+  , here is my COVID guide : EVERY time you get COVID , you have a small chance of
+  dying...'
 tweet_count: 12
 thread_number: 55
-author: "@BmoreOrganized"
-tags: ["a well-fitted KN95", "my COVID guide", "even a high-quality mask", "those long-term effects", "your immune cells"]
+author: '@BmoreOrganized'
+tags:
+- public-health-politics
 ---
 # Thread #55: this information
 

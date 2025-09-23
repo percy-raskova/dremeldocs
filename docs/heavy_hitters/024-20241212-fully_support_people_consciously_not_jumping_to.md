@@ -1,16 +1,19 @@
 ---
-title: "fully support people consciously not jumping to label..."
+title: fully support people consciously not jumping to label...
 date:
   created: 2024-12-12
-categories: [heavy_hitters]
-thread_id: "thread_0592"
+categories:
+- heavy_hitters
+thread_id: thread_0592
 word_count: 734
 reading_time: 3
-description: "I fully support people consciously not jumping to label themselves too specifically ."
+description: I fully support people consciously not jumping to label themselves too
+  specifically .
 tweet_count: 17
 thread_number: 24
-author: "@BmoreOrganized"
-tags: ["That small-scale, dispersed model", "a more coherent political framework", "actual relevant meanings", "the western context", "the vast majority"]
+author: '@BmoreOrganized'
+tags:
+- fascism-analysis
 ---
 # Thread #24: fully support people consciously not jumping to label...
 

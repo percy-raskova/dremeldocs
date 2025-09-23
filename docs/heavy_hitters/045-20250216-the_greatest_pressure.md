@@ -1,16 +1,20 @@
 ---
-title: "the greatest pressure"
+title: the greatest pressure
 date:
   created: 2025-02-16
-categories: [heavy_hitters]
-thread_id: "thread_0759"
+categories:
+- heavy_hitters
+thread_id: thread_0759
 word_count: 570
 reading_time: 3
-description: "It 's not that wild ."
+description: It 's not that wild .
 tweet_count: 14
 thread_number: 45
-author: "@BmoreOrganized"
-tags: ["One factor", "a whole changing, piece", "the shape", "the class", "Every social force"]
+author: '@BmoreOrganized'
+tags:
+- imperialism-colonialism
+- marxism-communism
+- political-economy
 ---
 # Thread #45: the greatest pressure
 

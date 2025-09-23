@@ -1,16 +1,22 @@
 ---
-title: "'m seeing a lot of misunderstanding around fascism lately "
+title: '''m seeing a lot of misunderstanding around fascism lately '
 date:
   created: 2024-09-11
-categories: [heavy_hitters]
-thread_id: "thread_0017"
+categories:
+- heavy_hitters
+thread_id: thread_0017
 word_count: 869
 reading_time: 4
-description: "I 'm seeing a lot of misunderstanding around fascism lately ."
+description: I 'm seeing a lot of misunderstanding around fascism lately .
 tweet_count: 23
 thread_number: 13
-author: "@BmoreOrganized"
-tags: ["a Marxist analysis", "utopian socialism", "scientific socialism", "some barely-restrained 'primal' fascism", "the past century"]
+author: '@BmoreOrganized'
+tags:
+- dialectical-historical-materialism
+- fascism-analysis
+- imperialism-colonialism
+- marxism-communism
+- social-criticism
 ---
 # Thread #13: 'm seeing a lot of misunderstanding around fascism lately 
 

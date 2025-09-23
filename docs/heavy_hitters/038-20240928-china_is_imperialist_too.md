@@ -1,16 +1,20 @@
 ---
-title: "China is imperialist too"
+title: China is imperialist too
 date:
   created: 2024-09-28
-categories: [heavy_hitters]
-thread_id: "thread_0784"
+categories:
+- heavy_hitters
+thread_id: thread_0784
 word_count: 612
 reading_time: 3
-description: "I am certainly not a ' China is imperialist too ! ' type , or a ' China is n't socialist ' type , but they are absolutely failing to do enough to oppose the US..."
+description: I am certainly not a ' China is imperialist too ! ' type , or a ' China
+  is n't socialist ' type , but they are absolutely failing to do enough to oppose
+  the US...
 tweet_count: 15
 thread_number: 38
-author: "@BmoreOrganized"
-tags: ["The US-centered *imperial apparatus", "free-flowing Chinese support", "both Team China", "US hegemony", "a LOT less productive power"]
+author: '@BmoreOrganized'
+tags:
+- imperialism-colonialism
 ---
 # Thread #38: China is imperialist too
 

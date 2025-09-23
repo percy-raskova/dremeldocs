@@ -1,16 +1,22 @@
 ---
-title: "t progressive isn"
+title: t progressive isn
 date:
   created: 2025-04-26
-categories: [heavy_hitters]
-thread_id: "thread_0965"
+categories:
+- heavy_hitters
+thread_id: thread_0965
 word_count: 1042
 reading_time: 5
-description: "The reason 1776 was n't progressive is n't because it was ' morally bad ' ( although it also was that ) ."
+description: The reason 1776 was n't progressive is n't because it was ' morally bad
+  ' ( although it also was that ) .
 tweet_count: 25
 thread_number: 6
-author: "@BmoreOrganized"
-tags: ["primitive accumulation", "Society A", "The reason", "The concept", "existing, regressive social structures"]
+author: '@BmoreOrganized'
+tags:
+- dialectical-historical-materialism
+- marxism-communism
+- political-economy
+- social-criticism
 ---
 # Thread #6: t progressive isn
 

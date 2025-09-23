@@ -1,16 +1,22 @@
 ---
-title: "a liberal conception"
+title: a liberal conception
 date:
   created: 2024-11-19
-categories: [heavy_hitters]
-thread_id: "thread_0269"
+categories:
+- heavy_hitters
+thread_id: thread_0269
 word_count: 539
 reading_time: 2
-description: "The people in those orgs are ideologically regimented under a liberal conception of organizational aims and methods ."
+description: The people in those orgs are ideologically regimented under a liberal
+  conception of organizational aims and methods .
 tweet_count: 13
 thread_number: 52
-author: "@BmoreOrganized"
-tags: ["the Ptolemeic system", "Democratic debate", "a potent, hegemonic culture", "The Truth", "a random person"]
+author: '@BmoreOrganized'
+tags:
+- dialectical-historical-materialism
+- fascism-analysis
+- marxism-communism
+- political-economy
 ---
 # Thread #52: a liberal conception
 

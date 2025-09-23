@@ -1,16 +1,21 @@
 ---
-title: "prisons are a way to extract slave labor"
+title: prisons are a way to extract slave labor
 date:
   created: 2024-10-09
-categories: [heavy_hitters]
-thread_id: "thread_0041"
+categories:
+- heavy_hitters
+thread_id: thread_0041
 word_count: 1101
 reading_time: 5
-description: "I too once fell into the trap of ' prisons are a way to extract slave labor . '"
+description: I too once fell into the trap of ' prisons are a way to extract slave
+  labor . '
 tweet_count: 27
 thread_number: 3
-author: "@BmoreOrganized"
-tags: ["a 'real Marxist", "Nazi labor camps", "such an elegant explanation", "just another  bad policy", "at least minimum wage"]
+author: '@BmoreOrganized'
+tags:
+- fascism-analysis
+- marxism-communism
+- political-economy
 ---
 # Thread #3: prisons are a way to extract slave labor
 

@@ -1,16 +1,19 @@
 ---
-title: "losing Georgia"
+title: losing Georgia
 date:
   created: 2024-05-30
-categories: [heavy_hitters]
-thread_id: "thread_0478"
+categories:
+- heavy_hitters
+thread_id: thread_0478
 word_count: 813
 reading_time: 4
-description: "This is such a fascinating case study in the mechanics of how US imperial interests get laundered through ' organic ' movements . For context , the law being..."
+description: This is such a fascinating case study in the mechanics of how US imperial
+  interests get laundered through ' organic ' movements . For context , the law being...
 tweet_count: 19
 thread_number: 16
-author: "@BmoreOrganized"
-tags: ["US imperial interests", "Georgian Dream", "the Georgian constitution", "Georgian sovereignty", "President Salome Zourabishvili"]
+author: '@BmoreOrganized'
+tags:
+- imperialism-colonialism
 ---
 # Thread #16: losing Georgia
 

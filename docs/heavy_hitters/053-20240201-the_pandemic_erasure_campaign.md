@@ -1,16 +1,19 @@
 ---
-title: "the pandemic erasure campaign"
+title: the pandemic erasure campaign
 date:
   created: 2024-02-01
-categories: [heavy_hitters]
-thread_id: "thread_0575"
+categories:
+- heavy_hitters
+thread_id: thread_0575
 word_count: 535
 reading_time: 2
-description: "This is the cornerstone of the pandemic erasure campaign ."
+description: This is the cornerstone of the pandemic erasure campaign .
 tweet_count: 12
 thread_number: 53
-author: "@BmoreOrganized"
-tags: ["8 sick days", "the total fabrication", "unlimited* sick leave", "the bosses' eyes", "a 'mild illness"]
+author: '@BmoreOrganized'
+tags:
+- public-health-politics
+- social-criticism
 ---
 # Thread #53: the pandemic erasure campaign
 

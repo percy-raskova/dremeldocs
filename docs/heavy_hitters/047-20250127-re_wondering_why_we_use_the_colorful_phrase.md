@@ -1,16 +1,19 @@
 ---
-title: "re wondering why we use the colorful phrase "
+title: 're wondering why we use the colorful phrase '
 date:
   created: 2025-01-27
-categories: [heavy_hitters]
-thread_id: "thread_1093"
+categories:
+- heavy_hitters
+thread_id: thread_1093
 word_count: 558
 reading_time: 2
-description: "If you 're wondering why we use the colorful phrase ' social - democracy is the left wing of fascism , ' try to understand how ghoulish it is to see this..."
+description: If you 're wondering why we use the colorful phrase ' social - democracy
+  is the left wing of fascism , ' try to understand how ghoulish it is to see this...
 tweet_count: 12
 thread_number: 47
-author: "@BmoreOrganized"
-tags: ["Sanne van der", "Wal et al", "around 11-16 cents", "about half a penny", "around $4 billi"]
+author: '@BmoreOrganized'
+tags:
+- imperialism-colonialism
 ---
 # Thread #47: re wondering why we use the colorful phrase 
 

@@ -1,16 +1,20 @@
 ---
-title: "The pop science aphorism"
+title: The pop science aphorism
 date:
   created: 2024-04-05
-categories: [heavy_hitters]
-thread_id: "thread_1362"
+categories:
+- heavy_hitters
+thread_id: thread_1362
 word_count: 968
 reading_time: 4
-description: "The pop science aphorism that “ atoms are mostly empty space ” is , itself , a mostly empty statement ."
+description: "The pop science aphorism that \u201C atoms are mostly empty space \u201D\
+  \ is , itself , a mostly empty statement ."
 tweet_count: 25
 thread_number: 7
-author: "@BmoreOrganized"
-tags: ["(4/25) The space", "one point", "The pop science aphorism", "The atom", "The picture"]
+author: '@BmoreOrganized'
+tags:
+- fascism-analysis
+- social-criticism
 ---
 # Thread #7: The pop science aphorism
 

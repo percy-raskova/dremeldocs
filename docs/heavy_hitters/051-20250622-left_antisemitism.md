@@ -1,16 +1,18 @@
 ---
-title: "left antisemitism"
+title: left antisemitism
 date:
   created: 2025-06-22
-categories: [heavy_hitters]
-thread_id: "thread_0713"
+categories:
+- heavy_hitters
+thread_id: thread_0713
 word_count: 549
 reading_time: 2
-description: "There is no such thing as ' left antisemitism . '"
+description: There is no such thing as ' left antisemitism . '
 tweet_count: 13
 thread_number: 51
-author: "@BmoreOrganized"
-tags: ["Israel's continued usefulness", "US support", "the Faithful", "the Nation", "Each individual target"]
+author: '@BmoreOrganized'
+tags:
+- marxism-communism
 ---
 # Thread #51: left antisemitism
 
