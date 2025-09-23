@@ -1,0 +1,337 @@
+/* AstraDocs Custom Theme - Earthy Vintage with Love */
+/* Color Palette:
+   #2E4E3C - Deep Forest Green (header/footer)
+   #F8F4E9 - Warm Cream (background)
+   #5D4037 - Rich Brown (text)
+   #B38B59 - Golden Ochre (links)
+   #8E2C3D - Deep Rose (visited links)
+*/
+
+:root {
+  /* Light mode colors */
+  --ad-forest-green: #2E4E3C;
+  --ad-cream: #F8F4E9;
+  --ad-brown: #5D4037;
+  --ad-ochre: #B38B59;
+  --ad-rose: #8E2C3D;
+
+  /* Dark mode colors (inverted) */
+  --ad-dark-bg: #2E4E3C;
+  --ad-dark-surface: #3A5647;
+  --ad-dark-text: #F8F4E9;
+  --ad-dark-link: #D4A574;
+  --ad-dark-visited: #C85566;
+}
+
+/* Override Material theme colors */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: var(--ad-forest-green);
+  --md-primary-bg-color: var(--ad-cream);
+  --md-accent-fg-color: var(--ad-ochre);
+  --md-default-bg-color: var(--ad-cream);
+  --md-default-fg-color: var(--ad-brown);
+  --md-typeset-color: var(--ad-brown);
+  --md-typeset-a-color: var(--ad-ochre);
+}
+
+/* Dark mode */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: var(--ad-dark-surface);
+  --md-primary-bg-color: var(--ad-dark-bg);
+  --md-accent-fg-color: var(--ad-dark-link);
+  --md-default-bg-color: var(--ad-dark-bg);
+  --md-default-fg-color: var(--ad-dark-text);
+  --md-typeset-color: var(--ad-dark-text);
+  --md-typeset-a-color: var(--ad-dark-link);
+}
+
+/* Typography - Courier Prime */
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+body, .md-typeset {
+  font-family: 'Courier Prime', 'Courier New', monospace !important;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ad-brown);
+}
+
+/* Headers with typewriter feel */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  font-family: 'Courier Prime', monospace !important;
+  font-weight: 700;
+  color: var(--ad-forest-green);
+  letter-spacing: -0.5px;
+}
+
+.md-typeset h1 {
+  font-size: 2.2rem;
+  border-bottom: 3px double var(--ad-forest-green);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.md-typeset h2 {
+  font-size: 1.8rem;
+  margin-top: 2rem;
+}
+
+/* Links styling */
+.md-typeset a {
+  color: var(--ad-ochre);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  transition: all 0.3s ease;
+}
+
+.md-typeset a:hover {
+  color: var(--ad-forest-green);
+  text-decoration-style: solid;
+}
+
+.md-typeset a:visited {
+  color: var(--ad-rose);
+}
+
+/* Header and navigation */
+.md-header {
+  background-color: var(--ad-forest-green);
+  box-shadow: 0 2px 8px rgba(46, 78, 60, 0.3);
+}
+
+.md-header__title {
+  font-family: 'Courier Prime', monospace;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Sidebar navigation */
+.md-sidebar {
+  background-color: rgba(248, 244, 233, 0.5);
+}
+
+[data-md-color-scheme="slate"] .md-sidebar {
+  background-color: rgba(58, 86, 71, 0.3);
+}
+
+.md-nav__item--active > .md-nav__link {
+  color: var(--ad-forest-green);
+  font-weight: 700;
+  background-color: rgba(179, 139, 89, 0.1);
+  border-left: 3px solid var(--ad-ochre);
+}
+
+/* Thread metadata cards */
+.thread-metadata {
+  background: linear-gradient(135deg, rgba(179, 139, 89, 0.1), rgba(248, 244, 233, 0.5));
+  border: 1px solid var(--ad-ochre);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.thread-metadata .metadata-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.thread-metadata .metadata-label {
+  color: var(--ad-forest-green);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.thread-metadata .metadata-value {
+  color: var(--ad-brown);
+}
+
+/* Quote blocks for highlighted passages */
+.md-typeset blockquote {
+  border-left: 4px solid var(--ad-rose);
+  background-color: rgba(142, 44, 61, 0.05);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  position: relative;
+}
+
+.md-typeset blockquote::before {
+  content: '"';
+  font-size: 3rem;
+  color: var(--ad-rose);
+  opacity: 0.3;
+  position: absolute;
+  top: -10px;
+  left: 10px;
+}
+
+/* Special styling for the love dedication */
+.love-dedication {
+  background: linear-gradient(135deg,
+    rgba(142, 44, 61, 0.05),
+    rgba(248, 244, 233, 0.8),
+    rgba(179, 139, 89, 0.05));
+  border: 2px solid var(--ad-rose);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.love-dedication::before {
+  content: '♥';
+  position: absolute;
+  top: -20px;
+  right: 20px;
+  font-size: 4rem;
+  color: var(--ad-rose);
+  opacity: 0.1;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.love-dedication h2 {
+  color: var(--ad-rose);
+  margin-bottom: 1rem;
+}
+
+/* ASCII art container */
+.ascii-art {
+  font-family: 'Courier New', monospace;
+  white-space: pre;
+  line-height: 1.2;
+  color: var(--ad-rose);
+  display: inline-block;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  background-color: rgba(248, 244, 233, 0.5);
+  border: 1px dashed var(--ad-ochre);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+/* Content containers */
+.md-content__inner {
+  padding-top: 1.5rem;
+  max-width: 900px;
+}
+
+/* Code blocks */
+.md-typeset pre {
+  background-color: rgba(46, 78, 60, 0.05);
+  border: 1px solid var(--ad-forest-green);
+}
+
+.md-typeset code {
+  font-family: 'Courier Prime', monospace;
+  background-color: rgba(179, 139, 89, 0.1);
+  color: var(--ad-forest-green);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+}
+
+/* Tables */
+.md-typeset table {
+  border: 1px solid var(--ad-ochre);
+}
+
+.md-typeset table th {
+  background-color: var(--ad-forest-green);
+  color: var(--ad-cream);
+  font-weight: 700;
+  text-align: left;
+}
+
+.md-typeset table td {
+  border-color: rgba(179, 139, 89, 0.3);
+}
+
+/* Footer */
+.md-footer {
+  background-color: var(--ad-forest-green);
+  color: var(--ad-cream);
+}
+
+.md-footer a {
+  color: var(--ad-ochre) !important;
+}
+
+/* Reading progress indicator */
+.reading-progress {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: rgba(179, 139, 89, 0.2);
+  z-index: 10;
+}
+
+.reading-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ad-ochre), var(--ad-rose));
+  width: 0%;
+  transition: width 0.2s ease;
+}
+
+/* Thread navigation */
+.thread-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0;
+  padding: 1rem 0;
+  border-top: 1px dotted var(--ad-ochre);
+  border-bottom: 1px dotted var(--ad-ochre);
+}
+
+.thread-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(179, 139, 89, 0.1);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.thread-nav a:hover {
+  background-color: rgba(179, 139, 89, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .md-typeset {
+    font-size: 16px;
+  }
+
+  .thread-metadata {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .love-dedication {
+    padding: 1.5rem 1rem;
+  }
+}

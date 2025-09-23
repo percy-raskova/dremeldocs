@@ -114,3 +114,4 @@ docs/heavy_hitters/*_old.md
 claude-session-*__pycache__
 **/__pycache__
 *.pyc
+.serena

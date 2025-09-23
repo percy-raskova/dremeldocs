@@ -1,6 +1,6 @@
 # MkDocs configuration for @BmoreOrganized's Twitter Archive
 
-site_name: BmoreOrganized Threads
+site_name: Philosophy & Politics - Ms. Dremel's Archive
 site_description: Philosophical and political threads from @BmoreOrganized's Twitter archive
 site_author: '@BmoreOrganized'
 site_url: https://example.com  # Update with actual URL
@@ -64,6 +64,12 @@ nav:
   - Politics: politics/
   - Both: both/
   - By Theme: themes/
+  - About:
+    - AI Collaboration: about/ai-collaboration.md
+
+# Custom CSS
+extra_css:
+  - stylesheets/extra.css
 
 extra:
   social:
