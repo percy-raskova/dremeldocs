@@ -111,4 +111,6 @@ docs/heavy_hitters/*_old.md
 
 # Claude/MCP related
 .mcp-cache/
-claude-session-*
+claude-session-*__pycache__
+**/__pycache__
+*.pyc
