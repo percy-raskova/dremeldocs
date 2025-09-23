@@ -331,9 +331,10 @@ class TestIntegration:
         # Should still work with manual themes file
         classifier = ThemeClassifier()
 
-        # Old method should still work
-        themes = classifier.classify_thread({"smushed_text": "Some political text"})
+        # Method should return tuple with themes and confidence
+        themes, confidence = classifier.classify_thread({"smushed_text": "Some political text"})
         assert isinstance(themes, list)
+        assert isinstance(confidence, float)
 
 
 if __name__ == "__main__":

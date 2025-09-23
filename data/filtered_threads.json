@@ -3,7 +3,7 @@
     "total_original_tweets": 21723,
     "filtered_tweets": 8,
     "threads_found": 4,
-    "processing_date": "2025-09-23T09:04:41.308343",
+    "processing_date": "2025-09-23T09:21:54.022686",
     "filter_stages": [
       "length>100",
       "thread_detection"
