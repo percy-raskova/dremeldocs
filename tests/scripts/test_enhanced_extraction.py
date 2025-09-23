@@ -12,11 +12,11 @@ from pathlib import Path
 scripts_dir = Path(__file__).parent.parent.parent / "scripts"
 sys.path.insert(0, str(scripts_dir))
 
-from text_processing import (
+from text_utilities import (
     extract_entities,
-    extract_entities_basic,
-    EnhancedTagExtractor
+    extract_entities_basic
 )
+from tag_extraction import EnhancedTagExtractor
 
 def test_enhanced_extraction():
     """Test enhanced extraction against sample threads."""

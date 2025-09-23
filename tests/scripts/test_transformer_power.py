@@ -10,7 +10,8 @@ from pathlib import Path
 scripts_dir = Path(__file__).parent.parent.parent / "scripts"
 sys.path.insert(0, str(scripts_dir))
 
-from text_processing import generate_title, extract_entities, MODEL_TYPE, nlp
+from text_utilities import generate_title, extract_entities
+from nlp_core import MODEL_TYPE, nlp
 
 print("=" * 80)
 print("🚀 NUCLEAR FUSION TRANSFORMER TEST 🚀")
