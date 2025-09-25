@@ -10,22 +10,25 @@ site_description: >-
 repo_url: https://github.com/yourusername/dremeldocs
 repo_name: dremeldocs
 
+# Use docs directory
+docs_dir: docs
+
 # Theme configuration
 theme:
   name: material
   language: en
 
-  # Color scheme
+  # Color scheme - using a more neutral professional scheme
   palette:
     - scheme: default
-      primary: deep purple
-      accent: amber
+      primary: indigo
+      accent: deep orange
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - scheme: slate
-      primary: deep purple
-      accent: amber
+      primary: indigo
+      accent: deep orange
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
@@ -58,34 +61,25 @@ theme:
     logo: material/library
     repo: fontawesome/brands/github
 
-# Plugins
+# Plugins with corrected tags configuration
 plugins:
   - search:
       separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
       lang:
         - en
 
+  # Correct tags plugin configuration for Material theme
   - tags:
       enabled: true
-      tags_file: tags/index.md
-      tags_hierarchy: true
-      tags_hierarchy_separator: "/"
-      tags_slugify_separator: "-"
+      tags_file: heavy_hitters/tags.md
+      # Remove invalid options: tags_hierarchy, shadow_tags, listings_map
 
-      # Shadow tags for internal use
-      shadow_tags:
-        - Draft
-        - Archive
-        - Internal
-
-      # Listings configuration
-      listings_map:
-        by-category:
-          scope: false
-          toc: true
-        by-theme:
-          scope: true
-          exclude: [Draft, Internal]
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+      htmlmin_opts:
+        remove_comments: true
 
 # Extensions
 markdown_extensions:
@@ -127,23 +121,28 @@ markdown_extensions:
       permalink: true
       toc_depth: 3
 
-# Navigation
+# Navigation - simplified to existing docs
 nav:
-  - Home: index.md
+  - Home: README.md
 
-  - About:
-    - About This Archive: about/index.md
-    - Usage Guide: about/usage.md
-    - AI Collaboration: about/ai-collaboration.md
+  - Documentation:
+    - Architecture: ARCHITECTURE.md
+    - API Reference: API_REFERENCE.md
+    - Setup Guide: setup.md
+    - Testing: testing.md
+    - Workflow: workflow.md
 
-  - Browse by Tags:
-    - All Tags: tags.md
+  - Heavy Hitters:
+    - Overview: heavy_hitters/index.md
+    - Analysis: heavy_hitters/ANALYSIS_REPORT.md
+    - Themes: heavy_hitters/THEMES_EXTRACTED.md
+    - Tags: heavy_hitters/tags.md
 
-  - Themes:
-    - Overview: themes/index.md
-
-  - Analysis:
-    - Critical Analysis: analysis/index.md
+  - Indexes:
+    - Master Index: MASTER_INDEX.md
+    - Navigation: NAVIGATION_INDEX.md
+    - Cross References: CROSS_REFERENCES.md
+    - Status: STATUS.md
 
 # Extra configuration
 extra:
@@ -155,7 +154,5 @@ extra:
 
 extra_css:
   - stylesheets/extra.css
-  - stylesheets/tags.css
 
-extra_javascript:
-  - javascripts/tags.js
+# Remove tags.css and tags.js as they don't exist and cause issues

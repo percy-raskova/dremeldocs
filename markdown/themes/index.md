@@ -4,20 +4,30 @@ This section contains the foundational theoretical frameworks that inform revolu
 
 ## Core Theoretical Frameworks
 
-### [Marxism & Historical Materialism](../marxism_historical materialism/)
+### Marxism & Historical Materialism
 The foundational analysis of capitalist social relations, historical development, and class struggle. These threads apply Marxist methodology to contemporary conditions while engaging critically with questions of theory and practice.
 
-### [Political Economy](../political economy/)
+*Content will be available after theme classification is completed.*
+
+### Political Economy
 Analysis of economic relations, value production, and the material basis of social organization. Examination of how capitalist economic structures shape all aspects of social life.
 
-### [Dialectics](../dialectics/)
+*Content will be available after theme classification is completed.*
+
+### Dialectics
 Exploration of dialectical methodology as both theoretical framework and practical approach to understanding contradiction, change, and development in social relations.
 
-### [Imperialism & Colonialism](../imperialism_colonialism/)
+*Content will be available after theme classification is completed.*
+
+### Imperialism & Colonialism
 Analysis of global capitalist expansion, colonial relations, and the ongoing structures of imperial domination. Connection between historical colonialism and contemporary global capitalism.
 
-### [Organizational Theory](../organizational theory/)
+*Content will be available after theme classification is completed.*
+
+### Organizational Theory
 Theoretical and practical questions of revolutionary organization, including party-building, mass work, and the relationship between spontaneity and consciousness.
+
+*Content will be available after theme classification is completed.*
 
 ---
 

@@ -5,6 +5,7 @@ Complete pipeline from Twitter archive to MkDocs site
 """
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -48,7 +49,7 @@ def check_prerequisites() -> bool:
 
     # Check for SpaCy model
     try:
-        nlp = spacy.load("en_core_web_lg")
+        _ = spacy.load("en_core_web_lg")
         print("SpaCy model loaded")
     except OSError:
         print("SpaCy model not found. Installing...")

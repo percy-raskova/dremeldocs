@@ -8,14 +8,20 @@ This section applies revolutionary theoretical frameworks to the analysis of con
 
 ## Areas of Analysis
 
-### [Fascism Analysis](../fascism analysis/)
+### Fascism Analysis
 **100 threads** examining the material basis of fascist movements, their relationship to capitalism in crisis, and strategies for anti-fascist resistance grounded in class analysis.
 
-### [Cultural Criticism](../cultural criticism/)
+*Content will be available after theme classification is completed.*
+
+### Cultural Criticism
 Analysis of cultural production, ideology, and superstructural phenomena through materialist lens. Examination of how culture both reflects and shapes material conditions.
 
-### [COVID & Public Health Politics](../covid_public health politics/)
+*Content will be available after theme classification is completed.*
+
+### COVID & Public Health Politics
 **140 threads** analyzing the pandemic as a crisis of capitalism, examining how class relations determine public health outcomes and the political economy of disease.
+
+*Content will be available after theme classification is completed.*
 
 ## Analytical Method
 

@@ -1,123 +1,152 @@
-# Data Processing Pipeline Configuration
-# Centralizes all paths and settings for the Twitter archive pipeline
+# DremelDocs Revolutionary Theory Archive
+site_name: DremelDocs Archive
+site_url: https://dremeldocs.org
+site_author: BmoreOrganized
+site_description: >-
+  A curated archive of revolutionary theory, political analysis,
+  and critical discourse from over a decade of philosophical inquiry.
 
-# Pipeline metadata
-site_name: "DremelDocs Processing Pipeline"
-version: "2.0.0"
-description: "Twitter archive to MkDocs Material transformation"
+# Repository
+repo_url: https://github.com/yourusername/dremeldocs
+repo_name: dremeldocs
 
-# Source data configuration
-source:
-  # Primary data source
-  twitter_archive:
-    path: "source/data/tweets.js"
-    format: "twitter_archive"
-    encoding: "utf-8"
-    size_limit: "50MB"
-  # Backup sources
-  backups:
-    directory: "backups/"
-    retention_days: 30
+# Use markdown directory for the actual content
+docs_dir: markdown
 
-# Processing stages configuration
-stages:
-  # Stage 1: Filtering
-  filtering:
-    script: "scripts/local_filter_pipeline.py"
-    input: "${source.twitter_archive.path}"
-    output: "data/filtered_threads.json"
-    settings:
-      min_length: 100
-      languages: ["en"]
-      exclude_retweets: true
-      thread_detection:
-        enabled: true
-        min_tweets: 2
-        max_time_gap_hours: 24
+# Theme configuration
+theme:
+  name: material
+  language: en
 
-  # Stage 2: Heavy hitter generation
-  heavy_hitters:
-    script: "scripts/generate_heavy_hitters.py"
-    input: "${stages.filtering.output}"
-    output: "docs/heavy_hitters/"
-    settings:
-      min_word_count: 500
-      max_threads: 100
-      generate_metadata: true
-      format: "markdown"
+  # Color scheme - using a more neutral professional scheme
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
 
-  # Stage 3: Manual theme extraction
-  theme_extraction:
-    type: "manual"
-    template: "docs/heavy_hitters/THEME_TEMPLATE.md"
-    output: "docs/heavy_hitters/THEMES_EXTRACTED.md"
-    instructions: |
-      1. Review threads in docs/heavy_hitters/
-      2. Identify recurring themes
-      3. Fill out THEME_TEMPLATE.md
-      4. Save as THEMES_EXTRACTED.md
+  # Typography
+  font:
+    text: Roboto
+    code: Roboto Mono
 
-  # Stage 4: Classification
-  classification:
-    script: "scripts/theme_classifier.py"
-    input: "${stages.theme_extraction.output}"
-    output: "data/classified_threads.json"
-    settings:
-      confidence_threshold: 0.7
-      multi_label: true
-      max_themes_per_thread: 3
+  # Features
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+    - toc.integrate
 
-  # Stage 5: Markdown generation
-  markdown_generation:
-    script: "scripts/theme_classifier.py"
-    input: "${stages.classification.output}"
-    output: "markdown/"
-    settings:
-      clear_existing: true
-      create_indexes: true
-      generate_navigation: true
-      frontmatter:
-        include_metadata: true
-        include_tags: true
-        include_dates: true
+  # Icons
+  icon:
+    logo: material/library
+    repo: fontawesome/brands/github
 
-# Data paths summary
-paths:
-  raw_data: "source/data/"
-  intermediate_data: "data/"
-  staging_content: "docs/"
-  production_content: "markdown/"
-  build_output: "site/"
-  cache: ".cache/"
-  logs: "logs/"
+# Plugins with corrected tags configuration
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+      lang:
+        - en
 
-# Validation rules
-validation:
-  thread_requirements:
-    min_word_count: 50
-    max_word_count: 10000
-    valid_date_range:
-      start: "2009-01-01"
-      end: "2025-12-31"
+  # Correct tags plugin configuration for Material theme
+  - tags:
+      enabled: true
+      tags_file: tags.md
+      # Remove invalid options: tags_hierarchy, shadow_tags, listings_map
 
-  theme_requirements:
-    min_themes: 5
-    max_themes: 20
-    min_confidence: 0.5
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+      htmlmin_opts:
+        remove_comments: true
 
-# Performance settings
-performance:
-  parallel_processing: true
-  max_workers: 4
-  chunk_size: 100
-  memory_limit: "2GB"
+# Extensions
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - admonition
+  - abbr
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - md_in_html
+  - toc:
+      permalink: true
+      toc_depth: 3
 
-# Logging configuration
-logging:
-  level: !ENV [LOG_LEVEL, "INFO"]
-  file: "logs/pipeline.log"
-  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-  rotation:
-    max_bytes: 10485760 # 10MB
-    backup_count: 5
+# Navigation - using markdown directory structure
+nav:
+  - Home: index.md
 
+  - About:
+    - About This Archive: about/index.md
+    - Usage Guide: about/usage.md
+    - AI Collaboration: about/ai-collaboration.md
+
+  - Tags: tags.md
+
+  - Themes:
+    - Overview: themes/index.md
+
+  - Analysis:
+    - Overview: analysis/index.md
+
+# Extra configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yourusername
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/BmoreOrganized
+
+extra_css:
+  - stylesheets/extra.css
+
+# Remove tags.css and tags.js as they don't exist and cause issues
