@@ -20,7 +20,8 @@ try:
 except ImportError:
     # Fallback for testing
     nlp = None
-    clean_social_text = lambda x: x
+    def clean_social_text(x):
+        return x
 
 
 class PoliticalVocabularyExtractor:
@@ -158,7 +159,7 @@ class PoliticalVocabularyExtractor:
                 found_terms.add(term)
 
         # Apply patterns
-        for category, patterns in self.marxist_patterns.items():
+        for _category, patterns in self.marxist_patterns.items():
             for pattern in patterns:
                 matches = re.findall(pattern, text_lower, re.IGNORECASE)
                 for match in matches:
@@ -180,7 +181,7 @@ class PoliticalVocabularyExtractor:
                 found_terms.add(term)
 
         # Apply patterns
-        for category, patterns in self.philosophical_patterns.items():
+        for _category, patterns in self.philosophical_patterns.items():
             for pattern in patterns:
                 matches = re.findall(pattern, text_lower, re.IGNORECASE)
                 for match in matches:
@@ -193,17 +194,17 @@ class PoliticalVocabularyExtractor:
 
     def extract_by_patterns(self, text: str) -> Dict[str, List[str]]:
         """Extract terms by category using patterns"""
-        results = defaultdict(list)
+        results: Dict[str, List[str]] = defaultdict(list)
         text_lower = text.lower()
 
         # Check Marxist patterns
-        for category, patterns in self.marxist_patterns.items():
+        for _category, patterns in self.marxist_patterns.items():
             for pattern in patterns:
                 matches = re.findall(pattern, text_lower, re.IGNORECASE)
                 for match in matches:
                     term = " ".join(match) if isinstance(match, tuple) else match
-                    if term and term not in results[category]:
-                        results[category].append(term)
+                    if term and term not in results[_category]:
+                        results[_category].append(term)
 
         # Special handling for organizing terms
         if "vanguard" in text_lower and "party" in text_lower:
@@ -272,9 +273,9 @@ class VocabularyBuilder:
         threads = data.get("threads", [])
 
         # Extract vocabulary from each thread
-        marxist_terms = Counter()
-        philosophical_terms = Counter()
-        colonial_terms = Counter()
+        marxist_terms: Counter[str] = Counter()
+        philosophical_terms: Counter[str] = Counter()
+        colonial_terms: Counter[str] = Counter()
 
         for thread in threads:
             text = thread.get("smushed_text", "")
@@ -344,7 +345,7 @@ class VocabularyBuilder:
 
     def merge_vocabularies(self, vocabularies: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Merge multiple vocabularies intelligently"""
-        merged = defaultdict(lambda: {"terms": set(), "patterns": set(), "scores": []})
+        merged: Dict[str, Dict[str, Any]] = defaultdict(lambda: {"terms": set(), "patterns": set(), "scores": []})
 
         for vocab in vocabularies:
             for category, data in vocab.items():

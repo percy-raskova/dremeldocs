@@ -174,11 +174,10 @@ def extract_key_phrase(sent: Span) -> Optional[str]:
     """
     # Look for the main subject (nsubj) or root verb's object
     subject = None
-    root = None
 
     for token in sent:
         if token.dep_ == "ROOT":
-            root = token
+            pass
         if token.dep_ in ("nsubj", "nsubjpass"):
             subject = token
 

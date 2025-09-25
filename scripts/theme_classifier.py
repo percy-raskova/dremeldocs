@@ -90,7 +90,7 @@ class ThemeClassifier:
 
         # Compile regex patterns for efficient matching
         for category, data in self.vocabulary.items():
-            if "patterns" in data:
+            if "patterns" in data and isinstance(data["patterns"], list):
                 self.pattern_matchers[category] = [
                     re.compile(pattern, re.IGNORECASE) for pattern in data["patterns"]
                 ]
@@ -286,7 +286,7 @@ class ThemeClassifier:
         self.pattern_matchers.clear()
 
         for category, data in self.vocabulary.items():
-            if "patterns" in data:
+            if "patterns" in data and isinstance(data["patterns"], list):
                 self.pattern_matchers[category] = [
                     re.compile(pattern, re.IGNORECASE) for pattern in data["patterns"]
                 ]
@@ -584,7 +584,6 @@ class ThemeClassifier:
             "dialectics",
             "metaphysics",
             "philosophy of mind",
-            "dialectics",  # From parsed themes
         }
 
         political_themes = {
@@ -599,7 +598,6 @@ class ThemeClassifier:
             "marxism_historical materialism",
             "fascism analysis",
             "imperialism_colonialism",
-            "political economy",
             "covid_public health politics",
             "organizational theory",
             "cultural criticism",
@@ -638,7 +636,7 @@ class ThemeClassifier:
     # Use the SpaCy-enhanced functions from text_processing module
     # These are now imported at the top of the file
 
-    def clear_all_markdown(self) -> None:
+    def clear_all_markdown(self) -> int:
         """Clear all existing markdown files from all category directories.
 
         This prevents duplicates when regenerating content.

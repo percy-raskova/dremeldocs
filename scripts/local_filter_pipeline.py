@@ -8,7 +8,7 @@ Then we can actually look at what we got, capeesh?
 import json
 import re
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Generator, List, Optional, Set
 
@@ -49,18 +49,18 @@ class LocalThreadExtractor:
             self.archive_path / "archive.html"
         ).exists()
 
-        missing_paths = []
+        missing_paths: List[str] = []
         for path in required_paths:
             if not path.exists():
-                missing_paths.append(path)
+                missing_paths.append(str(path))
 
         if not archive_html_exists:
             missing_paths.append("archive.html or Your archive.html")
 
         if missing_paths:
             print("❌ Missing required files/directories in archive:")
-            for path in missing_paths:
-                print(f"   - {path}")
+            for missing_path in missing_paths:
+                print(f"   - {missing_path}")
             print("\n💡 This should be a Twitter/X data export directory containing:")
             print("   - data/ directory with tweets.js")
             print("   - archive.html or Your archive.html file")
@@ -145,9 +145,7 @@ class LocalThreadExtractor:
 
         # We'll check for replies in a second pass
         # For now, mark replies and store all tweets
-        if is_reply or tweet_id:
-            return True
-        return False
+        return bool(is_reply or tweet_id)
 
     def process_tweets(self) -> None:
         """Apply the two-stage filter"""
@@ -282,7 +280,7 @@ class LocalThreadExtractor:
                 "total_original_tweets": 21723,
                 "filtered_tweets": len(self.filtered_tweets),
                 "threads_found": len(self.threads),
-                "processing_date": datetime.now().isoformat(),
+                "processing_date": datetime.now(timezone.utc).isoformat(),
                 "filter_stages": ["length>100", "thread_detection"],
             },
             "threads": [],
@@ -323,7 +321,7 @@ class LocalThreadExtractor:
         # Get the longest threads as samples (likely most interesting)
         sorted_threads = sorted(self.threads, key=lambda t: len(t), reverse=True)
 
-        for i, thread in enumerate(sorted_threads[:sample_count]):
+        for _i, thread in enumerate(sorted_threads[:sample_count]):
             # Create filename from date and first few words
             first_tweet = thread[0]
             date_str = first_tweet.get("created_at", "")[:10]

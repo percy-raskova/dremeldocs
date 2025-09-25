@@ -22,7 +22,7 @@ class DomainVocabulary:
         # Load domain vocabulary from config
         domain_vocab = config.get("tags", {}).get("domain_vocabulary", {})
         for category, terms in domain_vocab.items():
-            self.category_terms[category] = set(term.lower() for term in terms)
+            self.category_terms[category] = {term.lower() for term in terms}
             self.vocabulary_terms.update(self.category_terms[category])
 
     def contains_domain_term(self, text: str) -> bool:
@@ -90,17 +90,17 @@ class ChunkScorer:
         self.config = config
         self.weights = config.get("tags", {}).get("weights", {})
         self.domain_vocab = domain_vocab
-        self.skip_phrases = set(
+        self.skip_phrases = {
             phrase.lower()
             for phrase in config.get("content_filters", {}).get("skip_phrases", [])
-        )
+        }
 
         # SEMANTIC SIMILARITY POWER! Cache domain concept vectors
         self.domain_concept_docs = {}
         if MODEL_TYPE in ["transformer", "medium"]:
             print("⚡ Initializing semantic similarity scoring...")
             # Pre-process domain concepts for similarity comparison
-            for category, terms in domain_vocab.category_terms.items():
+            for _category, terms in domain_vocab.category_terms.items():
                 for term in terms:
                     self.domain_concept_docs[term] = nlp(term)
 

@@ -244,9 +244,8 @@ def setup_error_handling(debug: bool = False) -> None:
             print(f"❌ {exc_value}")
         else:
             print(f"❌ Unexpected error: {exc_value}")
-            if debug:
-                if exc_traceback is not None and issubclass(exc_type, BaseException):
-                    traceback.print_exception(exc_type, exc_value, exc_traceback)
+            if debug and exc_traceback is not None and issubclass(exc_type, BaseException):
+                traceback.print_exception(exc_type, exc_value, exc_traceback)
 
     sys.excepthook = custom_excepthook
 

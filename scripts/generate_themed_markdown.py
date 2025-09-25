@@ -132,7 +132,6 @@ This section contains **{thread_count} threads** related to {theme_display.lower
 def update_mkdocs_nav(themes_data: Dict[str, List]):
     """Generate navigation structure for mkdocs.yml"""
 
-    nav_structure = []
 
     # Sort themes by thread count
     sorted_themes = sorted(themes_data.items(), key=lambda x: len(x[1]), reverse=True)

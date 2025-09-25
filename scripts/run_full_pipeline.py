@@ -7,7 +7,7 @@ Clears old markdown files before regeneration to prevent duplicates.
 import json
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -68,7 +68,7 @@ def check_prerequisites() -> bool:
 def backup_existing_markdown() -> None:
     """Create a backup of existing markdown files."""
     markdown_dir = Path("markdown")
-    backup_dir = Path(f"backups/markdown_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
+    backup_dir = Path(f"backups/markdown_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}")
 
     if markdown_dir.exists() and any(markdown_dir.glob("**/*.md")):
         print(f"\n📦 Backing up existing markdown to {backup_dir}")
