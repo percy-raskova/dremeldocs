@@ -6,29 +6,33 @@ Provides consistent error logging and graceful degradation patterns.
 
 import sys
 import traceback
-from typing import Optional, Any, Callable, TypeVar
 from pathlib import Path
+from typing import Any, Callable, Optional, TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class DremelDocsError(Exception):
     """Base exception for DremelDocs-specific errors."""
+
     pass
 
 
 class FileProcessingError(DremelDocsError):
     """Raised when file processing operations fail."""
+
     pass
 
 
 class ConfigurationError(DremelDocsError):
     """Raised when configuration is invalid or missing."""
+
     pass
 
 
 class ValidationError(DremelDocsError):
     """Raised when input validation fails."""
+
     pass
 
 
@@ -36,7 +40,7 @@ def safe_execute(
     func: Callable[[], T],
     fallback: Optional[T] = None,
     error_message: Optional[str] = None,
-    silent: bool = False
+    silent: bool = False,
 ) -> Optional[T]:
     """
     Safely execute a function with standardized error handling.
@@ -89,7 +93,9 @@ def validate_file_path(path: Path, must_exist: bool = True) -> bool:
     return True
 
 
-def validate_directory_path(path: Path, must_exist: bool = True, create_if_missing: bool = False) -> bool:
+def validate_directory_path(
+    path: Path, must_exist: bool = True, create_if_missing: bool = False
+) -> bool:
     """
     Validate directory path with standardized error messages.
 
@@ -135,10 +141,10 @@ def handle_json_error(e: Exception, file_path: Path) -> None:
     if "Expecting" in str(e):
         print(f"❌ JSON syntax error in {file_path}:")
         print(f"   {e}")
-        print(f"   Hint: Check for missing commas, quotes, or brackets")
+        print("   Hint: Check for missing commas, quotes, or brackets")
     elif "decoder" in str(e).lower():
         print(f"❌ JSON decode error in {file_path}:")
-        print(f"   File may be corrupted or not valid JSON")
+        print("   File may be corrupted or not valid JSON")
     else:
         print(f"❌ Error reading JSON file {file_path}: {e}")
 
@@ -154,10 +160,10 @@ def handle_file_operation_error(e: Exception, operation: str, file_path: Path) -
     """
     if isinstance(e, PermissionError):
         print(f"❌ Permission denied {operation} file: {file_path}")
-        print(f"   Check file permissions and ownership")
+        print("   Check file permissions and ownership")
     elif isinstance(e, FileNotFoundError):
         print(f"❌ File not found when {operation}: {file_path}")
-        print(f"   Verify the file path is correct")
+        print("   Verify the file path is correct")
     elif isinstance(e, OSError) and "No space left" in str(e):
         print(f"❌ No disk space available when {operation} file: {file_path}")
     elif isinstance(e, OSError):
@@ -201,6 +207,7 @@ def with_error_context(operation_name: str) -> Callable:
     Args:
         operation_name: Name of the operation for error messages
     """
+
     def decorator(func: Callable) -> Callable:
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
@@ -213,7 +220,9 @@ def with_error_context(operation_name: str) -> Callable:
                 if "--debug" in sys.argv:
                     traceback.print_exc()
                 raise DremelDocsError(f"{operation_name} failed: {e}") from e
+
         return wrapper
+
     return decorator
 
 
@@ -228,7 +237,9 @@ def setup_error_handling(debug: bool = False) -> None:
         print("🐛 Debug mode enabled - full tracebacks will be shown")
 
     # Set up custom exception hook for unhandled exceptions
-    def custom_excepthook(exc_type: type, exc_value: BaseException, exc_traceback: Any) -> None:
+    def custom_excepthook(
+        exc_type: type, exc_value: BaseException, exc_traceback: Any
+    ) -> None:
         if issubclass(exc_type, DremelDocsError):
             print(f"❌ {exc_value}")
         else:
@@ -255,7 +266,7 @@ def safe_json_load(file_path: Path) -> Optional[dict]:
 
     try:
         validate_file_path(file_path, must_exist=True)
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(file_path, encoding="utf-8") as f:
             return json.load(f)
     except ValidationError as e:
         print(f"❌ Validation error: {e}")
@@ -283,7 +294,7 @@ def safe_json_save(data: dict, file_path: Path) -> bool:
 
     try:
         validate_directory_path(file_path.parent, create_if_missing=True)
-        with open(file_path, 'w', encoding='utf-8') as f:
+        with open(file_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         return True
     except ValidationError as e:
@@ -302,7 +313,11 @@ if __name__ == "__main__":
     def risky_operation() -> str:
         raise ValueError("Test error")
 
-    result = safe_execute(risky_operation, fallback="fallback_value", error_message="Test operation failed")
+    result = safe_execute(
+        risky_operation,
+        fallback="fallback_value",
+        error_message="Test operation failed",
+    )
     print(f"Safe execute result: {result}")
 
     # Test validation

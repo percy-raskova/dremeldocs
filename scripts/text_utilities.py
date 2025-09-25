@@ -5,13 +5,14 @@ Provides title generation, descriptions, frontmatter formatting, and filename ut
 """
 
 import re
-from typing import Optional, List, Union, Any
 from datetime import datetime
+from typing import Any, List, Optional, Union
+
 from dateutil import parser
-from spacy.tokens import Doc, Span
 
 # Import from our new modules
-from nlp_core import nlp, clean_social_text
+from nlp_core import clean_social_text, nlp
+from spacy.tokens import Doc, Span
 from tag_extraction import EnhancedTagExtractor, extract_concept_tags
 
 
@@ -28,16 +29,49 @@ def skip_common_starters(doc: Doc, min_chunk_words: int = 2) -> Optional[str]:
     """
     SKIP_WORDS = {
         # Pronouns
-        'i', 'we', 'you', 'they', 'it', 'he', 'she', 'that', 'this', 'these', 'those',
+        "i",
+        "we",
+        "you",
+        "they",
+        "it",
+        "he",
+        "she",
+        "that",
+        "this",
+        "these",
+        "those",
         # Articles
-        'the', 'a', 'an',
+        "the",
+        "a",
+        "an",
         # Common verbs that don't add meaning alone
-        'is', 'are', 'was', 'were', 'have', 'has', 'had',
+        "is",
+        "are",
+        "was",
+        "were",
+        "have",
+        "has",
+        "had",
         # Other common starters
-        'so', 'but', 'and', 'or', 'if', 'when', 'while',
+        "so",
+        "but",
+        "and",
+        "or",
+        "if",
+        "when",
+        "while",
         # Contractions (both forms)
-        "that's", "it's", "there's", "here's", "what's", "who's",
-        "thats", "its", "whats", "whos", "'s"
+        "that's",
+        "it's",
+        "there's",
+        "here's",
+        "what's",
+        "who's",
+        "thats",
+        "its",
+        "whats",
+        "whos",
+        "'s",
     }
 
     for sent in doc.sents:
@@ -70,7 +104,9 @@ def skip_common_starters(doc: Doc, min_chunk_words: int = 2) -> Optional[str]:
                     return chunk_text
 
             # Return sentence if meaningful
-            if len(sent_text) > 20 and not sent_text.lower().startswith(tuple(SKIP_WORDS)):
+            if len(sent_text) > 20 and not sent_text.lower().startswith(
+                tuple(SKIP_WORDS)
+            ):
                 return sent_text[:100]  # Cap length but keep meaningful
 
         # First word is skip word - find content after it
@@ -85,7 +121,7 @@ def skip_common_starters(doc: Doc, min_chunk_words: int = 2) -> Optional[str]:
             # Score chunks
             score = len(chunk_words)
             # Boost for proper nouns
-            if any(t.pos_ == 'PROPN' for t in chunk):
+            if any(t.pos_ == "PROPN" for t in chunk):
                 score += 3
             # Boost for named entities
             if any(t.ent_type_ for t in chunk):
@@ -100,24 +136,27 @@ def skip_common_starters(doc: Doc, min_chunk_words: int = 2) -> Optional[str]:
 
         # Try verb phrases with objects as fallback
         for token in sent:
-            if token.pos_ == 'VERB' and token.dep_ == 'ROOT':
+            if token.pos_ == "VERB" and token.dep_ == "ROOT":
                 # Get full verb phrase with modifiers and objects
                 children = list(token.subtree)
                 if len(children) >= min_chunk_words:
                     phrase_start = min(t.i for t in children)
                     phrase_end = max(t.i for t in children) + 1
                     phrase = doc[phrase_start:phrase_end]
-                    phrase_text = ' '.join([t.text for t in phrase if not t.is_space])
+                    phrase_text = " ".join([t.text for t in phrase if not t.is_space])
 
                     # Clean up the phrase
                     phrase_text = phrase_text.strip()
                     # Remove leading skip words
                     for skip in SKIP_WORDS:
-                        if phrase_text.lower().startswith(skip + ' '):
-                            phrase_text = phrase_text[len(skip)+1:]
+                        if phrase_text.lower().startswith(skip + " "):
+                            phrase_text = phrase_text[len(skip) + 1 :]
                             break
 
-                    if len(phrase_text.split()) >= min_chunk_words and len(phrase_text) > 15:
+                    if (
+                        len(phrase_text.split()) >= min_chunk_words
+                        and len(phrase_text) > 15
+                    ):
                         return phrase_text
 
     return None
@@ -175,7 +214,7 @@ def generate_title(text: str, max_length: int = 60) -> str:
         return ""
 
     # Remove RT prefix if present
-    if text.startswith('RT '):
+    if text.startswith("RT "):
         text = text[3:].lstrip()
 
     # Process with SpaCy (process more text for better context)
@@ -185,11 +224,11 @@ def generate_title(text: str, max_length: int = 60) -> str:
     meaningful_start = skip_common_starters(doc)
     if meaningful_start:
         # Clean and truncate if needed
-        meaningful_start = meaningful_start.strip('.!?,;:')
+        meaningful_start = meaningful_start.strip(".!?,;:")
         if len(meaningful_start) <= max_length:
             return meaningful_start
         # Truncate at word boundary
-        return meaningful_start[:max_length].rsplit(' ', 1)[0] + '...'
+        return meaningful_start[:max_length].rsplit(" ", 1)[0] + "..."
 
     # Strategy 2: Fall back to original method with improvements
     # Clean social media artifacts first
@@ -201,7 +240,9 @@ def generate_title(text: str, max_length: int = 60) -> str:
 
     if not sentences:
         # Fallback if no sentences detected
-        return cleaned_full[:max_length].rsplit(' ', 1)[0] + ('...' if len(cleaned_full) > max_length else '')
+        return cleaned_full[:max_length].rsplit(" ", 1)[0] + (
+            "..." if len(cleaned_full) > max_length else ""
+        )
 
     first_sent = sentences[0]
     first_text = first_sent.text.strip()
@@ -209,7 +250,7 @@ def generate_title(text: str, max_length: int = 60) -> str:
     # If first sentence is short enough, use it
     if len(first_text) <= max_length:
         # Remove trailing punctuation for titles
-        first_text = first_text.rstrip('.!?,;:')
+        first_text = first_text.rstrip(".!?,;:")
         return first_text
 
     # Try to extract the key phrase
@@ -218,12 +259,12 @@ def generate_title(text: str, max_length: int = 60) -> str:
         return key_phrase
 
     # Fallback: truncate at word boundary
-    truncated = first_text[:max_length].rsplit(' ', 1)[0]
+    truncated = first_text[:max_length].rsplit(" ", 1)[0]
 
     # Remove incomplete punctuation at end
-    truncated = truncated.rstrip('.!?,;:')
+    truncated = truncated.rstrip(".!?,;:")
 
-    return truncated + '...'
+    return truncated + "..."
 
 
 def generate_description(text: str, max_length: int = 160) -> str:
@@ -247,7 +288,9 @@ def generate_description(text: str, max_length: int = 160) -> str:
     sentences = list(doc.sents)
     if not sentences:
         # Fallback if no sentences detected
-        return text[:max_length].rsplit(' ', 1)[0] + ('...' if len(text) > max_length else '')
+        return text[:max_length].rsplit(" ", 1)[0] + (
+            "..." if len(text) > max_length else ""
+        )
 
     # Collect complete sentences up to max_length
     description_parts: List[str] = []
@@ -268,29 +311,30 @@ def generate_description(text: str, max_length: int = 160) -> str:
         else:
             # If we haven't added anything yet, we need to truncate the first sentence
             if not description_parts:
-                truncated = cleaned[:max_length].rsplit(' ', 1)[0]
-                return truncated + '...'
+                truncated = cleaned[:max_length].rsplit(" ", 1)[0]
+                return truncated + "..."
             break
 
     if description_parts:
-        return ' '.join(description_parts).strip()
+        return " ".join(description_parts).strip()
 
     # Fallback: use first sentence truncated
     first_cleaned = clean_social_text(sentences[0].as_doc())
     if len(first_cleaned) <= max_length:
         return first_cleaned
 
-    truncated = first_cleaned[:max_length].rsplit(' ', 1)[0]
-    return truncated + '...'
+    truncated = first_cleaned[:max_length].rsplit(" ", 1)[0]
+    return truncated + "..."
+
 
 def calculate_reading_time(text: str, words_per_minute: int = 200) -> int:
     """
     Calculate estimated reading time in minutes.
-    
+
     Args:
         text: The text to calculate reading time for
         words_per_minute: Average reading speed (default 200)
-        
+
     Returns:
         Estimated reading time in minutes (minimum 1)
     """
@@ -345,7 +389,9 @@ def extract_entities_basic(text: str, limit: int = 5) -> List[str]:
     doc = nlp(text[:2000])
 
     # Get concept tags from noun chunks (better for philosophical content)
-    concept_tags = extract_concept_tags(doc, max_tags=limit * 2)  # Get extra for filtering
+    concept_tags = extract_concept_tags(
+        doc, max_tags=limit * 2
+    )  # Get extra for filtering
 
     # Also get traditional named entities
     traditional_entities = []
@@ -353,7 +399,15 @@ def extract_entities_basic(text: str, limit: int = 5) -> List[str]:
 
     for ent in doc.ents:
         # Skip temporal/numeric entities
-        if ent.label_ in ("DATE", "TIME", "PERCENT", "MONEY", "QUANTITY", "ORDINAL", "CARDINAL"):
+        if ent.label_ in (
+            "DATE",
+            "TIME",
+            "PERCENT",
+            "MONEY",
+            "QUANTITY",
+            "ORDINAL",
+            "CARDINAL",
+        ):
             continue
 
         # Normalize and deduplicate
@@ -405,17 +459,17 @@ def format_frontmatter_value(value: Any) -> str:
         # Replace inner double quotes with single quotes for better readability
         # Then escape any remaining quotes and backslashes
         value = value.replace('"', "'")
-        escaped = value.replace('\\', '\\\\')
+        escaped = value.replace("\\", "\\\\")
         return f'"{escaped}"'
 
     elif isinstance(value, list):
         if not value:
-            return '[]'
+            return "[]"
         formatted_items = [format_frontmatter_value(item) for item in value]
-        return '[' + ', '.join(formatted_items) + ']'
+        return "[" + ", ".join(formatted_items) + "]"
 
     elif isinstance(value, bool):
-        return 'true' if value else 'false'
+        return "true" if value else "false"
 
     else:
         return str(value)
@@ -447,7 +501,7 @@ def parse_to_yyyymmdd(date_str: Union[str, datetime, None]) -> str:
             # Try flexible parsing
             date_obj = parser.parse(str(date_str))
 
-        return date_obj.strftime('%Y%m%d')
+        return date_obj.strftime("%Y%m%d")
     except Exception as e:
         # Fallback to default
         print(f"Warning: Could not parse date '{date_str}': {e}")
@@ -475,23 +529,28 @@ def generate_brief_title(text: str, max_length: int = 50) -> str:
     title = generate_title(text, max_length + 10)  # Allow extra for processing
 
     # Convert to filename-safe format
-    safe_title = re.sub(r'[^\w\s-]', '', title)  # Keep alphanumeric, spaces, hyphens
-    safe_title = safe_title.replace(' ', '_')     # Spaces to underscores
-    safe_title = re.sub(r'_+', '_', safe_title)   # Collapse multiple underscores
-    safe_title = safe_title.strip('_')            # Remove leading/trailing underscores
+    safe_title = re.sub(r"[^\w\s-]", "", title)  # Keep alphanumeric, spaces, hyphens
+    safe_title = safe_title.replace(" ", "_")  # Spaces to underscores
+    safe_title = re.sub(r"_+", "_", safe_title)  # Collapse multiple underscores
+    safe_title = safe_title.strip("_")  # Remove leading/trailing underscores
 
     # Ensure not empty
     if not safe_title:
-        safe_title = 'untitled'
+        safe_title = "untitled"
 
     # Truncate if needed (at word boundary)
     if len(safe_title) > max_length:
-        safe_title = safe_title[:max_length].rsplit('_', 1)[0]
+        safe_title = safe_title[:max_length].rsplit("_", 1)[0]
 
     return safe_title.lower()
 
 
-def generate_filename(sequence_num: int, date_str: Union[str, datetime, None], text: str, max_title_length: int = 50) -> str:
+def generate_filename(
+    sequence_num: int,
+    date_str: Union[str, datetime, None],
+    text: str,
+    max_title_length: int = 50,
+) -> str:
     """
     Generate standardized filename: {sequence}-{YYYYMMDD}-{title}.md
 

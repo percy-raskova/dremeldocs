@@ -5,17 +5,17 @@ Combines the best of all vocabulary extraction approaches into one powerful tool
 No more liberal incrementalism - this is the vanguard of NLP-powered political analysis!
 """
 
-import re
 import json
-import yaml
-from pathlib import Path
-from typing import Dict, List, Set, Tuple, Optional, Any
+import re
 from collections import Counter, defaultdict
-import sys
+from pathlib import Path
+from typing import Any, Dict, List, Set, Tuple
+
+import yaml
 
 # Import our enhanced NLP modules
 try:
-    from nlp_core import nlp, clean_social_text
+    from nlp_core import clean_social_text, nlp
     from tag_extraction import EnhancedTagExtractor
 except ImportError:
     # Fallback for testing
@@ -35,85 +35,116 @@ class PoliticalVocabularyExtractor:
         """Initialize with revolutionary fervor!"""
         # Political patterns from extract_domain_vocabulary.py
         self.marxist_patterns = {
-            'class_analysis': [
-                r'\b(working|ruling|owning) class\b',
-                r'\bclass (consciousness|struggle|war|interest|position)\b',
-                r'\b(proletaria[nt]|bourgeois\w*|petit[- ]bourgeois)\b',
-                r'\bmeans of production\b',
-                r'\b(wage|surplus) (labor|value)\b',
-                r'\b(labor|labour) (power|theory of value)\b',
+            "class_analysis": [
+                r"\b(working|ruling|owning) class\b",
+                r"\bclass (consciousness|struggle|war|interest|position)\b",
+                r"\b(proletaria[nt]|bourgeois\w*|petit[- ]bourgeois)\b",
+                r"\bmeans of production\b",
+                r"\b(wage|surplus) (labor|value)\b",
+                r"\b(labor|labour) (power|theory of value)\b",
             ],
-            'dialectics': [
-                r'\b(dialectical|historical) materialis[mt]\b',
-                r'\b(material|objective) (conditions|reality|basis)\b',
-                r'\bcontradictions?\b(?! in terms)',
-                r'\b(thesis|antithesis|synthesis)\b',
-                r'\bnegation of the negation\b',
-                r'\bbase and superstructure\b',
+            "dialectics": [
+                r"\b(dialectical|historical) materialis[mt]\b",
+                r"\b(material|objective) (conditions|reality|basis)\b",
+                r"\bcontradictions?\b(?! in terms)",
+                r"\b(thesis|antithesis|synthesis)\b",
+                r"\bnegation of the negation\b",
+                r"\bbase and superstructure\b",
             ],
-            'organizing': [
-                r'\b(mass|base|cadre|vanguard) (work|building|organization)\b',
-                r'\b(democratic|organizational) centralis[mt]\b',
-                r'\bparty (line|discipline|building)\b',
-                r'\b(revolutionary|communist|socialist) (party|organization)\b',
-                r'\bcross-pollination\b',
-                r'\bmass line\b',
-                r'\b(dual|state) power\b',
+            "organizing": [
+                r"\b(mass|base|cadre|vanguard) (work|building|organization)\b",
+                r"\b(democratic|organizational) centralis[mt]\b",
+                r"\bparty (line|discipline|building)\b",
+                r"\b(revolutionary|communist|socialist) (party|organization)\b",
+                r"\bcross-pollination\b",
+                r"\bmass line\b",
+                r"\b(dual|state) power\b",
             ],
-            'imperialism': [
-                r'\b(imperial|imperialist) (core|periphery|extraction)\b',
-                r'\b(settler|internal) colonialis[mt]\b',
-                r'\b(national|colonial) (oppression|liberation|question)\b',
-                r'\bcomprador\b',
-                r'\bglobal (north|south)\b',
-                r'\b(neo|anti)-?colonialis[mt]\b',
+            "imperialism": [
+                r"\b(imperial|imperialist) (core|periphery|extraction)\b",
+                r"\b(settler|internal) colonialis[mt]\b",
+                r"\b(national|colonial) (oppression|liberation|question)\b",
+                r"\bcomprador\b",
+                r"\bglobal (north|south)\b",
+                r"\b(neo|anti)-?colonialis[mt]\b",
             ],
-            'revolution': [
-                r'\brevolutionary (consciousness|potential|subject|praxis)\b',
-                r'\b(proletarian|socialist|communist) revolution\b',
-                r'\b(revolutionary|counter-revolutionary) (forces|movement)\b',
-                r'\bdictatorship of the proletariat\b',
-                r'\btransition to (socialism|communism)\b',
-            ]
+            "revolution": [
+                r"\brevolutionary (consciousness|potential|subject|praxis)\b",
+                r"\b(proletarian|socialist|communist) revolution\b",
+                r"\b(revolutionary|counter-revolutionary) (forces|movement)\b",
+                r"\bdictatorship of the proletariat\b",
+                r"\btransition to (socialism|communism)\b",
+            ],
         }
 
         # Philosophical patterns
         self.philosophical_patterns = {
-            'epistemology': [
-                r'\b(material|idealist) (analysis|conception)\b',
-                r'\bepistemolog\w+\b',
-                r'\bphenomenolog\w+\b',
-                r'\bontolog\w+\b',
-                r'\bpraxis\b',
+            "epistemology": [
+                r"\b(material|idealist) (analysis|conception)\b",
+                r"\bepistemolog\w+\b",
+                r"\bphenomenolog\w+\b",
+                r"\bontolog\w+\b",
+                r"\bpraxis\b",
             ],
-            'dialectics': [
-                r'\bdialectical (reasoning|method|process)\b',
-                r'\b(thesis|antithesis|synthesis)\b',
-                r'\bunity of opposites\b',
-                r'\bquantitative to qualitative\b',
-            ]
+            "dialectics": [
+                r"\bdialectical (reasoning|method|process)\b",
+                r"\b(thesis|antithesis|synthesis)\b",
+                r"\bunity of opposites\b",
+                r"\bquantitative to qualitative\b",
+            ],
         }
 
         # Core Marxist terms that should always be detected
         self.core_marxist_terms = {
-            'class struggle', 'means of production', 'surplus value',
-            'working class', 'proletariat', 'bourgeoisie', 'petit bourgeois',
-            'dialectical materialism', 'historical materialism',
-            'revolutionary consciousness', 'vanguard party', 'mass work',
-            'democratic centralism', 'dictatorship of the proletariat',
-            'wage labor', 'labor power', 'use value', 'exchange value',
-            'commodity fetishism', 'alienation', 'false consciousness',
-            'base and superstructure', 'mode of production',
-            'forces of production', 'relations of production'
+            "class struggle",
+            "means of production",
+            "surplus value",
+            "working class",
+            "proletariat",
+            "bourgeoisie",
+            "petit bourgeois",
+            "dialectical materialism",
+            "historical materialism",
+            "revolutionary consciousness",
+            "vanguard party",
+            "mass work",
+            "democratic centralism",
+            "dictatorship of the proletariat",
+            "wage labor",
+            "labor power",
+            "use value",
+            "exchange value",
+            "commodity fetishism",
+            "alienation",
+            "false consciousness",
+            "base and superstructure",
+            "mode of production",
+            "forces of production",
+            "relations of production",
         }
 
         # Philosophical terms
         self.philosophical_terms = {
-            'consciousness', 'material conditions', 'dialectical reasoning',
-            'thesis', 'antithesis', 'synthesis', 'praxis', 'phenomenology',
-            'epistemology', 'ontology', 'teleology', 'materialism', 'idealism',
-            'objective reality', 'subjective experience', 'concrete analysis',
-            'abstract thought', 'unity of opposites', 'negation', 'sublation'
+            "consciousness",
+            "material conditions",
+            "dialectical reasoning",
+            "thesis",
+            "antithesis",
+            "synthesis",
+            "praxis",
+            "phenomenology",
+            "epistemology",
+            "ontology",
+            "teleology",
+            "materialism",
+            "idealism",
+            "objective reality",
+            "subjective experience",
+            "concrete analysis",
+            "abstract thought",
+            "unity of opposites",
+            "negation",
+            "sublation",
         }
 
     def extract_marxist_terms(self, text: str) -> Set[str]:
@@ -132,7 +163,7 @@ class PoliticalVocabularyExtractor:
                 matches = re.findall(pattern, text_lower, re.IGNORECASE)
                 for match in matches:
                     if isinstance(match, tuple):
-                        found_terms.add(' '.join(match))
+                        found_terms.add(" ".join(match))
                     else:
                         found_terms.add(match)
 
@@ -154,7 +185,7 @@ class PoliticalVocabularyExtractor:
                 matches = re.findall(pattern, text_lower, re.IGNORECASE)
                 for match in matches:
                     if isinstance(match, tuple):
-                        found_terms.add(' '.join(match))
+                        found_terms.add(" ".join(match))
                     else:
                         found_terms.add(match)
 
@@ -170,28 +201,28 @@ class PoliticalVocabularyExtractor:
             for pattern in patterns:
                 matches = re.findall(pattern, text_lower, re.IGNORECASE)
                 for match in matches:
-                    term = ' '.join(match) if isinstance(match, tuple) else match
+                    term = " ".join(match) if isinstance(match, tuple) else match
                     if term and term not in results[category]:
                         results[category].append(term)
 
         # Special handling for organizing terms
-        if 'vanguard' in text_lower and 'party' in text_lower:
-            if 'organizing' not in results:
-                results['organizing'] = []
-            if 'vanguard party' not in results['organizing']:
-                results['organizing'].append('vanguard party')
+        if "vanguard" in text_lower and "party" in text_lower:
+            if "organizing" not in results:
+                results["organizing"] = []
+            if "vanguard party" not in results["organizing"]:
+                results["organizing"].append("vanguard party")
 
-        if 'mass' in text_lower and 'work' in text_lower:
-            if 'organizing' not in results:
-                results['organizing'] = []
-            if 'mass work' not in results['organizing']:
-                results['organizing'].append('mass work')
+        if "mass" in text_lower and "work" in text_lower:
+            if "organizing" not in results:
+                results["organizing"] = []
+            if "mass work" not in results["organizing"]:
+                results["organizing"].append("mass work")
 
-        if 'democratic centralism' in text_lower:
-            if 'organizing' not in results:
-                results['organizing'] = []
-            if 'democratic centralism' not in results['organizing']:
-                results['organizing'].append('democratic centralism')
+        if "democratic centralism" in text_lower:
+            if "organizing" not in results:
+                results["organizing"] = []
+            if "democratic centralism" not in results["organizing"]:
+                results["organizing"].append("democratic centralism")
 
         return dict(results)
 
@@ -228,15 +259,17 @@ class VocabularyBuilder:
     def __init__(self):
         """Initialize the vocabulary builder"""
         self.extractor = PoliticalVocabularyExtractor()
-        self.vocabulary = defaultdict(lambda: {'terms': [], 'patterns': [], 'score': 0.0})
+        self.vocabulary = defaultdict(
+            lambda: {"terms": [], "patterns": [], "score": 0.0}
+        )
 
     def build_from_corpus(self, corpus_file: Path) -> Dict[str, Any]:
         """Build vocabulary from a corpus of threads"""
         # Load corpus
-        with open(corpus_file, 'r', encoding='utf-8') as f:
+        with open(corpus_file, encoding="utf-8") as f:
             data = json.load(f)
 
-        threads = data.get('threads', [])
+        threads = data.get("threads", [])
 
         # Extract vocabulary from each thread
         marxist_terms = Counter()
@@ -244,7 +277,7 @@ class VocabularyBuilder:
         colonial_terms = Counter()
 
         for thread in threads:
-            text = thread.get('smushed_text', '')
+            text = thread.get("smushed_text", "")
 
             # Get Marxist terms
             m_terms = self.extractor.extract_marxist_terms(text)
@@ -257,34 +290,37 @@ class VocabularyBuilder:
                 philosophical_terms[term] += 1
 
             # Check for colonial/imperial themes
-            if any(word in text.lower() for word in ['settler', 'colonial', 'indigenous', 'native']):
+            if any(
+                word in text.lower()
+                for word in ["settler", "colonial", "indigenous", "native"]
+            ):
                 patterns = self.extractor.extract_by_patterns(text)
-                if 'imperialism' in patterns:
-                    for term in patterns['imperialism']:
+                if "imperialism" in patterns:
+                    for term in patterns["imperialism"]:
                         colonial_terms[term] += 1
 
         # Build vocabulary structure
         vocabulary = {}
 
         if marxist_terms:
-            vocabulary['marxism'] = {
-                'terms': list(marxist_terms.keys()),
-                'patterns': self.extractor.marxist_patterns.get('class_analysis', []),
-                'score': min(len(marxist_terms) / 10, 1.0)  # Normalize score
+            vocabulary["marxism"] = {
+                "terms": list(marxist_terms.keys()),
+                "patterns": self.extractor.marxist_patterns.get("class_analysis", []),
+                "score": min(len(marxist_terms) / 10, 1.0),  # Normalize score
             }
 
         if philosophical_terms:
-            vocabulary['philosophy'] = {
-                'terms': list(philosophical_terms.keys()),
-                'patterns': self.extractor.philosophical_patterns.get('dialectics', []),
-                'score': min(len(philosophical_terms) / 10, 1.0)
+            vocabulary["philosophy"] = {
+                "terms": list(philosophical_terms.keys()),
+                "patterns": self.extractor.philosophical_patterns.get("dialectics", []),
+                "score": min(len(philosophical_terms) / 10, 1.0),
             }
 
         if colonial_terms:
-            vocabulary['colonialism'] = {
-                'terms': list(colonial_terms.keys()),
-                'patterns': self.extractor.marxist_patterns.get('imperialism', []),
-                'score': min(len(colonial_terms) / 10, 1.0)
+            vocabulary["colonialism"] = {
+                "terms": list(colonial_terms.keys()),
+                "patterns": self.extractor.marxist_patterns.get("imperialism", []),
+                "score": min(len(colonial_terms) / 10, 1.0),
             }
 
         return vocabulary
@@ -296,33 +332,35 @@ class VocabularyBuilder:
 
         for category, data in vocabulary.items():
             yaml_data[category] = {
-                'description': f"Terms related to {category}",
-                'terms': data['terms'],
-                'patterns': data.get('patterns', []),
-                'score_threshold': data.get('score', 0.5)
+                "description": f"Terms related to {category}",
+                "terms": data["terms"],
+                "patterns": data.get("patterns", []),
+                "score_threshold": data.get("score", 0.5),
             }
 
         # Write YAML
-        with open(output_file, 'w', encoding='utf-8') as f:
+        with open(output_file, "w", encoding="utf-8") as f:
             yaml.dump(yaml_data, f, default_flow_style=False, sort_keys=False)
 
     def merge_vocabularies(self, vocabularies: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Merge multiple vocabularies intelligently"""
-        merged = defaultdict(lambda: {'terms': set(), 'patterns': set(), 'scores': []})
+        merged = defaultdict(lambda: {"terms": set(), "patterns": set(), "scores": []})
 
         for vocab in vocabularies:
             for category, data in vocab.items():
-                merged[category]['terms'].update(data.get('terms', []))
-                merged[category]['patterns'].update(data.get('patterns', []))
-                merged[category]['scores'].append(data.get('score', 0))
+                merged[category]["terms"].update(data.get("terms", []))
+                merged[category]["patterns"].update(data.get("patterns", []))
+                merged[category]["scores"].append(data.get("score", 0))
 
         # Convert sets back to lists and average scores
         result = {}
         for category, data in merged.items():
             result[category] = {
-                'terms': list(data['terms']),
-                'patterns': list(data['patterns']),
-                'score': sum(data['scores']) / len(data['scores']) if data['scores'] else 0
+                "terms": list(data["terms"]),
+                "patterns": list(data["patterns"]),
+                "score": sum(data["scores"]) / len(data["scores"])
+                if data["scores"]
+                else 0,
             }
 
         return result
@@ -332,25 +370,25 @@ class VocabularyBuilder:
         variations = [term]
 
         # Add plural
-        if not term.endswith('s'):
-            variations.append(term + 's')
-            if term.endswith('y'):
-                variations.append(term[:-1] + 'ies')
+        if not term.endswith("s"):
+            variations.append(term + "s")
+            if term.endswith("y"):
+                variations.append(term[:-1] + "ies")
 
         # Add verb forms for words ending in 'tion'
-        if term.endswith('tion'):
+        if term.endswith("tion"):
             root = term[:-4]
-            variations.append(root + 'te')  # revolutionize
-            variations.append(root + 'ting')  # revolutionizing
-            variations.append(root + 'tional')  # revolutional
+            variations.append(root + "te")  # revolutionize
+            variations.append(root + "ting")  # revolutionizing
+            variations.append(root + "tional")  # revolutional
 
         # Special cases
-        if term == 'revolutionary':
-            variations.extend(['revolution', 'revolutionaries', 'revolutionize'])
-        elif term == 'proletariat':
-            variations.extend(['proletarian', 'proletarians'])
-        elif term == 'bourgeoisie':
-            variations.extend(['bourgeois', 'bourgeoisification'])
+        if term == "revolutionary":
+            variations.extend(["revolution", "revolutionaries", "revolutionize"])
+        elif term == "proletariat":
+            variations.extend(["proletarian", "proletarians"])
+        elif term == "bourgeoisie":
+            variations.extend(["bourgeois", "bourgeoisification"])
 
         return variations
 
@@ -358,12 +396,55 @@ class VocabularyBuilder:
         """Filter out low-quality or common terms"""
         # Common stop words to filter
         stop_words = {
-            'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
-            'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'were',
-            'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does',
-            'did', 'will', 'would', 'could', 'should', 'may', 'might',
-            'must', 'can', 'this', 'that', 'these', 'those', 'a', 'an',
-            'it', 'its', 'they', 'them', 'their', 'we', 'us', 'our'
+            "the",
+            "and",
+            "or",
+            "but",
+            "in",
+            "on",
+            "at",
+            "to",
+            "for",
+            "of",
+            "with",
+            "by",
+            "from",
+            "as",
+            "is",
+            "was",
+            "are",
+            "were",
+            "be",
+            "been",
+            "being",
+            "have",
+            "has",
+            "had",
+            "do",
+            "does",
+            "did",
+            "will",
+            "would",
+            "could",
+            "should",
+            "may",
+            "might",
+            "must",
+            "can",
+            "this",
+            "that",
+            "these",
+            "those",
+            "a",
+            "an",
+            "it",
+            "its",
+            "they",
+            "them",
+            "their",
+            "we",
+            "us",
+            "our",
         }
 
         filtered = []

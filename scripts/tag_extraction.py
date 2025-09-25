@@ -5,11 +5,11 @@ Contains EnhancedTagExtractor, ChunkScorer, DomainVocabulary, and PatternMatcher
 """
 
 import re
-from typing import Dict, List, Tuple, Set, Optional, Any
-from spacy.tokens import Doc, Token
+from typing import Any, Dict, List, Optional, Tuple
 
 # Import from our new nlp_core module
-from nlp_core import nlp, MODEL_TYPE, NLP_CONFIG
+from nlp_core import MODEL_TYPE, NLP_CONFIG, nlp
+from spacy.tokens import Doc, Token
 
 
 class DomainVocabulary:
@@ -20,7 +20,7 @@ class DomainVocabulary:
         self.category_terms = {}
 
         # Load domain vocabulary from config
-        domain_vocab = config.get('tags', {}).get('domain_vocabulary', {})
+        domain_vocab = config.get("tags", {}).get("domain_vocabulary", {})
         for category, terms in domain_vocab.items():
             self.category_terms[category] = set(term.lower() for term in terms)
             self.vocabulary_terms.update(self.category_terms[category])
@@ -49,7 +49,7 @@ class PatternMatcher:
     """Detects domain-specific patterns in text."""
 
     def __init__(self, config: Dict[str, Any]) -> None:
-        self.patterns = config.get('patterns', {})
+        self.patterns = config.get("patterns", {})
         self.compiled_patterns = {}
 
         # Compile regex patterns
@@ -61,7 +61,7 @@ class PatternMatcher:
     def extract_quoted_phrases(self, text: str) -> List[str]:
         """Extract meaningful phrases from quotes."""
         phrases = []
-        for pattern in self.compiled_patterns.get('quote_patterns', []):
+        for pattern in self.compiled_patterns.get("quote_patterns", []):
             matches = pattern.findall(text)
             phrases.extend(matches)
         return [phrase.strip() for phrase in phrases if len(phrase.strip()) > 10]
@@ -69,7 +69,7 @@ class PatternMatcher:
     def extract_theory_patterns(self, text: str) -> List[str]:
         """Extract theory-related patterns like 'theory of X' or 'X theory'."""
         patterns = []
-        for pattern in self.compiled_patterns.get('theory_patterns', []):
+        for pattern in self.compiled_patterns.get("theory_patterns", []):
             matches = pattern.findall(text)
             patterns.extend(matches)
         return [match.strip() for match in patterns if len(match.strip()) > 5]
@@ -77,7 +77,7 @@ class PatternMatcher:
     def extract_relationship_patterns(self, text: str) -> List[str]:
         """Extract conceptual relationship patterns."""
         relationships = []
-        for pattern in self.compiled_patterns.get('relationship_patterns', []):
+        for pattern in self.compiled_patterns.get("relationship_patterns", []):
             matches = pattern.findall(text)
             relationships.extend(matches)
         return [match.strip() for match in relationships if len(match.strip()) > 8]
@@ -88,11 +88,11 @@ class ChunkScorer:
 
     def __init__(self, config: Dict[str, Any], domain_vocab: DomainVocabulary) -> None:
         self.config = config
-        self.weights = config.get('tags', {}).get('weights', {})
+        self.weights = config.get("tags", {}).get("weights", {})
         self.domain_vocab = domain_vocab
         self.skip_phrases = set(
-            phrase.lower() for phrase in
-            config.get('content_filters', {}).get('skip_phrases', [])
+            phrase.lower()
+            for phrase in config.get("content_filters", {}).get("skip_phrases", [])
         )
 
         # SEMANTIC SIMILARITY POWER! Cache domain concept vectors
@@ -104,7 +104,9 @@ class ChunkScorer:
                 for term in terms:
                     self.domain_concept_docs[term] = nlp(term)
 
-    def score_chunk(self, chunk_text: str, chunk_tokens: List[Token], doc: Doc) -> float:
+    def score_chunk(
+        self, chunk_text: str, chunk_tokens: List[Token], doc: Doc
+    ) -> float:
         """Calculate relevance score for a text chunk with SEMANTIC POWER!"""
         score = 0.0
         text_lower = chunk_text.lower().strip()
@@ -115,11 +117,11 @@ class ChunkScorer:
 
         # Base score from number of words
         word_count = len(chunk_tokens)
-        score += word_count * self.weights.get('length_bonus', 0.1)
+        score += word_count * self.weights.get("length_bonus", 0.1)
 
         # Multi-word bonus
         if word_count > 1:
-            score += self.weights.get('multi_word', 1.2)
+            score += self.weights.get("multi_word", 1.2)
 
         # 🚀 SEMANTIC SIMILARITY SCORING - THE NUCLEAR OPTION!
         if MODEL_TYPE in ["transformer", "medium"]:
@@ -132,7 +134,7 @@ class ChunkScorer:
 
         # Domain vocabulary bonus (still useful even with semantic scoring)
         if self.domain_vocab.contains_domain_term(chunk_text):
-            score += self.weights.get('domain_term', 2.5)
+            score += self.weights.get("domain_term", 2.5)
             # Extra bonus for multiple domain terms
             domain_count = self.domain_vocab.count_domain_terms(chunk_text)
             if domain_count > 1:
@@ -140,16 +142,16 @@ class ChunkScorer:
 
         # Named entity bonus
         if any(token.ent_type_ for token in chunk_tokens):
-            score += self.weights.get('named_entity', 2.0)
+            score += self.weights.get("named_entity", 2.0)
 
         # Proper noun bonus
-        if any(token.pos_ == 'PROPN' for token in chunk_tokens):
-            score += self.weights.get('proper_noun', 1.5)
+        if any(token.pos_ == "PROPN" for token in chunk_tokens):
+            score += self.weights.get("proper_noun", 1.5)
 
         # Check if appears in quotes (important concepts often quoted)
         for sent in doc.sents:
             if chunk_text in sent.text and ('"' in sent.text or "'" in sent.text):
-                score += self.weights.get('quoted_phrase', 1.8)
+                score += self.weights.get("quoted_phrase", 1.8)
                 break
 
         # Capitalization indicates importance
@@ -157,7 +159,7 @@ class ChunkScorer:
             score += 0.5
 
         # Penalize very common words
-        common_words = {'people', 'thing', 'way', 'time', 'year', 'day', 'place'}
+        common_words = {"people", "thing", "way", "time", "year", "day", "place"}
         if any(token.text.lower() in common_words for token in chunk_tokens):
             score -= 1.0
 
@@ -186,7 +188,9 @@ class ChunkScorer:
 
             # Log high-similarity matches for debugging
             if max_similarity > 0.7 and best_match:
-                print(f"    🎯 Semantic match: '{text}' ≈ '{best_match}' (similarity: {max_similarity:.2f})")
+                print(
+                    f"    🎯 Semantic match: '{text}' ≈ '{best_match}' (similarity: {max_similarity:.2f})"
+                )
 
             # Scale similarity score (0-1 range to 0-5 point bonus)
             return max_similarity * 5.0
@@ -207,11 +211,13 @@ class EnhancedTagExtractor:
         self.chunk_scorer = ChunkScorer(self.config, self.domain_vocab)
 
         # Tag extraction settings
-        tag_config = self.config.get('tags', {})
-        self.min_chunk_words = tag_config.get('min_chunk_words', 2)
-        self.max_chunk_words = tag_config.get('max_chunk_words', 5)
-        self.max_tags = tag_config.get('max_tags', 10)
-        self.min_concept_length = self.config.get('content_filters', {}).get('min_concept_length', 8)
+        tag_config = self.config.get("tags", {})
+        self.min_chunk_words = tag_config.get("min_chunk_words", 2)
+        self.max_chunk_words = tag_config.get("max_chunk_words", 5)
+        self.max_tags = tag_config.get("max_tags", 10)
+        self.min_concept_length = self.config.get("content_filters", {}).get(
+            "min_concept_length", 8
+        )
 
     def extract_noun_chunks(self, doc: Doc) -> List[Tuple[str, float]]:
         """Extract and score noun chunks."""
@@ -239,7 +245,7 @@ class EnhancedTagExtractor:
                 continue
 
             # Normalize for deduplication
-            normalized = ' '.join([t.lemma_.lower() for t in chunk_tokens])
+            normalized = " ".join([t.lemma_.lower() for t in chunk_tokens])
             if normalized in seen_normalized:
                 continue
             seen_normalized.add(normalized)
@@ -289,16 +295,19 @@ class EnhancedTagExtractor:
         # Look for sentences containing domain terms
         for sent in doc.sents:
             sent_text = sent.text.strip()
-            if (self.domain_vocab.contains_domain_term(sent_text) and
-                len(sent_text.split()) <= self.max_chunk_words and
-                len(sent_text) >= self.min_concept_length):
-
+            if (
+                self.domain_vocab.contains_domain_term(sent_text)
+                and len(sent_text.split()) <= self.max_chunk_words
+                and len(sent_text) >= self.min_concept_length
+            ):
                 score = 2.5 + self.domain_vocab.count_domain_terms(sent_text) * 0.5
                 scored_phrases.append((sent_text, score))
 
         return scored_phrases
 
-    def extract_enhanced_tags(self, text: str, max_tags: Optional[int] = None) -> List[str]:
+    def extract_enhanced_tags(
+        self, text: str, max_tags: Optional[int] = None
+    ) -> List[str]:
         """
         Extract enhanced tags using multiple strategies.
 
@@ -338,7 +347,10 @@ class EnhancedTagExtractor:
         final_chunks = []
         for chunk_text, score in all_scored_chunks:
             normalized = chunk_text.lower().strip()
-            if normalized not in seen_normalized and len(normalized) >= self.min_concept_length:
+            if (
+                normalized not in seen_normalized
+                and len(normalized) >= self.min_concept_length
+            ):
                 final_chunks.append((chunk_text, score))
                 seen_normalized.add(normalized)
 
@@ -347,7 +359,9 @@ class EnhancedTagExtractor:
         return [text for text, _ in final_chunks[:max_tags]]
 
 
-def extract_concept_tags(doc: Doc, max_tags: int = 10, min_words: int = 2, max_words: int = 5) -> List[str]:
+def extract_concept_tags(
+    doc: Doc, max_tags: int = 10, min_words: int = 2, max_words: int = 5
+) -> List[str]:
     """
     Extract meaningful concept phrases as tags using noun chunks.
 
@@ -378,7 +392,7 @@ def extract_concept_tags(doc: Doc, max_tags: int = 10, min_words: int = 2, max_w
             continue
 
         # Normalize for deduplication
-        normalized = ' '.join([t.lemma_.lower() for t in chunk_tokens])
+        normalized = " ".join([t.lemma_.lower() for t in chunk_tokens])
         if normalized in seen_normalized:
             continue
         seen_normalized.add(normalized)
@@ -394,7 +408,7 @@ def extract_concept_tags(doc: Doc, max_tags: int = 10, min_words: int = 2, max_w
             score += 3
 
         # Boost if contains proper nouns
-        if any(token.pos_ == 'PROPN' for token in chunk):
+        if any(token.pos_ == "PROPN" for token in chunk):
             score += 2
 
         # Boost if not all lowercase (suggests importance)
@@ -403,7 +417,7 @@ def extract_concept_tags(doc: Doc, max_tags: int = 10, min_words: int = 2, max_w
 
         # Penalize if very common (appears in many documents)
         # This would need corpus analysis in production
-        common_words = {'people', 'thing', 'way', 'time', 'year', 'day'}
+        common_words = {"people", "thing", "way", "time", "year", "day"}
         if any(t.text.lower() in common_words for t in chunk_tokens):
             score -= 2
 

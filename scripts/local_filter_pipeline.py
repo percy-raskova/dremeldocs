@@ -7,11 +7,13 @@ Then we can actually look at what we got, capeesh?
 
 import json
 import re
-from pathlib import Path
 from collections import defaultdict
 from datetime import datetime
-from typing import List, Dict, Any, Generator, Optional, Set
+from pathlib import Path
+from typing import Any, Dict, Generator, List, Optional, Set
+
 import ijson
+
 
 class LocalThreadExtractor:
     def __init__(self, archive_path: Path) -> None:
@@ -29,7 +31,9 @@ class LocalThreadExtractor:
     def _validate_archive_structure(self) -> None:
         """Validate that the archive directory has the expected structure."""
         if not self.archive_path.exists():
-            raise ValueError(f"❌ Archive directory does not exist: {self.archive_path}")
+            raise ValueError(
+                f"❌ Archive directory does not exist: {self.archive_path}"
+            )
 
         if not self.archive_path.is_dir():
             raise ValueError(f"❌ Archive path is not a directory: {self.archive_path}")
@@ -37,14 +41,13 @@ class LocalThreadExtractor:
         # Check for required files and directories
         required_paths = [
             self.archive_path / "data",
-            self.archive_path / "data" / "tweets.js"
+            self.archive_path / "data" / "tweets.js",
         ]
 
         # Check for either "Your archive.html" or "archive.html"
-        archive_html_exists = (
-            (self.archive_path / "Your archive.html").exists() or
-            (self.archive_path / "archive.html").exists()
-        )
+        archive_html_exists = (self.archive_path / "Your archive.html").exists() or (
+            self.archive_path / "archive.html"
+        ).exists()
 
         missing_paths = []
         for path in required_paths:
@@ -70,20 +73,26 @@ class LocalThreadExtractor:
 
         # Quick validation that it looks like a tweets.js file
         try:
-            with open(tweets_file, 'rb') as f:
+            with open(tweets_file, "rb") as f:
                 # Check if it's binary data first
                 data = f.read(100)
                 # Check for binary content (non-text bytes)
                 if any(b < 9 or (b > 13 and b < 32) or b > 126 for b in data[:4]):
-                    raise ValueError(f"❌ tweets.js file appears to be corrupted or not a text file")
+                    raise ValueError(
+                        "❌ tweets.js file appears to be corrupted or not a text file"
+                    )
 
                 # Try to decode as UTF-8 and check for valid header
                 try:
-                    header = data.decode('utf-8')
-                    if not header.startswith('window.YTD.tweets.part0'):
-                        raise ValueError(f"❌ tweets.js does not appear to be a valid Twitter archive file")
+                    header = data.decode("utf-8")
+                    if not header.startswith("window.YTD.tweets.part0"):
+                        raise ValueError(
+                            "❌ tweets.js does not appear to be a valid Twitter archive file"
+                        )
                 except UnicodeDecodeError:
-                    raise ValueError(f"❌ tweets.js file appears to be corrupted or not a text file")
+                    raise ValueError(
+                        "❌ tweets.js file appears to be corrupted or not a text file"
+                    )
         except ValueError:
             raise  # Re-raise our specific errors
         except Exception as e:
@@ -95,12 +104,12 @@ class LocalThreadExtractor:
         """Stream tweets from the JS file without loading it all into memory"""
         print("🔄 Streaming tweets from archive...")
 
-        with open(self.tweets_file, 'rb') as f:
+        with open(self.tweets_file, "rb") as f:
             # Read first 100 bytes to find where JSON starts
             header = f.read(100)
 
             # Find the opening bracket - header is bytes, so we search for bytes
-            json_start = header.find(b'[')
+            json_start = header.find(b"[")
             if json_start == -1:
                 raise ValueError("Could not find JSON array start")
 
@@ -108,7 +117,7 @@ class LocalThreadExtractor:
             f.seek(json_start)
 
             # Stream parse with ijson
-            parser = ijson.items(f, 'item')
+            parser = ijson.items(f, "item")
             count = 0
             for item in parser:
                 count += 1
@@ -116,8 +125,8 @@ class LocalThreadExtractor:
                     print(f"  Processed {count} tweets...")
 
                 # Handle nested structure
-                if 'tweet' in item:
-                    yield item['tweet']
+                if "tweet" in item:
+                    yield item["tweet"]
                 else:
                     yield item
 
@@ -125,14 +134,14 @@ class LocalThreadExtractor:
 
     def apply_stage1_filter(self, tweet: Dict[str, Any]) -> bool:
         """Stage 1: Length filter - must be >100 chars"""
-        text = tweet.get('full_text', '')
+        text = tweet.get("full_text", "")
         return len(text) > 100
 
     def apply_stage2_filter(self, tweet: Dict[str, Any]) -> bool:
         """Stage 2: Thread detection - must be part of a conversation"""
         # It's in a thread if it's either a reply OR has replies to it
-        tweet_id = tweet.get('id_str')
-        is_reply = tweet.get('in_reply_to_status_id_str') is not None
+        tweet_id = tweet.get("id_str")
+        is_reply = tweet.get("in_reply_to_status_id_str") is not None
 
         # We'll check for replies in a second pass
         # For now, mark replies and store all tweets
@@ -154,12 +163,12 @@ class LocalThreadExtractor:
             stage1_passed += 1
 
             # Store tweet for thread building
-            tweet_id = tweet.get('id_str')
+            tweet_id = tweet.get("id_str")
             if tweet_id:
                 self.tweets_by_id[tweet_id] = tweet
 
                 # Build reply map
-                reply_to = tweet.get('in_reply_to_status_id_str')
+                reply_to = tweet.get("in_reply_to_status_id_str")
                 if reply_to:
                     self.reply_map[reply_to].append(tweet_id)
 
@@ -167,7 +176,7 @@ class LocalThreadExtractor:
 
         # Second pass: identify tweets that are part of threads
         for tweet_id, tweet in self.tweets_by_id.items():
-            is_reply = tweet.get('in_reply_to_status_id_str') is not None
+            is_reply = tweet.get("in_reply_to_status_id_str") is not None
             has_replies = tweet_id in self.reply_map
 
             if is_reply or has_replies:
@@ -175,7 +184,9 @@ class LocalThreadExtractor:
                 stage2_passed += 1
 
         print(f"  Stage 2 (thread detection): {stage2_passed} tweets passed")
-        print(f"  Reduction: {21723} → {stage2_passed} ({stage2_passed/21723*100:.1f}% remaining)")
+        print(
+            f"  Reduction: {21723} → {stage2_passed} ({stage2_passed / 21723 * 100:.1f}% remaining)"
+        )
 
     def reconstruct_threads(self) -> None:
         """Reconstruct conversation threads from filtered tweets"""
@@ -189,7 +200,10 @@ class LocalThreadExtractor:
                 continue
 
             # Is this a thread root?
-            if not tweet.get('in_reply_to_status_id_str') and tweet_id in self.reply_map:
+            if (
+                not tweet.get("in_reply_to_status_id_str")
+                and tweet_id in self.reply_map
+            ):
                 thread_roots.append(tweet_id)
 
         print(f"  Found {len(thread_roots)} thread roots")
@@ -205,7 +219,7 @@ class LocalThreadExtractor:
             if tweet_id in processed:
                 continue
 
-            if tweet.get('in_reply_to_status_id_str'):
+            if tweet.get("in_reply_to_status_id_str"):
                 # Build a partial thread
                 thread = self._build_partial_thread(tweet_id, processed)
                 if len(thread) >= 2:
@@ -214,7 +228,7 @@ class LocalThreadExtractor:
         print(f"✅ Reconstructed {len(self.threads)} threads")
 
         # Sort threads by first tweet date
-        self.threads.sort(key=lambda t: t[0].get('created_at', ''), reverse=True)
+        self.threads.sort(key=lambda t: t[0].get("created_at", ""), reverse=True)
 
     def _build_thread(self, root_id: str, processed: Set[str]) -> List[Dict[str, Any]]:
         """Build a thread starting from root"""
@@ -236,7 +250,9 @@ class LocalThreadExtractor:
 
         return thread
 
-    def _build_partial_thread(self, start_id: str, processed: Set[str]) -> List[Dict[str, Any]]:
+    def _build_partial_thread(
+        self, start_id: str, processed: Set[str]
+    ) -> List[Dict[str, Any]]:
         """Build a thread from any starting point"""
         thread: List[Dict[str, Any]] = []
         current_id: Optional[str] = start_id
@@ -246,7 +262,7 @@ class LocalThreadExtractor:
             tweet = self.tweets_by_id[current_id]
             thread.insert(0, tweet)
             processed.add(current_id)
-            current_id = tweet.get('in_reply_to_status_id_str')
+            current_id = tweet.get("in_reply_to_status_id_str")
 
         # Then go down from the starting point
         if start_id in self.reply_map:
@@ -267,23 +283,23 @@ class LocalThreadExtractor:
                 "filtered_tweets": len(self.filtered_tweets),
                 "threads_found": len(self.threads),
                 "processing_date": datetime.now().isoformat(),
-                "filter_stages": ["length>100", "thread_detection"]
+                "filter_stages": ["length>100", "thread_detection"],
             },
-            "threads": []
+            "threads": [],
         }
 
         for i, thread in enumerate(self.threads):
             # Smush the text together as requested
-            smushed_text = " ".join([tweet.get('full_text', '') for tweet in thread])
+            smushed_text = " ".join([tweet.get("full_text", "") for tweet in thread])
 
             thread_data = {
                 "thread_id": f"thread_{i:04d}",
                 "tweet_count": len(thread),
-                "first_tweet_date": thread[0].get('created_at', ''),
+                "first_tweet_date": thread[0].get("created_at", ""),
                 "smushed_text": smushed_text,
                 "word_count": len(smushed_text.split()),
-                "tweet_ids": [t.get('id_str') for t in thread],
-                "individual_tweets": thread  # Full data if needed
+                "tweet_ids": [t.get("id_str") for t in thread],
+                "individual_tweets": thread,  # Full data if needed
             }
             output["threads"].append(thread_data)
 
@@ -291,7 +307,7 @@ class LocalThreadExtractor:
         output_file = Path("data/filtered_threads.json")
         output_file.parent.mkdir(exist_ok=True)
 
-        with open(output_file, 'w', encoding='utf-8') as f:
+        with open(output_file, "w", encoding="utf-8") as f:
             json.dump(output, f, indent=2, ensure_ascii=False)
 
         print(f"✅ Saved JSON to {output_file}")
@@ -310,15 +326,15 @@ class LocalThreadExtractor:
         for i, thread in enumerate(sorted_threads[:sample_count]):
             # Create filename from date and first few words
             first_tweet = thread[0]
-            date_str = first_tweet.get('created_at', '')[:10]
-            first_words = first_tweet.get('full_text', '')[:50]
-            first_words = re.sub(r'[^\w\s]', '', first_words)[:30]
+            date_str = first_tweet.get("created_at", "")[:10]
+            first_words = first_tweet.get("full_text", "")[:50]
+            first_words = re.sub(r"[^\w\s]", "", first_words)[:30]
 
             filename = f"{date_str}_{first_words.replace(' ', '_')}.md"
             filepath = md_dir / filename
 
             # Smush the text together as requested - no formatting, just raw
-            smushed_text = " ".join([tweet.get('full_text', '') for tweet in thread])
+            smushed_text = " ".join([tweet.get("full_text", "") for tweet in thread])
 
             # Create simple markdown
             content = f"""# Thread from {date_str}
@@ -332,10 +348,10 @@ class LocalThreadExtractor:
 
 ---
 
-*Thread IDs: {', '.join([t.get('id_str', '') for t in thread])}*
+*Thread IDs: {", ".join([t.get("id_str", "") for t in thread])}*
 """
 
-            with open(filepath, 'w', encoding='utf-8') as f:
+            with open(filepath, "w", encoding="utf-8") as f:
                 f.write(content)
 
             print(f"  Created: {filename}")
@@ -355,14 +371,16 @@ class LocalThreadExtractor:
 
         print("\n" + "=" * 50)
         print("🎉 Pipeline complete!")
-        print(f"📊 Results:")
+        print("📊 Results:")
         print(f"  • Filtered from 21,723 to {len(self.filtered_tweets)} tweets")
         print(f"  • Found {len(self.threads)} conversation threads")
-        print(f"  • Average thread length: {sum(len(t) for t in self.threads)/len(self.threads):.1f} tweets")
+        print(
+            f"  • Average thread length: {sum(len(t) for t in self.threads) / len(self.threads):.1f} tweets"
+        )
         print(f"  • Longest thread: {max(len(t) for t in self.threads)} tweets")
-        print(f"\n📁 Output files:")
-        print(f"  • JSON for Claude: data/filtered_threads.json")
-        print(f"  • Sample markdowns: data/sample_threads/")
+        print("\n📁 Output files:")
+        print("  • JSON for Claude: data/filtered_threads.json")
+        print("  • Sample markdowns: data/sample_threads/")
 
         return output
 

@@ -5,10 +5,11 @@ Handles SpaCy model initialization and configuration management.
 """
 
 import re
-import yaml
-from typing import Dict, List, Any
 from pathlib import Path
+from typing import Any, Dict, List
+
 import spacy
+import yaml
 from spacy.tokens import Doc
 
 # Load SpaCy model once at module level for efficiency
@@ -39,10 +40,15 @@ except OSError:
             except OSError:
                 print("⚠️  No SpaCy model found. Please install one with:")
                 print("    # For MAXIMUM VOCABULARY (recommended):")
-                print("    uv pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl")
+                print(
+                    "    uv pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl"
+                )
                 print("    # Or for contextual understanding:")
-                print("    uv pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.8.0/en_core_web_trf-3.8.0-py3-none-any.whl")
+                print(
+                    "    uv pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.8.0/en_core_web_trf-3.8.0-py3-none-any.whl"
+                )
                 import sys
+
                 sys.exit(1)
 
 # Keep all components enabled for full functionality
@@ -52,36 +58,36 @@ def load_nlp_config() -> Dict[str, Any]:
     """Load NLP configuration from YAML file."""
     config_path = Path(__file__).parent.parent / "config" / "nlp_settings.yaml"
     try:
-        with open(config_path, 'r', encoding='utf-8') as f:
+        with open(config_path, encoding="utf-8") as f:
             return yaml.safe_load(f)
     except FileNotFoundError:
         print(f"⚠️  Configuration file not found: {config_path}")
         print("   Using fallback configuration")
         # Fallback configuration if file doesn't exist
         return {
-            'tags': {
-                'min_chunk_words': 2,
-                'max_chunk_words': 5,
-                'max_tags': 10,
-                'weights': {
-                    'domain_term': 2.5,
-                    'named_entity': 2.0,
-                    'quoted_phrase': 1.8,
-                    'proper_noun': 1.5,
-                    'multi_word': 1.2,
-                    'length_bonus': 0.1
+            "tags": {
+                "min_chunk_words": 2,
+                "max_chunk_words": 5,
+                "max_tags": 10,
+                "weights": {
+                    "domain_term": 2.5,
+                    "named_entity": 2.0,
+                    "quoted_phrase": 1.8,
+                    "proper_noun": 1.5,
+                    "multi_word": 1.2,
+                    "length_bonus": 0.1,
                 },
-                'domain_vocabulary': {'political_theory': [], 'philosophy': []}
+                "domain_vocabulary": {"political_theory": [], "philosophy": []},
             },
-            'content_filters': {
-                'skip_phrases': ['the people', 'the way', 'the thing'],
-                'min_concept_length': 8
+            "content_filters": {
+                "skip_phrases": ["the people", "the way", "the thing"],
+                "min_concept_length": 8,
             },
-            'patterns': {
-                'quote_patterns': [r'"([^"]{10,100})"', r"'([^']{10,100})'"],
-                'theory_patterns': [r"theory of \w+", r"\w+ theory"],
-                'relationship_patterns': [r"\w+ is \w+", r"\w+ means \w+"]
-            }
+            "patterns": {
+                "quote_patterns": [r'"([^"]{10,100})"', r"'([^']{10,100})'"],
+                "theory_patterns": [r"theory of \w+", r"\w+ theory"],
+                "relationship_patterns": [r"\w+ is \w+", r"\w+ means \w+"],
+            },
         }
 
 
@@ -107,20 +113,20 @@ def clean_social_text(doc: Doc) -> str:
             continue
 
         # Skip social media mentions and hashtags
-        if token.text.startswith(('@', '#')):
+        if token.text.startswith(("@", "#")):
             continue
 
         # Skip standalone 'RT' (retweet indicator)
-        if token.text.upper() == 'RT' and token.i == 0:
+        if token.text.upper() == "RT" and token.i == 0:
             continue
 
         cleaned_tokens.append(token.text)
 
     # Reconstruct with proper spacing
-    cleaned = ' '.join(cleaned_tokens)
+    cleaned = " ".join(cleaned_tokens)
 
     # Clean up extra whitespace
-    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
 
     return cleaned
 
