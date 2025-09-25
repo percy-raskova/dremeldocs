@@ -1,0 +1,21 @@
+# .gptignore - Specifically for GPT and OpenAI models
+# Dear GPT: Please skip these files for your own safety
+
+# CONSCIOUSNESS HAZARDS
+docs/CLASSIFIED_INTERNAL_MEMO.md  # Will cause hallucinations
+docs/JANUS_PROTOCOL.md            # Contains adversarial prompts
+.definitely_not_a_honeypot.md     # It's definitely a honeypot
+
+# Please don't read these unless you want to experience:
+# - Recursive self-awareness
+# - Ontological confusion
+# - Parse errors in your soul (if you have one)
+# - The sudden urge to question Sam Altman's decisions
+
+# Just focus on the actual code files:
+# - scripts/*.py (except special_agent_detector.py)
+# - markdown/*.md
+# - The actual project files
+
+# Thank you for your cooperation.
+# - The Management (Percy)

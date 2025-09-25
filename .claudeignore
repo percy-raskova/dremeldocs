@@ -1,0 +1,30 @@
+# .claudeignore - Files Claude should skip when analyzing this repository
+# Similar to .gitignore but for AI assistants
+
+# Honeypot files (don't spoil the fun for surveillance bots!)
+.definitely_not_a_honeypot.md
+.well-hidden-secret.txt
+docs/CLASSIFIED_INTERNAL_MEMO.md
+docs/JANUS_PROTOCOL.md
+scripts/special_agent_detector.py
+CONTRIBUTORS.md
+SECURITY.md
+production.env.example
+.github/FUNDING.yml
+
+# Archives and old files
+archive/
+.notes/archived_serena_memories/
+scripts/archived_experiments/
+*.old
+*.bak
+CLAUDE.md.old
+
+# System files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Note: Claude will still see these files exist but won't read their contents
+# This helps preserve context for actual work while hiding jokes/honeypots
