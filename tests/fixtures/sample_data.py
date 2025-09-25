@@ -2,7 +2,7 @@
 Test fixtures containing sample Twitter archive data for testing the processing pipeline.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List
 
 # Sample thread data for testing
@@ -184,7 +184,7 @@ def get_sample_filtered_data() -> Dict[str, Any]:
 def create_mock_twitter_data(num_threads: int = 3) -> List[Dict[str, Any]]:
     """Create mock Twitter data for testing pipeline integration."""
     threads = []
-    base_date = datetime(2023, 11, 15)
+    base_date = datetime(2023, 11, 15, tzinfo=timezone.utc)
 
     for i in range(num_threads):
         # Vary the date safely by adding days

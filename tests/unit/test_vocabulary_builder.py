@@ -261,8 +261,8 @@ class TestThemeClassifierEnhancements:
         weak_text = "Maybe something about class or whatever"
         strong_text = "Class struggle is the motor of history. The proletariat must seize the means of production."
 
-        weak_themes = enhanced_classifier.classify_with_patterns(weak_text)
-        strong_themes = enhanced_classifier.classify_with_patterns(strong_text)
+        enhanced_classifier.classify_with_patterns(weak_text)
+        enhanced_classifier.classify_with_patterns(strong_text)
 
         # Strong text should have higher confidence
         assert enhanced_classifier.confidence_scores.get("marxism", 0) < 0.3  # Weak

@@ -292,7 +292,7 @@ class TestLocalThreadExtractor:
                 grouped_threads[tweet["id"]] = [tweet]
             else:
                 # Find parent thread
-                for thread_id, tweets in grouped_threads.items():
+                for _thread_id, tweets in grouped_threads.items():
                     if any(t["id"] == tweet["in_reply_to"] for t in tweets):
                         tweets.append(tweet)
                         break
@@ -300,7 +300,7 @@ class TestLocalThreadExtractor:
         # Should have 2 separate threads
         assert len(grouped_threads) == 2
         # First thread should have 3 tweets
-        assert len(list(grouped_threads.values())[0]) == 3
+        assert len(next(iter(grouped_threads.values()))) == 3
         # Second thread should have 1 tweet
         assert len(list(grouped_threads.values())[1]) == 1
 

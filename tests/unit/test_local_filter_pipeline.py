@@ -436,7 +436,7 @@ class TestOutputGeneration:
                 lambda x: output_file if "filtered_threads" in x else tmp_path / x
             )
 
-            with patch("builtins.open", mock_open()) as mock_file:
+            with patch("builtins.open", mock_open()):
                 output = LocalThreadExtractor.generate_json_output(extractor)
 
         assert "metadata" in output

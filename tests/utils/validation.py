@@ -67,19 +67,16 @@ def validate_frontmatter_structure(frontmatter: Dict[str, Any]) -> List[str]:
                 errors.append("Date 'created' field must be in YYYY-MM-DD format")
 
     # Validate categories contains heavy_hitters
-    if "categories" in frontmatter and isinstance(frontmatter["categories"], list):
-        if "heavy_hitters" not in frontmatter["categories"]:
-            errors.append("Categories must include 'heavy_hitters'")
+    if "categories" in frontmatter and isinstance(frontmatter["categories"], list) and "heavy_hitters" not in frontmatter["categories"]:
+        errors.append("Categories must include 'heavy_hitters'")
 
     # Validate reading_time is positive
-    if "reading_time" in frontmatter and isinstance(frontmatter["reading_time"], int):
-        if frontmatter["reading_time"] <= 0:
-            errors.append("Reading time must be positive")
+    if "reading_time" in frontmatter and isinstance(frontmatter["reading_time"], int) and frontmatter["reading_time"] <= 0:
+        errors.append("Reading time must be positive")
 
     # Validate word_count is positive
-    if "word_count" in frontmatter and isinstance(frontmatter["word_count"], int):
-        if frontmatter["word_count"] <= 0:
-            errors.append("Word count must be positive")
+    if "word_count" in frontmatter and isinstance(frontmatter["word_count"], int) and frontmatter["word_count"] <= 0:
+        errors.append("Word count must be positive")
 
     return errors
 
@@ -115,7 +112,7 @@ def validate_markdown_structure(content: str) -> List[str]:
     lines = content.split("\n")
 
     # Check for frontmatter boundaries
-    if not lines[0].strip() == "---":
+    if lines[0].strip() != "---":
         errors.append("Content must start with frontmatter delimiter '---'")
         return errors
 
@@ -236,7 +233,7 @@ def extract_frontmatter_from_content(content: str) -> Optional[Dict[str, Any]]:
     """
     lines = content.split("\n")
 
-    if not lines[0].strip() == "---":
+    if lines[0].strip() != "---":
         return None
 
     # Find end of frontmatter

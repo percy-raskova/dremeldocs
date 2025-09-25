@@ -364,7 +364,7 @@ class TestClassifyThread:
             "word_count": 5,
         }
 
-        themes, confidence = classifier.classify_thread(thread)
+        _themes, confidence = classifier.classify_thread(thread)
 
         assert confidence > 0
 
@@ -626,7 +626,7 @@ class TestProcessAllThreads:
 
         with patch("pathlib.Path.exists", return_value=True), patch(
             "builtins.open", mock_open(read_data=json.dumps(test_data))
-        ), patch("json.dump") as mock_dump:
+        ), patch("json.dump"):
             result = classifier.process_all_threads()
 
         assert result is not None
@@ -841,7 +841,7 @@ class TestIntegration:
         assert len(classifier.keywords) > 0
 
         # Process threads
-        output_file = tmp_path / "data" / "classified_threads.json"
+        tmp_path / "data" / "classified_threads.json"
 
         # Mock the file operations more precisely
         with patch("builtins.open", mock_open(read_data=json.dumps(test_data))), patch(
@@ -884,7 +884,7 @@ class TestEdgeCases:
             "thread_id": "unicode_test",
         }
 
-        themes, confidence = classifier.classify_thread(thread)
+        _themes, confidence = classifier.classify_thread(thread)
         assert confidence > 0
 
     def test_very_long_thread(self):
@@ -899,7 +899,7 @@ class TestEdgeCases:
             "thread_id": "long_test",
         }
 
-        themes, confidence = classifier.classify_thread(thread)
+        _themes, confidence = classifier.classify_thread(thread)
         assert confidence <= 1.0  # Should still be capped
 
     def test_malformed_theme_data(self):
@@ -927,7 +927,7 @@ class TestEdgeCases:
 
         # Should not cause infinite loops
         thread = {"thread_id": "002", "smushed_text": "test", "word_count": 1}
-        themes, confidence = classifier.classify_thread(thread)
+        themes, _confidence = classifier.classify_thread(thread)
 
         assert isinstance(themes, list)
 

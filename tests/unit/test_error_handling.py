@@ -720,7 +720,7 @@ class TestErrorHandlingIntegration:
 
             # Process items with progress
             total = len(loaded_data["items"])
-            for i, item in enumerate(loaded_data["items"], 1):
+            for i, _item in enumerate(loaded_data["items"], 1):
                 log_processing_progress(i, total, "items")
 
             return sum(loaded_data["items"])

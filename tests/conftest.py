@@ -126,9 +126,8 @@ def pytest_runtest_setup(item):
             pytest.skip("spaCy with en_core_web_sm model required")
 
     # Skip slow tests if --fast option is used (custom option)
-    if item.config.getoption("--fast", default=False):
-        if "slow" in item.keywords:
-            pytest.skip("Skipping slow test due to --fast option")
+    if item.config.getoption("--fast", default=False) and "slow" in item.keywords:
+        pytest.skip("Skipping slow test due to --fast option")
 
 
 def pytest_addoption(parser):

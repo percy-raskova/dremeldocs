@@ -270,7 +270,7 @@ class TestFormatFrontmatterValue:
             ({}, "{}"),
         ]
 
-        for input_val, expected in test_cases:
+        for input_val, _expected in test_cases:
             result = format_frontmatter_value(input_val)
             # Should handle non-strings gracefully
             assert isinstance(result, str)

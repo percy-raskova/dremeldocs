@@ -254,7 +254,7 @@ class TestEndToEndPipeline:
             },
         ]
 
-        for i, error_case in enumerate(error_cases):
+        for _i, error_case in enumerate(error_cases):
             try:
                 # Test each pipeline component with error case
                 title = generate_title(error_case["smushed_text"])
@@ -372,9 +372,9 @@ class TestEndToEndPipeline:
 
         for thread in large_dataset:
             # Process thread
-            title = generate_title(thread["smushed_text"])
-            description = generate_description(thread["smushed_text"])
-            reading_time = calculate_reading_time(thread["smushed_text"])
+            generate_title(thread["smushed_text"])
+            generate_description(thread["smushed_text"])
+            calculate_reading_time(thread["smushed_text"])
 
             # Check memory periodically
             current_memory = process.memory_info().rss
