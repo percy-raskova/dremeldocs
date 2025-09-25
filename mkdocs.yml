@@ -1,78 +1,123 @@
-# MkDocs configuration for @BmoreOrganized's Twitter Archive
+# Data Processing Pipeline Configuration
+# Centralizes all paths and settings for the Twitter archive pipeline
 
-site_name: Philosophy & Politics - Ms. Dremel's Archive
-site_description: Philosophical and political threads from @BmoreOrganized's Twitter archive
-site_author: '@BmoreOrganized'
-site_url: https://example.com  # Update with actual URL
+# Pipeline metadata
+site_name: "DremelDocs Processing Pipeline"
+version: "2.0.0"
+description: "Twitter archive to MkDocs Material transformation"
 
-# Important: Use markdown/ instead of docs/
-docs_dir: markdown
-site_dir: site
+# Source data configuration
+source:
+  # Primary data source
+  twitter_archive:
+    path: "source/data/tweets.js"
+    format: "twitter_archive"
+    encoding: "utf-8"
+    size_limit: "50MB"
+  # Backup sources
+  backups:
+    directory: "backups/"
+    retention_days: 30
 
-theme:
-  name: material
-  palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    - scheme: slate
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
-  features:
-    - navigation.tabs
-    - navigation.sections
-    - navigation.expand
-    - navigation.top
-    - search.suggest
-    - search.highlight
-    - content.tabs.link
-    - content.code.annotation
-    - content.code.copy
-  language: en
+# Processing stages configuration
+stages:
+  # Stage 1: Filtering
+  filtering:
+    script: "scripts/local_filter_pipeline.py"
+    input: "${source.twitter_archive.path}"
+    output: "data/filtered_threads.json"
+    settings:
+      min_length: 100
+      languages: ["en"]
+      exclude_retweets: true
+      thread_detection:
+        enabled: true
+        min_tweets: 2
+        max_time_gap_hours: 24
 
-plugins:
-  - search
-  - tags
+  # Stage 2: Heavy hitter generation
+  heavy_hitters:
+    script: "scripts/generate_heavy_hitters.py"
+    input: "${stages.filtering.output}"
+    output: "docs/heavy_hitters/"
+    settings:
+      min_word_count: 500
+      max_threads: 100
+      generate_metadata: true
+      format: "markdown"
 
-markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - admonition
-  - pymdownx.arithmatex:
-      generic: true
-  - footnotes
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.mark
-  - attr_list
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  # Stage 3: Manual theme extraction
+  theme_extraction:
+    type: "manual"
+    template: "docs/heavy_hitters/THEME_TEMPLATE.md"
+    output: "docs/heavy_hitters/THEMES_EXTRACTED.md"
+    instructions: |
+      1. Review threads in docs/heavy_hitters/
+      2. Identify recurring themes
+      3. Fill out THEME_TEMPLATE.md
+      4. Save as THEMES_EXTRACTED.md
 
-# Navigation structure (to be populated after classification)
-nav:
-  - Home: index.md
-  - Philosophy: philosophy/
-  - Politics: politics/
-  - Both: both/
-  - By Theme: themes/
-  - About:
-    - AI Collaboration: about/ai-collaboration.md
+  # Stage 4: Classification
+  classification:
+    script: "scripts/theme_classifier.py"
+    input: "${stages.theme_extraction.output}"
+    output: "data/classified_threads.json"
+    settings:
+      confidence_threshold: 0.7
+      multi_label: true
+      max_themes_per_thread: 3
 
-# Custom CSS
-extra_css:
-  - stylesheets/extra.css
+  # Stage 5: Markdown generation
+  markdown_generation:
+    script: "scripts/theme_classifier.py"
+    input: "${stages.classification.output}"
+    output: "markdown/"
+    settings:
+      clear_existing: true
+      create_indexes: true
+      generate_navigation: true
+      frontmatter:
+        include_metadata: true
+        include_tags: true
+        include_dates: true
 
-extra:
-  social:
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/BmoreOrganized
-  generator: false  # Don't show "Made with Material for MkDocs"
+# Data paths summary
+paths:
+  raw_data: "source/data/"
+  intermediate_data: "data/"
+  staging_content: "docs/"
+  production_content: "markdown/"
+  build_output: "site/"
+  cache: ".cache/"
+  logs: "logs/"
+
+# Validation rules
+validation:
+  thread_requirements:
+    min_word_count: 50
+    max_word_count: 10000
+    valid_date_range:
+      start: "2009-01-01"
+      end: "2025-12-31"
+
+  theme_requirements:
+    min_themes: 5
+    max_themes: 20
+    min_confidence: 0.5
+
+# Performance settings
+performance:
+  parallel_processing: true
+  max_workers: 4
+  chunk_size: 100
+  memory_limit: "2GB"
+
+# Logging configuration
+logging:
+  level: !ENV [LOG_LEVEL, "INFO"]
+  file: "logs/pipeline.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  rotation:
+    max_bytes: 10485760 # 10MB
+    backup_count: 5
+

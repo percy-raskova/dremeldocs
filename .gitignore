@@ -52,8 +52,10 @@ source/
 *.bak
 *.tmp
 
-# Data files (large Twitter archive)
+# Data files (large Twitter archive and generated artifacts)
 data/filtered_threads.json
+data/classified_threads.json
+data/classified_threads_enhanced.json
 data/tweets_media/
 data/direct_messages_media/
 
@@ -111,7 +113,12 @@ docs/heavy_hitters/*_old.md
 
 # Claude/MCP related
 .mcp-cache/
-claude-session-*__pycache__
+claude-session-*
+.playwright-mcp/
+*-tagnav.txt
+
+# Python cache
+__pycache__
 **/__pycache__
 *.pyc
 .serena
@@ -119,4 +126,3 @@ claude-session-*__pycache__
 coverage.json
 .serena/cache
 scripts/__pycache__
-data/filtered_threads.json
