@@ -6,14 +6,11 @@ testing the complete Twitter archive processing pipeline from raw data
 to filtered threads with proper error handling and edge cases.
 """
 
-import pytest
 import json
-import tempfile
-import shutil
-from pathlib import Path
-from typing import Dict, List, Any
-from unittest.mock import patch, MagicMock
 import sys
+from pathlib import Path
+
+import pytest
 
 # Add scripts to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
@@ -75,11 +72,12 @@ class TestArchiveValidation:
     def test_invalid_tweets_format(self, tmp_path):
         """Test handling of invalid tweets.js format."""
         archive_path = self._create_valid_archive(
-            tmp_path,
-            tweets_content="invalid javascript content"
+            tmp_path, tweets_content="invalid javascript content"
         )
 
-        with pytest.raises(ValueError, match="does not appear to be a valid Twitter archive"):
+        with pytest.raises(
+            ValueError, match="does not appear to be a valid Twitter archive"
+        ):
             LocalThreadExtractor(archive_path)
 
     def test_corrupted_tweets_file(self, tmp_path):
@@ -90,7 +88,7 @@ class TestArchiveValidation:
 
         # Write binary content
         tweets_file = archive_path / "data" / "tweets.js"
-        tweets_file.write_bytes(b'\x00\x01\x02\x03\x04')
+        tweets_file.write_bytes(b"\x00\x01\x02\x03\x04")
 
         with pytest.raises(ValueError, match="appears to be corrupted"):
             LocalThreadExtractor(archive_path)
@@ -105,7 +103,7 @@ class TestArchiveValidation:
         (archive_path / "Your archive.html").write_text("<html></html>")
 
         if tweets_content is None:
-            tweets_content = 'window.YTD.tweets.part0 = []'
+            tweets_content = "window.YTD.tweets.part0 = []"
 
         if tweets_content:  # Only write if not empty string
             (data_dir / "tweets.js").write_text(tweets_content)
@@ -122,7 +120,7 @@ class TestTweetStreaming:
         """Test streaming basic tweets without nesting."""
         tweets_data = [
             {"id_str": "1", "full_text": "First tweet"},
-            {"id_str": "2", "full_text": "Second tweet"}
+            {"id_str": "2", "full_text": "Second tweet"},
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -137,7 +135,7 @@ class TestTweetStreaming:
         """Test streaming tweets with nested structure."""
         tweets_data = [
             {"tweet": {"id_str": "1", "full_text": "Nested tweet 1"}},
-            {"tweet": {"id_str": "2", "full_text": "Nested tweet 2"}}
+            {"tweet": {"id_str": "2", "full_text": "Nested tweet 2"}},
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -152,8 +150,7 @@ class TestTweetStreaming:
         """Test streaming performance with large dataset."""
         # Generate 5000 tweets
         tweets_data = [
-            {"id_str": str(i), "full_text": f"Tweet number {i}"}
-            for i in range(5000)
+            {"id_str": str(i), "full_text": f"Tweet number {i}"} for i in range(5000)
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -190,7 +187,7 @@ class TestTweetStreaming:
 
         # Create tweets.js with data
         tweets_json = json.dumps(tweets_data)
-        tweets_content = f'window.YTD.tweets.part0 = {tweets_json}'
+        tweets_content = f"window.YTD.tweets.part0 = {tweets_json}"
         (data_dir / "tweets.js").write_text(tweets_content)
 
         return archive_path
@@ -205,7 +202,7 @@ class TestFilteringLogic:
             {"id_str": "1", "full_text": "Short"},  # <100 chars
             {"id_str": "2", "full_text": "a" * 101},  # >100 chars
             {"id_str": "3", "full_text": "b" * 50},  # <100 chars
-            {"id_str": "4", "full_text": "c" * 200}  # >100 chars
+            {"id_str": "4", "full_text": "c" * 200},  # >100 chars
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -221,8 +218,16 @@ class TestFilteringLogic:
         """Test Stage 2: Thread detection (replies)."""
         tweets_data = [
             {"id_str": "1", "full_text": "a" * 101},  # No reply, no replies to it
-            {"id_str": "2", "full_text": "b" * 101, "in_reply_to_status_id_str": "1"},  # Reply
-            {"id_str": "3", "full_text": "c" * 101, "in_reply_to_status_id_str": None}  # Not a reply
+            {
+                "id_str": "2",
+                "full_text": "b" * 101,
+                "in_reply_to_status_id_str": "1",
+            },  # Reply
+            {
+                "id_str": "3",
+                "full_text": "c" * 101,
+                "in_reply_to_status_id_str": None,
+            },  # Not a reply
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -244,11 +249,9 @@ class TestFilteringLogic:
             {"id_str": "1", "full_text": "a" * 150},
             {"id_str": "2", "full_text": "b" * 120, "in_reply_to_status_id_str": "1"},
             {"id_str": "3", "full_text": "c" * 110, "in_reply_to_status_id_str": "2"},
-
             # Thread 2: Partial thread
             {"id_str": "4", "full_text": "d" * 200, "in_reply_to_status_id_str": "999"},
             {"id_str": "5", "full_text": "e" * 180, "in_reply_to_status_id_str": "4"},
-
             # Non-thread tweets
             {"id_str": "6", "full_text": "Short tweet"},  # Too short
             {"id_str": "7", "full_text": "f" * 150},  # Long but no thread
@@ -272,7 +275,7 @@ class TestFilteringLogic:
         (archive_path / "Your archive.html").write_text("<html></html>")
 
         tweets_json = json.dumps(tweets_data)
-        tweets_content = f'window.YTD.tweets.part0 = {tweets_json}'
+        tweets_content = f"window.YTD.tweets.part0 = {tweets_json}"
         (data_dir / "tweets.js").write_text(tweets_content)
 
         return archive_path
@@ -286,7 +289,7 @@ class TestThreadReconstruction:
         tweets_data = [
             {"id_str": "1", "full_text": "a" * 150},
             {"id_str": "2", "full_text": "b" * 150, "in_reply_to_status_id_str": "1"},
-            {"id_str": "3", "full_text": "c" * 150, "in_reply_to_status_id_str": "2"}
+            {"id_str": "3", "full_text": "c" * 150, "in_reply_to_status_id_str": "2"},
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -304,9 +307,21 @@ class TestThreadReconstruction:
         """Test reconstructing thread with multiple branches."""
         tweets_data = [
             {"id_str": "1", "full_text": "Root" + "a" * 150},
-            {"id_str": "2", "full_text": "Branch1" + "b" * 150, "in_reply_to_status_id_str": "1"},
-            {"id_str": "3", "full_text": "Branch2" + "c" * 150, "in_reply_to_status_id_str": "1"},
-            {"id_str": "4", "full_text": "Reply" + "d" * 150, "in_reply_to_status_id_str": "2"}
+            {
+                "id_str": "2",
+                "full_text": "Branch1" + "b" * 150,
+                "in_reply_to_status_id_str": "1",
+            },
+            {
+                "id_str": "3",
+                "full_text": "Branch2" + "c" * 150,
+                "in_reply_to_status_id_str": "1",
+            },
+            {
+                "id_str": "4",
+                "full_text": "Reply" + "d" * 150,
+                "in_reply_to_status_id_str": "2",
+            },
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -324,9 +339,21 @@ class TestThreadReconstruction:
         """Test reconstructing thread missing root tweet."""
         tweets_data = [
             # Missing root with id "999"
-            {"id_str": "1000", "full_text": "a" * 150, "in_reply_to_status_id_str": "999"},
-            {"id_str": "1001", "full_text": "b" * 150, "in_reply_to_status_id_str": "1000"},
-            {"id_str": "1002", "full_text": "c" * 150, "in_reply_to_status_id_str": "1001"}
+            {
+                "id_str": "1000",
+                "full_text": "a" * 150,
+                "in_reply_to_status_id_str": "999",
+            },
+            {
+                "id_str": "1001",
+                "full_text": "b" * 150,
+                "in_reply_to_status_id_str": "1000",
+            },
+            {
+                "id_str": "1002",
+                "full_text": "c" * 150,
+                "in_reply_to_status_id_str": "1001",
+            },
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -344,7 +371,11 @@ class TestThreadReconstruction:
         """Test that threads need at least 2 tweets."""
         tweets_data = [
             {"id_str": "1", "full_text": "a" * 150},  # Single tweet, no replies
-            {"id_str": "2", "full_text": "b" * 150, "in_reply_to_status_id_str": "999"},  # Single reply
+            {
+                "id_str": "2",
+                "full_text": "b" * 150,
+                "in_reply_to_status_id_str": "999",
+            },  # Single reply
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -383,7 +414,7 @@ class TestThreadReconstruction:
         (archive_path / "Your archive.html").write_text("<html></html>")
 
         tweets_json = json.dumps(tweets_data)
-        tweets_content = f'window.YTD.tweets.part0 = {tweets_json}'
+        tweets_content = f"window.YTD.tweets.part0 = {tweets_json}"
         (data_dir / "tweets.js").write_text(tweets_content)
 
         return archive_path
@@ -396,7 +427,11 @@ class TestJsonOutput:
         """Test JSON output has correct structure."""
         tweets_data = [
             {"id_str": "1", "full_text": "First tweet " + "a" * 150},
-            {"id_str": "2", "full_text": "Reply tweet " + "b" * 150, "in_reply_to_status_id_str": "1"}
+            {
+                "id_str": "2",
+                "full_text": "Reply tweet " + "b" * 150,
+                "in_reply_to_status_id_str": "1",
+            },
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -431,13 +466,14 @@ class TestJsonOutput:
         """Test JSON file is saved correctly."""
         tweets_data = [
             {"id_str": "1", "full_text": "a" * 150},
-            {"id_str": "2", "full_text": "b" * 150, "in_reply_to_status_id_str": "1"}
+            {"id_str": "2", "full_text": "b" * 150, "in_reply_to_status_id_str": "1"},
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
 
         # Change working directory to tmp_path for file creation
         import os
+
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
 
@@ -462,8 +498,16 @@ class TestJsonOutput:
         """Test smushed_text combines all tweet texts."""
         tweets_data = [
             {"id_str": "1", "full_text": "First part of thread"},
-            {"id_str": "2", "full_text": "Second part of thread", "in_reply_to_status_id_str": "1"},
-            {"id_str": "3", "full_text": "Third part of thread", "in_reply_to_status_id_str": "2"}
+            {
+                "id_str": "2",
+                "full_text": "Second part of thread",
+                "in_reply_to_status_id_str": "1",
+            },
+            {
+                "id_str": "3",
+                "full_text": "Third part of thread",
+                "in_reply_to_status_id_str": "2",
+            },
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
@@ -474,7 +518,9 @@ class TestJsonOutput:
         output = extractor.generate_json_output()
 
         thread = output["threads"][0]
-        expected_text = "First part of thread Second part of thread Third part of thread"
+        expected_text = (
+            "First part of thread Second part of thread Third part of thread"
+        )
         assert thread["smushed_text"] == expected_text
         assert thread["word_count"] == len(expected_text.split())
 
@@ -486,7 +532,7 @@ class TestJsonOutput:
         (archive_path / "Your archive.html").write_text("<html></html>")
 
         tweets_json = json.dumps(tweets_data)
-        tweets_content = f'window.YTD.tweets.part0 = {tweets_json}'
+        tweets_content = f"window.YTD.tweets.part0 = {tweets_json}"
         (data_dir / "tweets.js").write_text(tweets_content)
 
         return archive_path
@@ -501,19 +547,20 @@ class TestSampleMarkdownGeneration:
             {
                 "id_str": "1",
                 "full_text": "Long thread " + "a" * 200,
-                "created_at": "Mon Jan 15 10:30:00 +0000 2024"
+                "created_at": "Mon Jan 15 10:30:00 +0000 2024",
             },
             {
                 "id_str": "2",
                 "full_text": "Reply " + "b" * 200,
-                "in_reply_to_status_id_str": "1"
-            }
+                "in_reply_to_status_id_str": "1",
+            },
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
 
         # Change working directory
         import os
+
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
 
@@ -546,18 +593,15 @@ class TestSampleMarkdownGeneration:
             {
                 "id_str": "1",
                 "full_text": "Test thread about @user and #hashtag! More content...",
-                "created_at": "Mon Jan 15 10:30:00 +0000 2024"
+                "created_at": "Mon Jan 15 10:30:00 +0000 2024",
             },
-            {
-                "id_str": "2",
-                "full_text": "b" * 150,
-                "in_reply_to_status_id_str": "1"
-            }
+            {"id_str": "2", "full_text": "b" * 150, "in_reply_to_status_id_str": "1"},
         ]
 
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
 
         import os
+
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
 
@@ -586,7 +630,7 @@ class TestSampleMarkdownGeneration:
         (archive_path / "Your archive.html").write_text("<html></html>")
 
         tweets_json = json.dumps(tweets_data)
-        tweets_content = f'window.YTD.tweets.part0 = {tweets_json}'
+        tweets_content = f"window.YTD.tweets.part0 = {tweets_json}"
         (data_dir / "tweets.js").write_text(tweets_content)
 
         return archive_path
@@ -602,6 +646,7 @@ class TestFullPipeline:
         archive_path = self._create_archive_with_tweets(tmp_path, tweets_data)
 
         import os
+
         original_cwd = os.getcwd()
         os.chdir(tmp_path)
 
@@ -648,7 +693,7 @@ class TestFullPipeline:
             tweet = {
                 "id_str": str(i),
                 "full_text": f"Tweet {i} " + "x" * 150,
-                "created_at": f"2024-01-{(i % 28) + 1:02d}"
+                "created_at": f"2024-01-{(i % 28) + 1:02d}",
             }
             if i > 0 and i % 3 == 0:  # Every 3rd tweet is a reply
                 tweet["in_reply_to_status_id_str"] = str(i - 1)
@@ -673,45 +718,43 @@ class TestFullPipeline:
             {
                 "id_str": "100",
                 "full_text": "Discussing Kant's categorical imperative and its implications for modern ethics. This is a complex topic that requires careful consideration of multiple perspectives.",
-                "created_at": "Mon Jan 01 10:00:00 +0000 2024"
+                "created_at": "Mon Jan 01 10:00:00 +0000 2024",
             },
             {
                 "id_str": "101",
                 "full_text": "The universalizability principle suggests that moral actions must be applicable to all rational beings. This creates interesting challenges in pluralistic societies.",
                 "in_reply_to_status_id_str": "100",
-                "created_at": "Mon Jan 01 10:05:00 +0000 2024"
+                "created_at": "Mon Jan 01 10:05:00 +0000 2024",
             },
             {
                 "id_str": "102",
                 "full_text": "Critics argue that the categorical imperative is too rigid and doesn't account for contextual nuances. Virtue ethics offers a more flexible framework.",
                 "in_reply_to_status_id_str": "101",
-                "created_at": "Mon Jan 01 10:10:00 +0000 2024"
+                "created_at": "Mon Jan 01 10:10:00 +0000 2024",
             },
-
             # Thread 2: Technology critique
             {
                 "id_str": "200",
                 "full_text": "The attention economy is fundamentally reshaping human cognition. We're optimizing for engagement metrics rather than human flourishing or genuine connection.",
-                "created_at": "Tue Jan 02 14:00:00 +0000 2024"
+                "created_at": "Tue Jan 02 14:00:00 +0000 2024",
             },
             {
                 "id_str": "201",
                 "full_text": "Platform algorithms create filter bubbles that reinforce existing beliefs. This polarization threatens democratic discourse and shared understanding.",
                 "in_reply_to_status_id_str": "200",
-                "created_at": "Tue Jan 02 14:15:00 +0000 2024"
+                "created_at": "Tue Jan 02 14:15:00 +0000 2024",
             },
-
             # Non-thread tweets
             {
                 "id_str": "300",
                 "full_text": "Short tweet",
-                "created_at": "Wed Jan 03 09:00:00 +0000 2024"
+                "created_at": "Wed Jan 03 09:00:00 +0000 2024",
             },
             {
                 "id_str": "301",
                 "full_text": "Another standalone tweet that's long enough but not part of any thread structure",
-                "created_at": "Wed Jan 03 09:30:00 +0000 2024"
-            }
+                "created_at": "Wed Jan 03 09:30:00 +0000 2024",
+            },
         ]
 
     def _create_archive_with_tweets(self, tmp_path, tweets_data):
@@ -722,7 +765,7 @@ class TestFullPipeline:
         (archive_path / "Your archive.html").write_text("<html></html>")
 
         tweets_json = json.dumps(tweets_data)
-        tweets_content = f'window.YTD.tweets.part0 = {tweets_json}'
+        tweets_content = f"window.YTD.tweets.part0 = {tweets_json}"
         (data_dir / "tweets.js").write_text(tweets_content)
 
         return archive_path

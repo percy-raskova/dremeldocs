@@ -4,34 +4,33 @@ Unit tests for error_handling.py following Test-Driven Development principles.
 Tests all error handling utilities, exception classes, and standardized patterns.
 """
 
-import pytest
 import json
 import sys
 from pathlib import Path
-from unittest.mock import patch, mock_open, MagicMock, call
 from typing import Any
-import tempfile
-import os
+from unittest.mock import patch
+
+import pytest
 
 # Add scripts directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
 
 from error_handling import (
+    ConfigurationError,
     DremelDocsError,
     FileProcessingError,
-    ConfigurationError,
     ValidationError,
-    safe_execute,
-    validate_file_path,
-    validate_directory_path,
-    handle_json_error,
-    handle_file_operation_error,
-    log_processing_progress,
     graceful_exit,
-    with_error_context,
-    setup_error_handling,
+    handle_file_operation_error,
+    handle_json_error,
+    log_processing_progress,
+    safe_execute,
     safe_json_load,
-    safe_json_save
+    safe_json_save,
+    setup_error_handling,
+    validate_directory_path,
+    validate_file_path,
+    with_error_context,
 )
 
 
@@ -67,7 +66,7 @@ class TestCustomExceptions:
         errors = [
             FileProcessingError("test"),
             ConfigurationError("test"),
-            ValidationError("test")
+            ValidationError("test"),
         ]
         for error in errors:
             assert isinstance(error, DremelDocsError)
@@ -79,6 +78,7 @@ class TestSafeExecute:
 
     def test_successful_execution(self):
         """Test function executes successfully."""
+
         def good_func():
             return "success"
 
@@ -87,6 +87,7 @@ class TestSafeExecute:
 
     def test_execution_with_exception(self, capsys):
         """Test function handles exceptions."""
+
         def bad_func():
             raise ValueError("Test error")
 
@@ -99,10 +100,13 @@ class TestSafeExecute:
 
     def test_custom_error_message(self, capsys):
         """Test custom error message."""
+
         def bad_func():
             raise RuntimeError("Runtime issue")
 
-        result = safe_execute(bad_func, fallback=None, error_message="Custom error occurred")
+        result = safe_execute(
+            bad_func, fallback=None, error_message="Custom error occurred"
+        )
         assert result is None
 
         captured = capsys.readouterr()
@@ -111,6 +115,7 @@ class TestSafeExecute:
 
     def test_silent_mode(self, capsys):
         """Test silent mode suppresses output."""
+
         def bad_func():
             raise Exception("Should not appear")
 
@@ -122,6 +127,7 @@ class TestSafeExecute:
 
     def test_no_fallback(self):
         """Test with no fallback value."""
+
         def bad_func():
             raise Exception("Error")
 
@@ -130,6 +136,7 @@ class TestSafeExecute:
 
     def test_complex_return_type(self):
         """Test with complex return types."""
+
         def dict_func():
             return {"key": "value", "list": [1, 2, 3]}
 
@@ -195,7 +202,9 @@ class TestValidateDirectoryPath:
         """Test creating directory when it doesn't exist."""
         new_dir = tmp_path / "new_directory"
 
-        result = validate_directory_path(new_dir, must_exist=False, create_if_missing=True)
+        result = validate_directory_path(
+            new_dir, must_exist=False, create_if_missing=True
+        )
         assert result is True
         assert new_dir.exists()
         assert new_dir.is_dir()
@@ -208,7 +217,9 @@ class TestValidateDirectoryPath:
         missing_dir = tmp_path / "missing"
 
         with pytest.raises(ValidationError, match="Required directory does not exist"):
-            validate_directory_path(missing_dir, must_exist=True, create_if_missing=False)
+            validate_directory_path(
+                missing_dir, must_exist=True, create_if_missing=False
+            )
 
     def test_path_is_file_not_directory(self, tmp_path):
         """Test error when path is file instead of directory."""
@@ -229,7 +240,7 @@ class TestValidateDirectoryPath:
 
     def test_create_directory_permission_error(self, tmp_path):
         """Test handling permission error when creating directory."""
-        with patch('pathlib.Path.mkdir', side_effect=OSError("Permission denied")):
+        with patch("pathlib.Path.mkdir", side_effect=OSError("Permission denied")):
             bad_dir = tmp_path / "cannot_create"
 
             with pytest.raises(ValidationError, match="Could not create directory"):
@@ -406,6 +417,7 @@ class TestWithErrorContext:
 
     def test_successful_function(self):
         """Test decorator with successful function."""
+
         @with_error_context("test operation")
         def good_function(x, y):
             return x + y
@@ -415,6 +427,7 @@ class TestWithErrorContext:
 
     def test_function_with_exception(self, capsys):
         """Test decorator with failing function."""
+
         @with_error_context("calculation")
         def bad_function():
             raise ValueError("Division by zero")
@@ -428,6 +441,7 @@ class TestWithErrorContext:
 
     def test_preserves_custom_exceptions(self):
         """Test decorator preserves DremelDocsError exceptions."""
+
         @with_error_context("custom operation")
         def custom_error_function():
             raise ValidationError("Invalid input")
@@ -441,6 +455,7 @@ class TestWithErrorContext:
         sys.argv.append("--debug")
 
         try:
+
             @with_error_context("debug operation")
             def debug_function():
                 raise RuntimeError("Debug error")
@@ -456,6 +471,7 @@ class TestWithErrorContext:
 
     def test_preserves_function_signature(self):
         """Test decorator preserves function arguments."""
+
         @with_error_context("signature test")
         def parameterized_function(a, b=10, *args, **kwargs):
             return {"a": a, "b": b, "args": args, "kwargs": kwargs}
@@ -503,7 +519,6 @@ class TestSetupErrorHandling:
 
     def test_custom_excepthook_with_debug(self, capsys):
         """Test exception hook with debug mode shows traceback."""
-        import traceback as tb
 
         setup_error_handling(debug=True)
 
@@ -559,7 +574,7 @@ class TestSafeJsonLoad:
         json_file = tmp_path / "protected.json"
         json_file.write_text('{"data": "value"}')
 
-        with patch('builtins.open', side_effect=PermissionError("Access denied")):
+        with patch("builtins.open", side_effect=PermissionError("Access denied")):
             result = safe_json_load(json_file)
             assert result is None
 
@@ -573,7 +588,7 @@ class TestSafeJsonLoad:
             "nested": {"deep": {"structure": [1, 2, {"key": "value"}]}},
             "unicode": "émojis 🎉",
             "special": None,
-            "boolean": True
+            "boolean": True,
         }
         json_file.write_text(json.dumps(data, ensure_ascii=False))
 
@@ -612,7 +627,7 @@ class TestSafeJsonSave:
         json_file = tmp_path / "readonly.json"
         data = {"test": "data"}
 
-        with patch('builtins.open', side_effect=PermissionError("Cannot write")):
+        with patch("builtins.open", side_effect=PermissionError("Cannot write")):
             result = safe_json_save(data, json_file)
             assert result is False
 
@@ -621,7 +636,7 @@ class TestSafeJsonSave:
 
     def test_save_invalid_path(self, capsys):
         """Test handling invalid save path."""
-        with patch('pathlib.Path.mkdir', side_effect=OSError("Invalid path")):
+        with patch("pathlib.Path.mkdir", side_effect=OSError("Invalid path")):
             json_file = Path("/invalid/path/file.json")
             data = {"test": "data"}
 
@@ -640,7 +655,7 @@ class TestSafeJsonSave:
         assert result is True
 
         # Verify Unicode is preserved
-        saved_text = json_file.read_text(encoding='utf-8')
+        saved_text = json_file.read_text(encoding="utf-8")
         assert "世界" in saved_text
         assert "🌍" in saved_text
         assert "α β γ δ" in saved_text
@@ -674,6 +689,7 @@ class TestErrorHandlingIntegration:
 
     def test_error_context_with_safe_operations(self):
         """Test decorator with safe operations."""
+
         @with_error_context("integrated operation")
         def complex_operation():
             result = safe_execute(lambda: 10 / 2, fallback=0)
@@ -686,6 +702,7 @@ class TestErrorHandlingIntegration:
 
     def test_full_error_pipeline(self, tmp_path, capsys):
         """Test complete error handling pipeline."""
+
         @with_error_context("pipeline test")
         def data_pipeline():
             # Create test data
@@ -718,11 +735,13 @@ class TestErrorHandlingIntegration:
 
     def test_nested_error_contexts(self):
         """Test nested error context decorators."""
+
         @with_error_context("outer operation")
         def outer():
             @with_error_context("inner operation")
             def inner():
                 raise ValueError("Inner error")
+
             return inner()
 
         with pytest.raises(DremelDocsError, match="inner operation failed"):
@@ -769,6 +788,7 @@ class TestEdgeCases:
 
     def test_none_values_in_safe_execute(self):
         """Test safe_execute with None returns."""
+
         def returns_none():
             return None
 
@@ -839,11 +859,13 @@ class TestConcurrency:
     def test_concurrent_safe_execute(self):
         """Test safe_execute with concurrent calls."""
         import threading
+
         results = []
 
         def thread_function(value):
             def func():
                 return value * 2
+
             result = safe_execute(func)
             results.append(result)
 
@@ -893,10 +915,7 @@ class TestMemoryAndPerformance:
 
     def test_large_json_handling(self, tmp_path):
         """Test handling large JSON files."""
-        large_data = {
-            f"key_{i}": {"value": i, "data": "x" * 100}
-            for i in range(1000)
-        }
+        large_data = {f"key_{i}": {"value": i, "data": "x" * 100} for i in range(1000)}
 
         json_file = tmp_path / "large.json"
 

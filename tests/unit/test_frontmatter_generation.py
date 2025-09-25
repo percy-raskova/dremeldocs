@@ -5,35 +5,35 @@ Tests the YAML frontmatter generation used in the markdown output files,
 including proper field inclusion, YAML syntax validation, and special character escaping.
 """
 
+import sys
+from datetime import datetime
+from pathlib import Path
+
 import pytest
 import yaml
-import sys
-from pathlib import Path
-from datetime import datetime
 
 # Add the scripts directory to Python path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
 
 from text_utilities import (
+    calculate_reading_time,
     format_frontmatter_value,
-    parse_to_yyyymmdd,
-    generate_title,
     generate_description,
-    calculate_reading_time
+    generate_title,
+    parse_to_yyyymmdd,
 )
 
 from tests.fixtures.sample_data import (
-    SAMPLE_THREAD_DATA,
-    SAMPLE_SHORT_THREAD_DATA,
-    SAMPLE_COMPLEX_THREAD_DATA,
     EXPECTED_FRONTMATTER,
-    YAML_ESCAPING_CASES
+    SAMPLE_COMPLEX_THREAD_DATA,
+    SAMPLE_SHORT_THREAD_DATA,
+    SAMPLE_THREAD_DATA,
+    YAML_ESCAPING_CASES,
 )
-
 from tests.utils.validation import (
+    extract_frontmatter_from_content,
     validate_frontmatter_structure,
     validate_yaml_syntax,
-    extract_frontmatter_from_content
 )
 
 
@@ -57,19 +57,17 @@ class TestFrontmatterGeneration:
 
         # Build frontmatter dictionary
         frontmatter_dict = {
-            'title': title,
-            'date': {
-                'created': date_formatted
-            },
-            'categories': ['heavy_hitters'],
-            'thread_id': thread["thread_id"],
-            'word_count': thread["word_count"],
-            'reading_time': reading_time,
-            'description': description,
-            'tweet_count': thread["tweet_count"],
-            'heavy_hitter': True,
-            'thread_number': thread_number,
-            'author': "@BmoreOrganized"
+            "title": title,
+            "date": {"created": date_formatted},
+            "categories": ["heavy_hitters"],
+            "thread_id": thread["thread_id"],
+            "word_count": thread["word_count"],
+            "reading_time": reading_time,
+            "description": description,
+            "tweet_count": thread["tweet_count"],
+            "heavy_hitter": True,
+            "thread_number": thread_number,
+            "author": "@BmoreOrganized",
         }
 
         # Validate frontmatter structure
@@ -109,9 +107,17 @@ class TestFrontmatterGeneration:
     def test_frontmatter_required_fields(self):
         """Test that all required frontmatter fields are present."""
         expected_fields = {
-            'title', 'date', 'categories', 'thread_id', 'word_count',
-            'reading_time', 'description', 'tweet_count', 'heavy_hitter',
-            'thread_number', 'author'
+            "title",
+            "date",
+            "categories",
+            "thread_id",
+            "word_count",
+            "reading_time",
+            "description",
+            "tweet_count",
+            "heavy_hitter",
+            "thread_number",
+            "author",
         }
 
         # Use the expected frontmatter from fixtures
@@ -128,36 +134,37 @@ class TestFrontmatterGeneration:
 
         # Generate date structure
         date_yyyymmdd = parse_to_yyyymmdd(thread["first_tweet_date"])
-        date_formatted = f"{date_yyyymmdd[:4]}-{date_yyyymmdd[4:6]}-{date_yyyymmdd[6:8]}"
+        date_formatted = (
+            f"{date_yyyymmdd[:4]}-{date_yyyymmdd[4:6]}-{date_yyyymmdd[6:8]}"
+        )
 
-        date_structure = {
-            'created': date_formatted
-        }
+        date_structure = {"created": date_formatted}
 
         # Validate date structure
         assert isinstance(date_structure, dict)
-        assert 'created' in date_structure
-        assert isinstance(date_structure['created'], str)
+        assert "created" in date_structure
+        assert isinstance(date_structure["created"], str)
 
         # Validate date format (YYYY-MM-DD)
         import re
-        date_pattern = r'^\d{4}-\d{2}-\d{2}$'
-        assert re.match(date_pattern, date_structure['created'])
+
+        date_pattern = r"^\d{4}-\d{2}-\d{2}$"
+        assert re.match(date_pattern, date_structure["created"])
 
         # Validate date is parseable
         try:
-            datetime.strptime(date_structure['created'], '%Y-%m-%d')
+            datetime.strptime(date_structure["created"], "%Y-%m-%d")
         except ValueError:
             pytest.fail(f"Invalid date format: {date_structure['created']}")
 
     @pytest.mark.unit
     def test_frontmatter_categories_structure(self):
         """Test that categories field is properly structured."""
-        categories = ['heavy_hitters']
+        categories = ["heavy_hitters"]
 
         assert isinstance(categories, list)
         assert len(categories) >= 1
-        assert 'heavy_hitters' in categories
+        assert "heavy_hitters" in categories
 
         # All categories should be strings
         for category in categories:
@@ -171,13 +178,13 @@ class TestFrontmatterGeneration:
         test_cases = [
             'Title with "quotes" needs escaping',
             "Title with 'apostrophes' might need escaping",
-            'Title with: colons needs escaping',
-            'Title with [brackets] needs escaping',
-            'Title with {braces} needs escaping',
-            'Title with | pipe needs escaping',
-            'Title with > greater than',
-            'Title with & ampersand',
-            'Title with % percent'
+            "Title with: colons needs escaping",
+            "Title with [brackets] needs escaping",
+            "Title with {braces} needs escaping",
+            "Title with | pipe needs escaping",
+            "Title with > greater than",
+            "Title with & ampersand",
+            "Title with % percent",
         ]
 
         for test_title in test_cases:
@@ -185,8 +192,10 @@ class TestFrontmatterGeneration:
 
             # Create minimal frontmatter with escaped title
             frontmatter = {
-                'title': escaped_title,
-                'description': format_frontmatter_value(f"Description for {test_title}")
+                "title": escaped_title,
+                "description": format_frontmatter_value(
+                    f"Description for {test_title}"
+                ),
             }
 
             # Test that it serializes to valid YAML
@@ -208,26 +217,23 @@ class TestFrontmatterGeneration:
     @pytest.mark.unit
     def test_frontmatter_boolean_values(self):
         """Test that boolean values are properly handled in frontmatter."""
-        frontmatter = {
-            'heavy_hitter': True,
-            'processed': False
-        }
+        frontmatter = {"heavy_hitter": True, "processed": False}
 
         # Test YAML serialization of booleans
         yaml_content = yaml.safe_dump(frontmatter)
         parsed_back = yaml.safe_load(yaml_content)
 
-        assert parsed_back['heavy_hitter'] is True
-        assert parsed_back['processed'] is False
+        assert parsed_back["heavy_hitter"] is True
+        assert parsed_back["processed"] is False
 
     @pytest.mark.unit
     def test_frontmatter_integer_values(self):
         """Test that integer values are properly handled in frontmatter."""
         frontmatter = {
-            'word_count': 756,
-            'reading_time': 4,
-            'tweet_count': 18,
-            'thread_number': 1
+            "word_count": 756,
+            "reading_time": 4,
+            "tweet_count": 18,
+            "thread_number": 1,
         }
 
         # Test YAML serialization of integers
@@ -245,8 +251,8 @@ class TestFrontmatterGeneration:
         entities = ["Marx", "capitalism", "proletariat"]
 
         frontmatter = {
-            'title': 'Test title',
-            'entities': format_frontmatter_value(entities)
+            "title": "Test title",
+            "entities": format_frontmatter_value(entities),
         }
 
         # Test YAML serialization
@@ -267,19 +273,17 @@ class TestFrontmatterGeneration:
 
         # Build frontmatter
         frontmatter_dict = {
-            'title': format_frontmatter_value(title),
-            'date': {
-                'created': '2023-11-15'
-            },
-            'categories': ['heavy_hitters'],
-            'thread_id': format_frontmatter_value(thread["thread_id"]),
-            'word_count': thread["word_count"],
-            'reading_time': reading_time,
-            'description': format_frontmatter_value(description),
-            'tweet_count': thread["tweet_count"],
-            'heavy_hitter': True,
-            'thread_number': 1,
-            'author': format_frontmatter_value("@BmoreOrganized")
+            "title": format_frontmatter_value(title),
+            "date": {"created": "2023-11-15"},
+            "categories": ["heavy_hitters"],
+            "thread_id": format_frontmatter_value(thread["thread_id"]),
+            "word_count": thread["word_count"],
+            "reading_time": reading_time,
+            "description": format_frontmatter_value(description),
+            "tweet_count": thread["tweet_count"],
+            "heavy_hitter": True,
+            "thread_number": 1,
+            "author": format_frontmatter_value("@BmoreOrganized"),
         }
 
         # Create complete markdown content
@@ -314,18 +318,18 @@ class TestFrontmatterVariations:
         reading_time = calculate_reading_time(thread["smushed_text"])
 
         frontmatter_dict = {
-            'title': format_frontmatter_value(title),
-            'word_count': thread["word_count"],
-            'reading_time': reading_time,
-            'description': format_frontmatter_value(description),
-            'tweet_count': thread["tweet_count"]
+            "title": format_frontmatter_value(title),
+            "word_count": thread["word_count"],
+            "reading_time": reading_time,
+            "description": format_frontmatter_value(description),
+            "tweet_count": thread["tweet_count"],
         }
 
         # Even short threads should have valid frontmatter
-        assert isinstance(frontmatter_dict['title'], str)
-        assert frontmatter_dict['word_count'] > 0
-        assert frontmatter_dict['reading_time'] >= 1  # Minimum 1 minute
-        assert isinstance(frontmatter_dict['description'], str)
+        assert isinstance(frontmatter_dict["title"], str)
+        assert frontmatter_dict["word_count"] > 0
+        assert frontmatter_dict["reading_time"] >= 1  # Minimum 1 minute
+        assert isinstance(frontmatter_dict["description"], str)
 
     @pytest.mark.unit
     def test_complex_thread_frontmatter(self):
@@ -340,10 +344,7 @@ class TestFrontmatterVariations:
         escaped_description = format_frontmatter_value(description)
 
         # Test that escaping works for complex content
-        frontmatter_dict = {
-            'title': escaped_title,
-            'description': escaped_description
-        }
+        frontmatter_dict = {"title": escaped_title, "description": escaped_description}
 
         yaml_content = yaml.safe_dump(frontmatter_dict)
         yaml_error = validate_yaml_syntax(yaml_content)
@@ -352,7 +353,11 @@ class TestFrontmatterVariations:
     @pytest.mark.unit
     def test_frontmatter_consistency_across_threads(self):
         """Test that frontmatter structure is consistent across different threads."""
-        threads = [SAMPLE_THREAD_DATA, SAMPLE_SHORT_THREAD_DATA, SAMPLE_COMPLEX_THREAD_DATA]
+        threads = [
+            SAMPLE_THREAD_DATA,
+            SAMPLE_SHORT_THREAD_DATA,
+            SAMPLE_COMPLEX_THREAD_DATA,
+        ]
 
         frontmatter_structures = []
 
@@ -362,26 +367,28 @@ class TestFrontmatterVariations:
             reading_time = calculate_reading_time(thread["smushed_text"])
 
             frontmatter_dict = {
-                'title': format_frontmatter_value(title),
-                'date': {'created': '2023-11-15'},
-                'categories': ['heavy_hitters'],
-                'thread_id': format_frontmatter_value(thread["thread_id"]),
-                'word_count': thread["word_count"],
-                'reading_time': reading_time,
-                'description': format_frontmatter_value(description),
-                'tweet_count': thread["tweet_count"],
-                'heavy_hitter': True,
-                'thread_number': i + 1,
-                'author': format_frontmatter_value("@BmoreOrganized")
+                "title": format_frontmatter_value(title),
+                "date": {"created": "2023-11-15"},
+                "categories": ["heavy_hitters"],
+                "thread_id": format_frontmatter_value(thread["thread_id"]),
+                "word_count": thread["word_count"],
+                "reading_time": reading_time,
+                "description": format_frontmatter_value(description),
+                "tweet_count": thread["tweet_count"],
+                "heavy_hitter": True,
+                "thread_number": i + 1,
+                "author": format_frontmatter_value("@BmoreOrganized"),
             }
 
             frontmatter_structures.append(set(frontmatter_dict.keys()))
 
             # Validate each frontmatter
             errors = validate_frontmatter_structure(frontmatter_dict)
-            assert len(errors) == 0, f"Thread {i+1} frontmatter errors: {errors}"
+            assert len(errors) == 0, f"Thread {i + 1} frontmatter errors: {errors}"
 
         # All frontmatter should have the same structure (same keys)
         first_structure = frontmatter_structures[0]
         for i, structure in enumerate(frontmatter_structures[1:], 1):
-            assert structure == first_structure, f"Thread {i+1} has different frontmatter structure"
+            assert structure == first_structure, (
+                f"Thread {i + 1} has different frontmatter structure"
+            )

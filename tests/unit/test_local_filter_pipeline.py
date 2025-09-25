@@ -5,15 +5,14 @@ Tests are designed to be comprehensive, isolated, and fast.
 """
 
 import json
-import pytest
-from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock, mock_open
-from typing import Dict, Any, List
-import tempfile
-import shutil
 
 # Add scripts directory to path for imports
 import sys
+from pathlib import Path
+from unittest.mock import Mock, mock_open, patch
+
+import pytest
+
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
 
 from local_filter_pipeline import LocalThreadExtractor
@@ -31,7 +30,7 @@ class TestLocalThreadExtractorInit:
 
         # Create tweets.js with valid header
         tweets_file = archive_dir / "data" / "tweets.js"
-        tweets_file.write_text('window.YTD.tweets.part0 = []')
+        tweets_file.write_text("window.YTD.tweets.part0 = []")
 
         # Create archive.html
         (archive_dir / "archive.html").write_text("<html></html>")
@@ -108,7 +107,7 @@ class TestLocalThreadExtractorInit:
         archive_dir = tmp_path / "archive"
         archive_dir.mkdir()
         (archive_dir / "data").mkdir()
-        (archive_dir / "data" / "tweets.js").write_text('window.YTD.tweets.part0 = []')
+        (archive_dir / "data" / "tweets.js").write_text("window.YTD.tweets.part0 = []")
         (archive_dir / "Your archive.html").write_text("<html></html>")
 
         # Should initialize without errors
@@ -123,9 +122,25 @@ class TestStreamTweets:
     def mock_tweets_data(self):
         """Sample tweets data for testing."""
         return [
-            {"tweet": {"id_str": "1", "full_text": "First tweet", "created_at": "2024-01-01"}},
-            {"tweet": {"id_str": "2", "full_text": "Second tweet", "created_at": "2024-01-02"}},
-            {"id_str": "3", "full_text": "Third tweet without wrapper", "created_at": "2024-01-03"}
+            {
+                "tweet": {
+                    "id_str": "1",
+                    "full_text": "First tweet",
+                    "created_at": "2024-01-01",
+                }
+            },
+            {
+                "tweet": {
+                    "id_str": "2",
+                    "full_text": "Second tweet",
+                    "created_at": "2024-01-02",
+                }
+            },
+            {
+                "id_str": "3",
+                "full_text": "Third tweet without wrapper",
+                "created_at": "2024-01-03",
+            },
         ]
 
     def test_stream_tweets_with_wrapper(self, tmp_path, mock_tweets_data):
@@ -133,7 +148,7 @@ class TestStreamTweets:
         archive_dir = self._setup_archive(tmp_path)
 
         # Create tweets.js with wrapped format
-        tweets_js = 'window.YTD.tweets.part0 = ' + json.dumps(mock_tweets_data)
+        tweets_js = "window.YTD.tweets.part0 = " + json.dumps(mock_tweets_data)
         (archive_dir / "data" / "tweets.js").write_text(tweets_js)
 
         extractor = LocalThreadExtractor(archive_dir)
@@ -149,9 +164,11 @@ class TestStreamTweets:
         archive_dir = self._setup_archive(tmp_path)
 
         # Create a large tweets file
-        large_tweets = [{"tweet": {"id_str": str(i), "full_text": f"Tweet {i}"}}
-                       for i in range(5000)]
-        tweets_js = 'window.YTD.tweets.part0 = ' + json.dumps(large_tweets)
+        large_tweets = [
+            {"tweet": {"id_str": str(i), "full_text": f"Tweet {i}"}}
+            for i in range(5000)
+        ]
+        tweets_js = "window.YTD.tweets.part0 = " + json.dumps(large_tweets)
         (archive_dir / "data" / "tweets.js").write_bytes(tweets_js.encode())
 
         extractor = LocalThreadExtractor(archive_dir)
@@ -170,7 +187,9 @@ class TestStreamTweets:
         archive_dir = self._setup_archive(tmp_path)
 
         # Create tweets.js without proper JSON array
-        (archive_dir / "data" / "tweets.js").write_text('window.YTD.tweets.part0 = "not an array"')
+        (archive_dir / "data" / "tweets.js").write_text(
+            'window.YTD.tweets.part0 = "not an array"'
+        )
 
         extractor = LocalThreadExtractor(archive_dir)
         with pytest.raises(ValueError) as exc_info:
@@ -206,23 +225,21 @@ class TestFiltering:
         extractor = Mock(spec=LocalThreadExtractor)
         tweet_no_text = {"id_str": "123"}
 
-        assert LocalThreadExtractor.apply_stage1_filter(extractor, tweet_no_text) is False
+        assert (
+            LocalThreadExtractor.apply_stage1_filter(extractor, tweet_no_text) is False
+        )
 
     def test_stage2_filter_detects_replies(self):
         """Test stage 2 filter detects reply tweets."""
         extractor = Mock(spec=LocalThreadExtractor)
 
-        tweet_reply = {
-            "id_str": "2",
-            "in_reply_to_status_id_str": "1"
-        }
-        tweet_not_reply = {
-            "id_str": "3",
-            "in_reply_to_status_id_str": None
-        }
+        tweet_reply = {"id_str": "2", "in_reply_to_status_id_str": "1"}
+        tweet_not_reply = {"id_str": "3", "in_reply_to_status_id_str": None}
 
         assert LocalThreadExtractor.apply_stage2_filter(extractor, tweet_reply) is True
-        assert LocalThreadExtractor.apply_stage2_filter(extractor, tweet_not_reply) is True  # Has id_str
+        assert (
+            LocalThreadExtractor.apply_stage2_filter(extractor, tweet_not_reply) is True
+        )  # Has id_str
 
     def test_process_tweets_integration(self, tmp_path):
         """Test the complete tweet processing pipeline."""
@@ -249,12 +266,24 @@ class TestFiltering:
         # Create sample tweets with various characteristics
         tweets = [
             {"tweet": {"id_str": "1", "full_text": "x" * 101}},  # Long, no reply
-            {"tweet": {"id_str": "2", "full_text": "x" * 101, "in_reply_to_status_id_str": "1"}},  # Reply
+            {
+                "tweet": {
+                    "id_str": "2",
+                    "full_text": "x" * 101,
+                    "in_reply_to_status_id_str": "1",
+                }
+            },  # Reply
             {"tweet": {"id_str": "3", "full_text": "x" * 50}},  # Too short
-            {"tweet": {"id_str": "4", "full_text": "x" * 101, "in_reply_to_status_id_str": "2"}},  # Thread
+            {
+                "tweet": {
+                    "id_str": "4",
+                    "full_text": "x" * 101,
+                    "in_reply_to_status_id_str": "2",
+                }
+            },  # Thread
         ]
 
-        tweets_js = 'window.YTD.tweets.part0 = ' + json.dumps(tweets)
+        tweets_js = "window.YTD.tweets.part0 = " + json.dumps(tweets)
         (archive_dir / "data" / "tweets.js").write_text(tweets_js)
 
         return archive_dir
@@ -268,8 +297,16 @@ class TestThreadReconstruction:
         extractor = Mock(spec=LocalThreadExtractor)
         extractor.tweets_by_id = {
             "1": {"id_str": "1", "full_text": "Root tweet"},
-            "2": {"id_str": "2", "full_text": "Reply 1", "in_reply_to_status_id_str": "1"},
-            "3": {"id_str": "3", "full_text": "Reply 2", "in_reply_to_status_id_str": "1"}
+            "2": {
+                "id_str": "2",
+                "full_text": "Reply 1",
+                "in_reply_to_status_id_str": "1",
+            },
+            "3": {
+                "id_str": "3",
+                "full_text": "Reply 2",
+                "in_reply_to_status_id_str": "1",
+            },
         }
         extractor.reply_map = {"1": ["2", "3"]}
 
@@ -285,8 +322,16 @@ class TestThreadReconstruction:
         """Test building a partial thread from middle."""
         extractor = Mock(spec=LocalThreadExtractor)
         extractor.tweets_by_id = {
-            "2": {"id_str": "2", "full_text": "Middle", "in_reply_to_status_id_str": "1"},
-            "3": {"id_str": "3", "full_text": "Reply", "in_reply_to_status_id_str": "2"}
+            "2": {
+                "id_str": "2",
+                "full_text": "Middle",
+                "in_reply_to_status_id_str": "1",
+            },
+            "3": {
+                "id_str": "3",
+                "full_text": "Reply",
+                "in_reply_to_status_id_str": "2",
+            },
         }
         extractor.reply_map = {"2": ["3"]}
 
@@ -316,7 +361,7 @@ class TestThreadReconstruction:
         extractor.threads = [
             [{"created_at": "2024-01-03"}],
             [{"created_at": "2024-01-01"}],
-            [{"created_at": "2024-01-02"}]
+            [{"created_at": "2024-01-02"}],
         ]
         extractor.tweets_by_id = {}
         extractor.reply_map = {}
@@ -336,14 +381,32 @@ class TestThreadReconstruction:
 
         # Create a thread
         tweets = [
-            {"tweet": {"id_str": "1", "full_text": "x" * 101, "created_at": "2024-01-01"}},
-            {"tweet": {"id_str": "2", "full_text": "x" * 101, "created_at": "2024-01-02",
-                      "in_reply_to_status_id_str": "1"}},
-            {"tweet": {"id_str": "3", "full_text": "x" * 101, "created_at": "2024-01-03",
-                      "in_reply_to_status_id_str": "2"}},
+            {
+                "tweet": {
+                    "id_str": "1",
+                    "full_text": "x" * 101,
+                    "created_at": "2024-01-01",
+                }
+            },
+            {
+                "tweet": {
+                    "id_str": "2",
+                    "full_text": "x" * 101,
+                    "created_at": "2024-01-02",
+                    "in_reply_to_status_id_str": "1",
+                }
+            },
+            {
+                "tweet": {
+                    "id_str": "3",
+                    "full_text": "x" * 101,
+                    "created_at": "2024-01-03",
+                    "in_reply_to_status_id_str": "2",
+                }
+            },
         ]
 
-        tweets_js = 'window.YTD.tweets.part0 = ' + json.dumps(tweets)
+        tweets_js = "window.YTD.tweets.part0 = " + json.dumps(tweets)
         (archive_dir / "data" / "tweets.js").write_text(tweets_js)
 
         return archive_dir
@@ -358,7 +421,7 @@ class TestOutputGeneration:
         extractor.filtered_tweets = [{"id_str": "1"}, {"id_str": "2"}]
         extractor.threads = [
             [{"id_str": "1", "full_text": "Tweet 1", "created_at": "2024-01-01"}],
-            [{"id_str": "2", "full_text": "Tweet 2", "created_at": "2024-01-02"}]
+            [{"id_str": "2", "full_text": "Tweet 2", "created_at": "2024-01-02"}],
         ]
 
         # Create the output directory
@@ -367,11 +430,13 @@ class TestOutputGeneration:
         output_file = output_dir / "filtered_threads.json"
 
         # Mock Path and open to use tmp_path
-        with patch('local_filter_pipeline.Path') as mock_path:
+        with patch("local_filter_pipeline.Path") as mock_path:
             # Make Path constructor return the actual tmp_path based object when called
-            mock_path.side_effect = lambda x: output_file if "filtered_threads" in x else tmp_path / x
+            mock_path.side_effect = (
+                lambda x: output_file if "filtered_threads" in x else tmp_path / x
+            )
 
-            with patch('builtins.open', mock_open()) as mock_file:
+            with patch("builtins.open", mock_open()) as mock_file:
                 output = LocalThreadExtractor.generate_json_output(extractor)
 
         assert "metadata" in output
@@ -394,13 +459,12 @@ class TestOutputGeneration:
         thread = [
             {"full_text": "First part"},
             {"full_text": "Second part"},
-            {"full_text": "Third part"}
+            {"full_text": "Third part"},
         ]
         extractor.threads = [thread]
         extractor.filtered_tweets = []
 
-        with patch('local_filter_pipeline.Path'), \
-             patch('builtins.open', mock_open()):
+        with patch("local_filter_pipeline.Path"), patch("builtins.open", mock_open()):
             output = LocalThreadExtractor.generate_json_output(extractor)
 
         smushed = output["threads"][0]["smushed_text"]
@@ -410,19 +474,33 @@ class TestOutputGeneration:
         """Test markdown generation."""
         extractor = Mock(spec=LocalThreadExtractor)
         extractor.threads = [
-            [{"full_text": "Long tweet " * 20, "created_at": "2024-01-01 12:00:00", "id_str": "1"}],
-            [{"full_text": "Short", "created_at": "2024-01-02 13:00:00", "id_str": "2"}]
+            [
+                {
+                    "full_text": "Long tweet " * 20,
+                    "created_at": "2024-01-01 12:00:00",
+                    "id_str": "1",
+                }
+            ],
+            [
+                {
+                    "full_text": "Short",
+                    "created_at": "2024-01-02 13:00:00",
+                    "id_str": "2",
+                }
+            ],
         ]
 
         # Create sample directory
         sample_dir = tmp_path / "data" / "sample_threads"
         sample_dir.mkdir(parents=True)
 
-        with patch('local_filter_pipeline.Path') as mock_path:
+        with patch("local_filter_pipeline.Path") as mock_path:
             # Return the actual directory that exists
-            mock_path.side_effect = lambda x: sample_dir if "sample_threads" in x else tmp_path / x
+            mock_path.side_effect = (
+                lambda x: sample_dir if "sample_threads" in x else tmp_path / x
+            )
 
-            with patch('builtins.open', mock_open()) as mock_file:
+            with patch("builtins.open", mock_open()) as mock_file:
                 LocalThreadExtractor.generate_sample_markdown(extractor, sample_count=2)
 
                 # Check that files were created
@@ -431,15 +509,18 @@ class TestOutputGeneration:
     def test_markdown_filename_sanitization(self):
         """Test that markdown filenames are properly sanitized."""
         extractor = Mock(spec=LocalThreadExtractor)
-        thread = [{
-            "full_text": "This has special chars!@#$%^&*()",
-            "created_at": "2024-01-01 12:00:00",
-            "id_str": "1"
-        }]
+        thread = [
+            {
+                "full_text": "This has special chars!@#$%^&*()",
+                "created_at": "2024-01-01 12:00:00",
+                "id_str": "1",
+            }
+        ]
         extractor.threads = [thread]
 
-        with patch('local_filter_pipeline.Path'), \
-             patch('builtins.open', mock_open()) as mock_file:
+        with patch("local_filter_pipeline.Path"), patch(
+            "builtins.open", mock_open()
+        ) as mock_file:
             LocalThreadExtractor.generate_sample_markdown(extractor, sample_count=1)
 
             # Get the filename used
@@ -462,7 +543,7 @@ class TestRunPipeline:
         extractor = LocalThreadExtractor(archive_dir)
 
         # Mock the output directory creation
-        with patch('local_filter_pipeline.Path.mkdir'):
+        with patch("local_filter_pipeline.Path.mkdir"):
             output = extractor.run_pipeline()
 
         assert output is not None
@@ -481,7 +562,7 @@ class TestRunPipeline:
         output_dir.mkdir(exist_ok=True)
 
         # Patch Path to use our tmp_path for output
-        with patch('local_filter_pipeline.Path') as mock_path:
+        with patch("local_filter_pipeline.Path") as mock_path:
             # Configure the mock to handle different paths
             def path_side_effect(path_str):
                 if "data/filtered_threads.json" in str(path_str):
@@ -515,14 +596,14 @@ class TestRunPipeline:
                 "tweet": {
                     "id_str": str(i),
                     "full_text": f"This is tweet number {i} " + "x" * 100,
-                    "created_at": f"2024-01-{i+1:02d} 12:00:00"
+                    "created_at": f"2024-01-{i + 1:02d} 12:00:00",
                 }
             }
             if i > 0 and i % 2 == 0:
                 tweet["tweet"]["in_reply_to_status_id_str"] = str(i - 1)
             tweets.append(tweet)
 
-        tweets_js = 'window.YTD.tweets.part0 = ' + json.dumps(tweets)
+        tweets_js = "window.YTD.tweets.part0 = " + json.dumps(tweets)
         (archive_dir / "data" / "tweets.js").write_text(tweets_js)
 
         return archive_dir
@@ -539,7 +620,7 @@ class TestErrorHandling:
         (archive_dir / "archive.html").write_text("<html></html>")
 
         # Create corrupted file (binary data)
-        (archive_dir / "data" / "tweets.js").write_bytes(b'\x00\x01\x02\x03')
+        (archive_dir / "data" / "tweets.js").write_bytes(b"\x00\x01\x02\x03")
 
         with pytest.raises(ValueError) as exc_info:
             LocalThreadExtractor(archive_dir)
@@ -548,9 +629,7 @@ class TestErrorHandling:
     def test_empty_thread_handling(self):
         """Test that empty threads are not included."""
         extractor = Mock(spec=LocalThreadExtractor)
-        extractor.tweets_by_id = {
-            "1": {"id_str": "1", "full_text": "Single tweet"}
-        }
+        extractor.tweets_by_id = {"1": {"id_str": "1", "full_text": "Single tweet"}}
         extractor.reply_map = {}
         extractor.threads = []
         extractor.filtered_tweets = []
@@ -575,7 +654,9 @@ class TestErrorHandling:
 
         # Should handle gracefully
         assert LocalThreadExtractor.apply_stage2_filter(extractor, tweet_no_id) is False
-        assert LocalThreadExtractor.apply_stage1_filter(extractor, tweet_no_text) is False
+        assert (
+            LocalThreadExtractor.apply_stage1_filter(extractor, tweet_no_text) is False
+        )
 
 
 class TestPerformance:
@@ -589,9 +670,11 @@ class TestPerformance:
         (archive_dir / "archive.html").write_text("<html></html>")
 
         # Create file with 2000 tweets to trigger progress printing
-        tweets = [{"tweet": {"id_str": str(i), "full_text": f"Tweet {i}"}}
-                 for i in range(2000)]
-        tweets_js = 'window.YTD.tweets.part0 = ' + json.dumps(tweets)
+        tweets = [
+            {"tweet": {"id_str": str(i), "full_text": f"Tweet {i}"}}
+            for i in range(2000)
+        ]
+        tweets_js = "window.YTD.tweets.part0 = " + json.dumps(tweets)
         (archive_dir / "data" / "tweets.js").write_text(tweets_js)
 
         extractor = LocalThreadExtractor(archive_dir)
@@ -640,32 +723,35 @@ def complete_archive(tmp_path):
         {
             "tweet": {
                 "id_str": "1000",
-                "full_text": "This is the start of an interesting thread about Python testing. " * 3,
+                "full_text": "This is the start of an interesting thread about Python testing. "
+                * 3,
                 "created_at": "Wed Nov 15 14:23:45 +0000 2023",
-                "user": {"screen_name": "testuser"}
+                "user": {"screen_name": "testuser"},
             }
         },
         {
             "tweet": {
                 "id_str": "1001",
-                "full_text": "Continuing the thread: Test-driven development is crucial for quality. " * 3,
+                "full_text": "Continuing the thread: Test-driven development is crucial for quality. "
+                * 3,
                 "created_at": "Wed Nov 15 14:25:00 +0000 2023",
                 "in_reply_to_status_id_str": "1000",
-                "user": {"screen_name": "testuser"}
+                "user": {"screen_name": "testuser"},
             }
         },
         {
             "tweet": {
                 "id_str": "1002",
-                "full_text": "Finally, always write tests first before implementation. " * 3,
+                "full_text": "Finally, always write tests first before implementation. "
+                * 3,
                 "created_at": "Wed Nov 15 14:26:00 +0000 2023",
                 "in_reply_to_status_id_str": "1001",
-                "user": {"screen_name": "testuser"}
+                "user": {"screen_name": "testuser"},
             }
-        }
+        },
     ]
 
-    tweets_js = 'window.YTD.tweets.part0 = ' + json.dumps(tweets)
+    tweets_js = "window.YTD.tweets.part0 = " + json.dumps(tweets)
     (archive_dir / "data" / "tweets.js").write_text(tweets_js)
 
     return archive_dir
@@ -673,7 +759,7 @@ def complete_archive(tmp_path):
 
 def test_integration_complete_flow(complete_archive, tmp_path):
     """Integration test for complete pipeline flow."""
-    with patch('local_filter_pipeline.Path') as mock_path:
+    with patch("local_filter_pipeline.Path") as mock_path:
         # Mock output paths
         mock_path.side_effect = lambda x: tmp_path / x if isinstance(x, str) else x
 

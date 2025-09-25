@@ -3,10 +3,10 @@ Validation utilities for testing the Twitter archive processing pipeline.
 """
 
 import re
+from typing import Any, Dict, List, Optional
+
 import yaml
-from pathlib import Path
-from typing import Dict, Any, List, Optional
-from datetime import datetime
+
 
 def validate_filename_format(filename: str) -> bool:
     """
@@ -18,8 +18,9 @@ def validate_filename_format(filename: str) -> bool:
     Returns:
         bool: True if filename matches expected format
     """
-    pattern = r'^\d{3}-\d{8}-[a-zA-Z0-9_]+\.md$'
+    pattern = r"^\d{3}-\d{8}-[a-zA-Z0-9_]+\.md$"
     return bool(re.match(pattern, filename))
+
 
 def validate_frontmatter_structure(frontmatter: Dict[str, Any]) -> List[str]:
     """
@@ -33,17 +34,17 @@ def validate_frontmatter_structure(frontmatter: Dict[str, Any]) -> List[str]:
     """
     errors = []
     required_fields = {
-        'title': str,
-        'date': dict,
-        'categories': list,
-        'thread_id': str,
-        'word_count': int,
-        'reading_time': int,
-        'description': str,
-        'tweet_count': int,
-        'heavy_hitter': bool,
-        'thread_number': int,
-        'author': str
+        "title": str,
+        "date": dict,
+        "categories": list,
+        "thread_id": str,
+        "word_count": int,
+        "reading_time": int,
+        "description": str,
+        "tweet_count": int,
+        "heavy_hitter": bool,
+        "thread_number": int,
+        "author": str,
     }
 
     # Check required fields exist and have correct types
@@ -51,34 +52,37 @@ def validate_frontmatter_structure(frontmatter: Dict[str, Any]) -> List[str]:
         if field not in frontmatter:
             errors.append(f"Missing required field: {field}")
         elif not isinstance(frontmatter[field], expected_type):
-            errors.append(f"Field '{field}' should be {expected_type.__name__}, got {type(frontmatter[field]).__name__}")
+            errors.append(
+                f"Field '{field}' should be {expected_type.__name__}, got {type(frontmatter[field]).__name__}"
+            )
 
     # Validate date structure
-    if 'date' in frontmatter and isinstance(frontmatter['date'], dict):
-        if 'created' not in frontmatter['date']:
+    if "date" in frontmatter and isinstance(frontmatter["date"], dict):
+        if "created" not in frontmatter["date"]:
             errors.append("Date field missing 'created' key")
         else:
             # Validate date format YYYY-MM-DD
-            date_pattern = r'^\d{4}-\d{2}-\d{2}$'
-            if not re.match(date_pattern, str(frontmatter['date']['created'])):
+            date_pattern = r"^\d{4}-\d{2}-\d{2}$"
+            if not re.match(date_pattern, str(frontmatter["date"]["created"])):
                 errors.append("Date 'created' field must be in YYYY-MM-DD format")
 
     # Validate categories contains heavy_hitters
-    if 'categories' in frontmatter and isinstance(frontmatter['categories'], list):
-        if 'heavy_hitters' not in frontmatter['categories']:
+    if "categories" in frontmatter and isinstance(frontmatter["categories"], list):
+        if "heavy_hitters" not in frontmatter["categories"]:
             errors.append("Categories must include 'heavy_hitters'")
 
     # Validate reading_time is positive
-    if 'reading_time' in frontmatter and isinstance(frontmatter['reading_time'], int):
-        if frontmatter['reading_time'] <= 0:
+    if "reading_time" in frontmatter and isinstance(frontmatter["reading_time"], int):
+        if frontmatter["reading_time"] <= 0:
             errors.append("Reading time must be positive")
 
     # Validate word_count is positive
-    if 'word_count' in frontmatter and isinstance(frontmatter['word_count'], int):
-        if frontmatter['word_count'] <= 0:
+    if "word_count" in frontmatter and isinstance(frontmatter["word_count"], int):
+        if frontmatter["word_count"] <= 0:
             errors.append("Word count must be positive")
 
     return errors
+
 
 def validate_yaml_syntax(yaml_content: str) -> Optional[str]:
     """
@@ -94,7 +98,8 @@ def validate_yaml_syntax(yaml_content: str) -> Optional[str]:
         yaml.safe_load(yaml_content)
         return None
     except yaml.YAMLError as e:
-        return f"YAML syntax error: {str(e)}"
+        return f"YAML syntax error: {e!s}"
+
 
 def validate_markdown_structure(content: str) -> List[str]:
     """
@@ -107,17 +112,17 @@ def validate_markdown_structure(content: str) -> List[str]:
         List of validation error messages (empty if valid)
     """
     errors = []
-    lines = content.split('\n')
+    lines = content.split("\n")
 
     # Check for frontmatter boundaries
-    if not lines[0].strip() == '---':
+    if not lines[0].strip() == "---":
         errors.append("Content must start with frontmatter delimiter '---'")
         return errors
 
     # Find end of frontmatter
     frontmatter_end = None
     for i, line in enumerate(lines[1:], 1):
-        if line.strip() == '---':
+        if line.strip() == "---":
             frontmatter_end = i
             break
 
@@ -126,7 +131,7 @@ def validate_markdown_structure(content: str) -> List[str]:
         return errors
 
     # Extract and validate frontmatter
-    frontmatter_content = '\n'.join(lines[1:frontmatter_end])
+    frontmatter_content = "\n".join(lines[1:frontmatter_end])
     yaml_error = validate_yaml_syntax(frontmatter_content)
     if yaml_error:
         errors.append(f"Frontmatter YAML error: {yaml_error}")
@@ -137,11 +142,11 @@ def validate_markdown_structure(content: str) -> List[str]:
         frontmatter_errors = validate_frontmatter_structure(frontmatter_data)
         errors.extend(frontmatter_errors)
     except Exception as e:
-        errors.append(f"Error parsing frontmatter: {str(e)}")
+        errors.append(f"Error parsing frontmatter: {e!s}")
 
     # Check for main content
-    content_lines = lines[frontmatter_end + 1:]
-    content_text = '\n'.join(content_lines).strip()
+    content_lines = lines[frontmatter_end + 1 :]
+    content_text = "\n".join(content_lines).strip()
 
     if not content_text:
         errors.append("Content must have body text after frontmatter")
@@ -149,14 +154,17 @@ def validate_markdown_structure(content: str) -> List[str]:
     # Check for thread title (should start with # Thread #N:)
     title_found = False
     for line in content_lines:
-        if line.strip().startswith('# Thread #'):
+        if line.strip().startswith("# Thread #"):
             title_found = True
             break
 
     if not title_found:
-        errors.append("Content should contain a thread title starting with '# Thread #'")
+        errors.append(
+            "Content should contain a thread title starting with '# Thread #'"
+        )
 
     return errors
+
 
 def validate_reading_time_calculation(text: str, calculated_time: int) -> bool:
     """
@@ -177,6 +185,7 @@ def validate_reading_time_calculation(text: str, calculated_time: int) -> bool:
 
     return min_time <= calculated_time <= max_time
 
+
 def validate_smushed_text_quality(smushed_text: str) -> List[str]:
     """
     Validate that smushed text appears to be properly processed.
@@ -190,29 +199,30 @@ def validate_smushed_text_quality(smushed_text: str) -> List[str]:
     issues = []
 
     # Check for common artifacts that should be cleaned
-    if '@' in smushed_text and smushed_text.count('@') > 2:
+    if "@" in smushed_text and smushed_text.count("@") > 2:
         issues.append("Text contains many @ mentions - may not be properly cleaned")
 
-    if '#' in smushed_text and smushed_text.count('#') > 5:
+    if "#" in smushed_text and smushed_text.count("#") > 5:
         issues.append("Text contains many hashtags - may not be properly cleaned")
 
-    if 'http' in smushed_text.lower():
+    if "http" in smushed_text.lower():
         issues.append("Text contains URLs - should be cleaned")
 
     # Check for reasonable sentence structure
-    sentences = smushed_text.split('.')
+    sentences = smushed_text.split(".")
     if len(sentences) < 3 and len(smushed_text) > 200:
         issues.append("Long text with very few sentences - may have processing issues")
 
     # Check for excessive whitespace
-    if '  ' in smushed_text:
+    if "  " in smushed_text:
         issues.append("Text contains multiple consecutive spaces")
 
     # Check for common formatting artifacts
-    if smushed_text.count('\n') > len(smushed_text) // 100:
+    if smushed_text.count("\n") > len(smushed_text) // 100:
         issues.append("Text contains many newlines - may not be properly smushed")
 
     return issues
+
 
 def extract_frontmatter_from_content(content: str) -> Optional[Dict[str, Any]]:
     """
@@ -224,21 +234,22 @@ def extract_frontmatter_from_content(content: str) -> Optional[Dict[str, Any]]:
     Returns:
         Parsed frontmatter dictionary or None if extraction fails
     """
-    lines = content.split('\n')
+    lines = content.split("\n")
 
-    if not lines[0].strip() == '---':
+    if not lines[0].strip() == "---":
         return None
 
     # Find end of frontmatter
     for i, line in enumerate(lines[1:], 1):
-        if line.strip() == '---':
-            frontmatter_content = '\n'.join(lines[1:i])
+        if line.strip() == "---":
+            frontmatter_content = "\n".join(lines[1:i])
             try:
                 return yaml.safe_load(frontmatter_content)
             except yaml.YAMLError:
                 return None
 
     return None
+
 
 def validate_thread_id_format(thread_id: str) -> bool:
     """
@@ -251,8 +262,9 @@ def validate_thread_id_format(thread_id: str) -> bool:
         bool: True if format is valid
     """
     # Allow various formats: thread_123, thread_abc_123, etc.
-    pattern = r'^thread_[a-zA-Z0-9_]+$'
+    pattern = r"^thread_[a-zA-Z0-9_]+$"
     return bool(re.match(pattern, thread_id))
+
 
 def validate_tweet_ids_format(tweet_ids: List[str]) -> List[str]:
     """
@@ -266,7 +278,7 @@ def validate_tweet_ids_format(tweet_ids: List[str]) -> List[str]:
     """
     invalid_ids = []
     # Twitter tweet IDs are numeric strings, typically 18-19 digits
-    pattern = r'^\d{15,20}$'
+    pattern = r"^\d{15,20}$"
 
     for tweet_id in tweet_ids:
         if not re.match(pattern, tweet_id):

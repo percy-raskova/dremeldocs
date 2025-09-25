@@ -10,39 +10,37 @@ Tests the core text processing functions including:
 - calculate_reading_time(): Estimates reading time from word count
 """
 
-import pytest
 import sys
 from pathlib import Path
+
+import pytest
 
 # Add the scripts directory to Python path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
 
 from text_utilities import (
-    generate_title,
+    calculate_reading_time,
+    format_frontmatter_value,
+    generate_brief_title,
     generate_description,
     generate_filename,
+    generate_title,
     parse_to_yyyymmdd,
-    format_frontmatter_value,
-    calculate_reading_time,
-    generate_brief_title,
-    clean_social_text,
-    extract_key_phrase
 )
 
 from tests.fixtures.sample_data import (
-    SAMPLE_THREAD_DATA,
-    SAMPLE_SHORT_THREAD_DATA,
-    SAMPLE_COMPLEX_THREAD_DATA,
     DATE_PARSING_CASES,
     FILENAME_GENERATION_CASES,
+    SAMPLE_COMPLEX_THREAD_DATA,
+    SAMPLE_SHORT_THREAD_DATA,
+    SAMPLE_THREAD_DATA,
     TEXT_PROCESSING_EDGE_CASES,
-    YAML_ESCAPING_CASES
+    YAML_ESCAPING_CASES,
 )
-
 from tests.utils.validation import (
     validate_filename_format,
     validate_reading_time_calculation,
-    validate_smushed_text_quality
+    validate_smushed_text_quality,
 )
 
 
@@ -58,7 +56,7 @@ class TestGenerateTitle:
         assert isinstance(title, str)
         assert len(title) > 0
         assert len(title) <= 60  # Default max_length
-        assert not title.endswith('.')  # Should strip trailing punctuation
+        assert not title.endswith(".")  # Should strip trailing punctuation
         # NLP model extracts better title than just first sentence
         assert len(title) > 10  # Should have meaningful content
 
@@ -115,12 +113,12 @@ class TestGenerateTitle:
             "This is a question?",
             "This is exciting!",
             "This has: colons",
-            "This has; semicolons"
+            "This has; semicolons",
         ]
 
         for text in test_cases:
             title = generate_title(text)
-            assert not title.endswith(('.', '?', '!', ':', ';'))
+            assert not title.endswith((".", "?", "!", ":", ";"))
 
 
 class TestGenerateDescription:
@@ -154,14 +152,18 @@ class TestGenerateDescription:
 
         assert isinstance(description, str)
         assert len(description) > 0
-        assert any(term in description.lower() for term in ["palestine", "colonial", "settler"])
+        assert any(
+            term in description.lower() for term in ["palestine", "colonial", "settler"]
+        )
 
 
 class TestGenerateFilename:
     """Test the generate_filename function."""
 
     @pytest.mark.unit
-    @pytest.mark.parametrize("seq_num,date_str,text,expected", FILENAME_GENERATION_CASES)
+    @pytest.mark.parametrize(
+        "seq_num,date_str,text,expected", FILENAME_GENERATION_CASES
+    )
     def test_generate_filename_cases(self, seq_num, date_str, text, expected):
         """Test filename generation with various inputs."""
         filename = generate_filename(seq_num, date_str, text)
@@ -177,27 +179,28 @@ class TestGenerateFilename:
         assert expected_date in filename
 
         # Check file extension
-        assert filename.endswith('.md')
+        assert filename.endswith(".md")
 
     @pytest.mark.unit
     def test_generate_filename_sequence_padding(self):
         """Test that sequence numbers are properly zero-padded."""
-        test_cases = [
-            (1, "001"),
-            (42, "042"),
-            (100, "100"),
-            (999, "999")
-        ]
+        test_cases = [(1, "001"), (42, "042"), (100, "100"), (999, "999")]
 
         for seq_num, expected_padded in test_cases:
-            filename = generate_filename(seq_num, "Wed Nov 15 14:23:45 +0000 2023", "Test title")
+            filename = generate_filename(
+                seq_num, "Wed Nov 15 14:23:45 +0000 2023", "Test title"
+            )
             assert filename.startswith(expected_padded + "-")
 
     @pytest.mark.unit
     def test_generate_filename_title_sanitization(self):
         """Test that titles are properly sanitized for filenames."""
-        problematic_title = "Title with/slashes and\\backslashes and:colons and?questions"
-        filename = generate_filename(1, "Wed Nov 15 14:23:45 +0000 2023", problematic_title)
+        problematic_title = (
+            "Title with/slashes and\\backslashes and:colons and?questions"
+        )
+        filename = generate_filename(
+            1, "Wed Nov 15 14:23:45 +0000 2023", problematic_title
+        )
 
         # Check that problematic characters are handled
         assert "/" not in filename
@@ -224,7 +227,7 @@ class TestParseDateToYYYYMMDD:
             "",
             "not a date",
             "2023-13-45",  # Invalid month/day
-            None
+            None,
         ]
 
         for invalid_date in invalid_dates:
@@ -264,7 +267,7 @@ class TestFormatFrontmatterValue:
             (True, "true"),
             (False, "false"),
             ([], "[]"),
-            ({}, "{}")
+            ({}, "{}"),
         ]
 
         for input_val, expected in test_cases:
@@ -353,7 +356,7 @@ class TestGenerateBriefTitle:
         brief_title = generate_brief_title(problematic_text)
 
         # Should not contain filesystem problematic characters
-        forbidden_chars = ['/', '\\', ':', '*', '?', '"', '<', '>', '|', ' ']
+        forbidden_chars = ["/", "\\", ":", "*", "?", '"', "<", ">", "|", " "]
         for char in forbidden_chars:
             assert char not in brief_title
 
@@ -398,7 +401,9 @@ class TestTextProcessingIntegration:
         title = generate_title(thread["smushed_text"])
         description = generate_description(thread["smushed_text"])
         reading_time = calculate_reading_time(thread["smushed_text"])
-        filename = generate_filename(1, thread["first_tweet_date"], thread["smushed_text"])
+        filename = generate_filename(
+            1, thread["first_tweet_date"], thread["smushed_text"]
+        )
 
         # Validate they all work together
         assert len(title) > 0
@@ -429,14 +434,20 @@ class TestTextProcessingIntegration:
     @pytest.mark.integration
     def test_consistency_across_samples(self):
         """Test that processing is consistent across different sample types."""
-        samples = [SAMPLE_THREAD_DATA, SAMPLE_SHORT_THREAD_DATA, SAMPLE_COMPLEX_THREAD_DATA]
+        samples = [
+            SAMPLE_THREAD_DATA,
+            SAMPLE_SHORT_THREAD_DATA,
+            SAMPLE_COMPLEX_THREAD_DATA,
+        ]
 
         for i, sample in enumerate(samples):
             # All samples should produce valid outputs
             title = generate_title(sample["smushed_text"])
             description = generate_description(sample["smushed_text"])
             reading_time = calculate_reading_time(sample["smushed_text"])
-            filename = generate_filename(i + 1, sample["first_tweet_date"], sample["smushed_text"])
+            filename = generate_filename(
+                i + 1, sample["first_tweet_date"], sample["smushed_text"]
+            )
 
             # Basic validation
             assert isinstance(title, str) and len(title) > 0

@@ -5,13 +5,12 @@ Tests the local_filter_pipeline.py script which processes Twitter archive data
 and extracts threads based on criteria like word count and tweet count.
 """
 
-import pytest
-import json
-import tempfile
 import sys
+import tempfile
 from pathlib import Path
-from unittest.mock import patch, mock_open, MagicMock
+
 import ijson
+import pytest
 
 # Add the scripts directory to Python path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
@@ -21,13 +20,9 @@ from local_filter_pipeline import LocalThreadExtractor
 from tests.fixtures.sample_data import (
     SAMPLE_FILTERED_THREADS,
     create_mock_twitter_data,
-    get_sample_filtered_data
+    get_sample_filtered_data,
 )
-
-from tests.utils.validation import (
-    validate_thread_id_format,
-    validate_tweet_ids_format
-)
+from tests.utils.validation import validate_thread_id_format, validate_tweet_ids_format
 
 
 class TestLocalThreadExtractor:
@@ -43,13 +38,13 @@ class TestLocalThreadExtractor:
 
         # Create a minimal tweets.js file
         tweets_file = data_dir / "tweets.js"
-        tweets_file.write_text('window.YTD.tweets.part0 = [];')
+        tweets_file.write_text("window.YTD.tweets.part0 = [];")
 
         extractor = LocalThreadExtractor(archive_path)
 
         # Verify the extractor has the required attributes
-        assert hasattr(extractor, 'tweets_file')
-        assert hasattr(extractor, 'stream_tweets')
+        assert hasattr(extractor, "tweets_file")
+        assert hasattr(extractor, "stream_tweets")
         assert extractor.archive_path == archive_path
 
     @pytest.mark.integration
@@ -62,12 +57,14 @@ class TestLocalThreadExtractor:
 
         # Create an empty tweets.js file
         tweets_file = data_dir / "tweets.js"
-        tweets_file.write_text('window.YTD.tweets.part0 = [];')
+        tweets_file.write_text("window.YTD.tweets.part0 = [];")
 
         extractor = LocalThreadExtractor(archive_path)
 
         # Create a temporary output file
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as tmp_file:
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".json", delete=False
+        ) as tmp_file:
             output_path = tmp_file.name
 
         try:
@@ -95,13 +92,15 @@ class TestLocalThreadExtractor:
         # Test filtering logic (this may need adaptation based on actual implementation)
         for thread in mock_threads:
             # Verify test data meets expected criteria for heavy hitters
-            assert thread['word_count'] >= 500
-            assert thread['tweet_count'] >= 3
+            assert thread["word_count"] >= 500
+            assert thread["tweet_count"] >= 3
 
             # Validate thread structure
-            assert validate_thread_id_format(thread['thread_id'])
-            invalid_tweet_ids = validate_tweet_ids_format(thread['tweet_ids'])
-            assert len(invalid_tweet_ids) == 0, f"Invalid tweet IDs: {invalid_tweet_ids}"
+            assert validate_thread_id_format(thread["thread_id"])
+            invalid_tweet_ids = validate_tweet_ids_format(thread["tweet_ids"])
+            assert len(invalid_tweet_ids) == 0, (
+                f"Invalid tweet IDs: {invalid_tweet_ids}"
+            )
 
     @pytest.mark.integration
     def test_filter_pipeline_file_operations(self, tmp_path):
@@ -113,16 +112,20 @@ class TestLocalThreadExtractor:
 
         # Create a minimal tweets.js file
         tweets_file = data_dir / "tweets.js"
-        tweets_file.write_text('window.YTD.tweets.part0 = [];')
+        tweets_file.write_text("window.YTD.tweets.part0 = [];")
 
         extractor = LocalThreadExtractor(archive_path)
 
         # Test with temporary files
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False) as input_file:
-            input_file.write('window.YTD.tweets.part0 = [];')
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".js", delete=False
+        ) as input_file:
+            input_file.write("window.YTD.tweets.part0 = [];")
             input_path = input_file.name
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as output_file:
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".json", delete=False
+        ) as output_file:
             output_path = output_file.name
 
         try:
@@ -148,7 +151,7 @@ class TestLocalThreadExtractor:
                     "id_str": "1724780432156789001",
                     "created_at": "Wed Nov 15 14:23:45 +0000 2023",
                     "full_text": "This is the start of a thread about dialectical materialism. 1/5",
-                    "in_reply_to_status_id_str": None
+                    "in_reply_to_status_id_str": None,
                 }
             },
             {
@@ -156,7 +159,7 @@ class TestLocalThreadExtractor:
                     "id_str": "1724780432156789002",
                     "created_at": "Wed Nov 15 14:24:45 +0000 2023",
                     "full_text": "The fundamental misunderstanding stems from treating it as rigid formula. 2/5",
-                    "in_reply_to_status_id_str": "1724780432156789001"
+                    "in_reply_to_status_id_str": "1724780432156789001",
                 }
             },
             {
@@ -164,9 +167,9 @@ class TestLocalThreadExtractor:
                     "id_str": "1724780432156789003",
                     "created_at": "Wed Nov 15 14:25:45 +0000 2023",
                     "full_text": "Instead of understanding contradictions within systems. 3/5",
-                    "in_reply_to_status_id_str": "1724780432156789002"
+                    "in_reply_to_status_id_str": "1724780432156789002",
                 }
-            }
+            },
         ]
 
         # Test thread reconstruction logic
@@ -187,8 +190,14 @@ class TestLocalThreadExtractor:
         test_texts = [
             ("Single word", 2),
             ("This is a test sentence with multiple words", 9),
-            ("Text with @mentions and #hashtags should count properly", 9),  # Artifacts should be cleaned
-            (SAMPLE_FILTERED_THREADS["threads"][0]["smushed_text"], 756)  # Known word count
+            (
+                "Text with @mentions and #hashtags should count properly",
+                9,
+            ),  # Artifacts should be cleaned
+            (
+                SAMPLE_FILTERED_THREADS["threads"][0]["smushed_text"],
+                756,
+            ),  # Known word count
         ]
 
         for text, expected_count in test_texts:
@@ -214,7 +223,9 @@ class TestLocalThreadExtractor:
         # This test verifies the streaming approach using ijson
         # Create a modest mock dataset suitable for hobbyist testing
 
-        large_mock_data = create_mock_twitter_data(20)  # 20 threads is enough for hobbyist testing
+        large_mock_data = create_mock_twitter_data(
+            20
+        )  # 20 threads is enough for hobbyist testing
 
         # Verify that processing doesn't consume excessive memory
         # This is more of a smoke test - in real usage we'd monitor memory
@@ -233,9 +244,15 @@ class TestLocalThreadExtractor:
             # Missing required fields
             {"tweet": {"id_str": "123", "created_at": "invalid date"}},
             # Empty tweet text
-            {"tweet": {"id_str": "124", "created_at": "Wed Nov 15 14:23:45 +0000 2023", "full_text": ""}},
+            {
+                "tweet": {
+                    "id_str": "124",
+                    "created_at": "Wed Nov 15 14:23:45 +0000 2023",
+                    "full_text": "",
+                }
+            },
             # Invalid JSON structure
-            {"not_a_tweet": "invalid structure"}
+            {"not_a_tweet": "invalid structure"},
         ]
 
         for malformed_case in malformed_cases:
@@ -259,7 +276,11 @@ class TestLocalThreadExtractor:
             {"id": "1001", "in_reply_to": None, "text": "Start of thread"},
             {"id": "1002", "in_reply_to": "1001", "text": "Reply 1"},
             {"id": "1003", "in_reply_to": "1002", "text": "Reply 2"},
-            {"id": "1004", "in_reply_to": None, "text": "Different thread"}  # Should be separate
+            {
+                "id": "1004",
+                "in_reply_to": None,
+                "text": "Different thread",
+            },  # Should be separate
         ]
 
         # Test thread grouping logic
@@ -299,7 +320,10 @@ class TestFilterPipelineOutput:
         # Verify metadata structure
         metadata = sample_output["metadata"]
         required_metadata_fields = [
-            "total_tweets", "filtered_threads", "filter_criteria", "extracted_at"
+            "total_tweets",
+            "filtered_threads",
+            "filter_criteria",
+            "extracted_at",
         ]
         for field in required_metadata_fields:
             assert field in metadata
@@ -311,8 +335,12 @@ class TestFilterPipelineOutput:
 
         for thread in threads:
             required_thread_fields = [
-                "thread_id", "word_count", "tweet_count",
-                "first_tweet_date", "smushed_text", "tweet_ids"
+                "thread_id",
+                "word_count",
+                "tweet_count",
+                "first_tweet_date",
+                "smushed_text",
+                "tweet_ids",
             ]
             for field in required_thread_fields:
                 assert field in thread
@@ -348,7 +376,11 @@ class TestFilterPipelineOutput:
 
             # Should have reasonable sentence structure for long texts
             if len(smushed_text) > 200:
-                sentence_count = smushed_text.count('.') + smushed_text.count('!') + smushed_text.count('?')
+                sentence_count = (
+                    smushed_text.count(".")
+                    + smushed_text.count("!")
+                    + smushed_text.count("?")
+                )
                 assert sentence_count > 0  # Should have some sentence endings
 
     @pytest.mark.integration
@@ -381,5 +413,10 @@ class TestFilterPipelineOutput:
             # Should be in Twitter date format
             # Pattern: "Day Mon DD HH:MM:SS +0000 YYYY"
             import re
-            twitter_date_pattern = r'^[A-Za-z]{3} [A-Za-z]{3} \d{2} \d{2}:\d{2}:\d{2} \+0000 \d{4}$'
-            assert re.match(twitter_date_pattern, date_str), f"Invalid date format: {date_str}"
+
+            twitter_date_pattern = (
+                r"^[A-Za-z]{3} [A-Za-z]{3} \d{2} \d{2}:\d{2}:\d{2} \+0000 \d{4}$"
+            )
+            assert re.match(twitter_date_pattern, date_str), (
+                f"Invalid date format: {date_str}"
+            )

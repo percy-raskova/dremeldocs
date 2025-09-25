@@ -4,19 +4,17 @@ Unit tests for theme_classifier.py following Test-Driven Development principles.
 Tests the ThemeClassifier class and all its methods for theme-based classification.
 """
 
-import pytest
 import json
 import sys
 from pathlib import Path
-from unittest.mock import patch, mock_open, MagicMock, call
-from typing import Dict, List, Any
-from datetime import datetime
-import tempfile
+from unittest.mock import MagicMock, mock_open, patch
+
+import pytest
 
 # Add scripts directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
 
-from theme_classifier import ThemeClassifier, Thread
+from theme_classifier import ThemeClassifier
 
 
 class TestThemeClassifierInit:
@@ -26,14 +24,14 @@ class TestThemeClassifierInit:
         """Test initialization with default themes file path."""
         classifier = ThemeClassifier()
 
-        assert classifier.themes_file == Path('docs/heavy_hitters/THEMES_EXTRACTED.md')
+        assert classifier.themes_file == Path("docs/heavy_hitters/THEMES_EXTRACTED.md")
         assert classifier.themes == {}
         assert classifier.keywords == {}
         assert classifier.thread_theme_map == {}
 
     def test_init_with_custom_themes_file(self):
         """Test initialization with custom themes file path."""
-        custom_path = 'custom/themes.md'
+        custom_path = "custom/themes.md"
         classifier = ThemeClassifier(themes_file=custom_path)
 
         assert classifier.themes_file == Path(custom_path)
@@ -62,7 +60,7 @@ class TestLoadHumanThemes:
 
     def test_load_missing_themes_file(self, capsys):
         """Test loading when themes file doesn't exist."""
-        classifier = ThemeClassifier(themes_file='nonexistent.md')
+        classifier = ThemeClassifier(themes_file="nonexistent.md")
 
         result = classifier.load_human_themes()
 
@@ -113,7 +111,7 @@ class TestLoadHumanThemes:
         assert len(classifier.themes) == 0
         assert len(classifier.keywords) == 0
 
-    @patch('builtins.open', side_effect=PermissionError("Access denied"))
+    @patch("builtins.open", side_effect=PermissionError("Access denied"))
     def test_load_permission_error(self, mock_file, tmp_path):
         """Test handling permission error when loading themes file."""
         themes_file = tmp_path / "protected.md"
@@ -324,14 +322,14 @@ class TestClassifyThread:
         classifier = ThemeClassifier()
         classifier.keywords = {
             "class struggle": "class struggle",
-            "revolution": "revolution"
+            "revolution": "revolution",
         }
         classifier.themes = {"Marxism": 10}
 
         thread = {
             "smushed_text": "This is about class struggle and revolution in society",
             "thread_id": "test_001",
-            "word_count": 10
+            "word_count": 10,
         }
 
         themes, confidence = classifier.classify_thread(thread)
@@ -348,7 +346,7 @@ class TestClassifyThread:
         thread = {
             "smushed_text": "Random text about nothing in particular",
             "thread_id": "test_002",
-            "word_count": 7
+            "word_count": 7,
         }
 
         themes, confidence = classifier.classify_thread(thread)
@@ -363,7 +361,7 @@ class TestClassifyThread:
         thread = {
             "smushed_text": "MARXISM and Marxism and marxism",
             "thread_id": "test_003",
-            "word_count": 5
+            "word_count": 5,
         }
 
         themes, confidence = classifier.classify_thread(thread)
@@ -375,11 +373,7 @@ class TestClassifyThread:
         classifier = ThemeClassifier()
         classifier.keywords = {"keyword": "keyword"}
 
-        thread = {
-            "smushed_text": "",
-            "thread_id": "test_004",
-            "word_count": 0
-        }
+        thread = {"smushed_text": "", "thread_id": "test_004", "word_count": 0}
 
         themes, confidence = classifier.classify_thread(thread)
 
@@ -393,10 +387,7 @@ class TestCalculateThemeScore:
     def test_calculate_basic_score(self):
         """Test basic theme score calculation."""
         classifier = ThemeClassifier()
-        classifier.keywords = {
-            "revolution": "revolution",
-            "class": "class"
-        }
+        classifier.keywords = {"revolution": "revolution", "class": "class"}
 
         text = "revolution and class struggle"
         score = classifier._calculate_theme_score(text, "Marxism")
@@ -430,7 +421,7 @@ class TestCalculateThemeScore:
         classifier.keywords = {
             "dialectical": "dialectical",
             "materialism": "materialism",
-            "historical": "historical"
+            "historical": "historical",
         }
 
         text = "dialectical approach to understanding"
@@ -504,7 +495,7 @@ class TestProcessAllThreads:
         """Test processing when data file doesn't exist."""
         classifier = ThemeClassifier()
 
-        with patch('pathlib.Path.exists', return_value=False):
+        with patch("pathlib.Path.exists", return_value=False):
             result = classifier.process_all_threads()
 
         assert result is None
@@ -519,8 +510,9 @@ class TestProcessAllThreads:
 
         classifier = ThemeClassifier()
 
-        with patch('pathlib.Path.exists', return_value=True), \
-             patch('builtins.open', mock_open(read_data="{invalid json}")):
+        with patch("pathlib.Path.exists", return_value=True), patch(
+            "builtins.open", mock_open(read_data="{invalid json}")
+        ):
             result = classifier.process_all_threads()
 
         assert result is None
@@ -538,7 +530,7 @@ class TestProcessAllThreads:
                     "word_count": 7,
                     "tweet_count": 2,
                     "first_tweet_date": "2024-01-01",
-                    "tweets": []
+                    "tweets": [],
                 },
                 {
                     "thread_id": "002",
@@ -546,8 +538,8 @@ class TestProcessAllThreads:
                     "word_count": 5,
                     "tweet_count": 1,
                     "first_tweet_date": "2024-01-02",
-                    "tweets": []
-                }
+                    "tweets": [],
+                },
             ]
         }
 
@@ -561,10 +553,12 @@ class TestProcessAllThreads:
         classifier.keywords = {"marxism": "marxism", "epistemology": "epistemology"}
         classifier.themes = {"Marxism": 10, "Philosophy": 5}
 
-        with patch('pathlib.Path', side_effect=lambda x: data_file if "filtered" in str(x) else output_file):
-            with patch('builtins.open', mock_open(read_data=json.dumps(test_data))):
-                with patch('json.dump'):
-                    result = classifier.process_all_threads()
+        with patch(
+            "pathlib.Path",
+            side_effect=lambda x: data_file if "filtered" in str(x) else output_file,
+        ), patch("builtins.open", mock_open(read_data=json.dumps(test_data))):
+            with patch("json.dump"):
+                result = classifier.process_all_threads()
 
         assert result is not None
         assert "metadata" in result
@@ -580,7 +574,7 @@ class TestProcessAllThreads:
                 "word_count": 10,
                 "tweet_count": 1,
                 "first_tweet_date": "2024-01-01",
-                "tweets": []
+                "tweets": [],
             }
             for i in range(150)
         ]
@@ -589,9 +583,9 @@ class TestProcessAllThreads:
 
         classifier = ThemeClassifier()
 
-        with patch('pathlib.Path.exists', return_value=True), \
-             patch('builtins.open', mock_open(read_data=json.dumps(test_data))), \
-             patch('json.dump'):
+        with patch("pathlib.Path.exists", return_value=True), patch(
+            "builtins.open", mock_open(read_data=json.dumps(test_data))
+        ), patch("json.dump"):
             classifier.process_all_threads()
 
         captured = capsys.readouterr()
@@ -601,17 +595,38 @@ class TestProcessAllThreads:
         """Test that threads are properly categorized and counted."""
         test_data = {
             "threads": [
-                {"thread_id": "001", "smushed_text": "philosophy", "word_count": 1, "tweet_count": 1, "first_tweet_date": "2024-01-01", "tweets": []},
-                {"thread_id": "002", "smushed_text": "politics", "word_count": 1, "tweet_count": 1, "first_tweet_date": "2024-01-02", "tweets": []},
-                {"thread_id": "003", "smushed_text": "random", "word_count": 1, "tweet_count": 1, "first_tweet_date": "2024-01-03", "tweets": []}
+                {
+                    "thread_id": "001",
+                    "smushed_text": "philosophy",
+                    "word_count": 1,
+                    "tweet_count": 1,
+                    "first_tweet_date": "2024-01-01",
+                    "tweets": [],
+                },
+                {
+                    "thread_id": "002",
+                    "smushed_text": "politics",
+                    "word_count": 1,
+                    "tweet_count": 1,
+                    "first_tweet_date": "2024-01-02",
+                    "tweets": [],
+                },
+                {
+                    "thread_id": "003",
+                    "smushed_text": "random",
+                    "word_count": 1,
+                    "tweet_count": 1,
+                    "first_tweet_date": "2024-01-03",
+                    "tweets": [],
+                },
             ]
         }
 
         classifier = ThemeClassifier()
 
-        with patch('pathlib.Path.exists', return_value=True), \
-             patch('builtins.open', mock_open(read_data=json.dumps(test_data))), \
-             patch('json.dump') as mock_dump:
+        with patch("pathlib.Path.exists", return_value=True), patch(
+            "builtins.open", mock_open(read_data=json.dumps(test_data))
+        ), patch("json.dump") as mock_dump:
             result = classifier.process_all_threads()
 
         assert result is not None
@@ -634,7 +649,7 @@ class TestGenerateFinalMarkdown:
                         "confidence": 0.8,
                         "word_count": 5,
                         "tweet_count": 1,
-                        "first_tweet_date": "2024-01-01T12:00:00Z"
+                        "first_tweet_date": "2024-01-01T12:00:00Z",
                     }
                 ]
             }
@@ -644,6 +659,7 @@ class TestGenerateFinalMarkdown:
 
         # Create a mock that returns the JSON data on first call, then acts as file writer
         read_count = [0]
+
         def open_side_effect(*args, **kwargs):
             read_count[0] += 1
             if read_count[0] == 1:
@@ -653,8 +669,9 @@ class TestGenerateFinalMarkdown:
                 # Subsequent calls are writing markdown
                 return mock_open()(*args, **kwargs)
 
-        with patch('builtins.open', side_effect=open_side_effect) as mock_file, \
-             patch('pathlib.Path.mkdir'):
+        with patch("builtins.open", side_effect=open_side_effect) as mock_file, patch(
+            "pathlib.Path.mkdir"
+        ):
             classifier.generate_final_markdown("philosophical", limit=1)
 
             # Verify files were opened (1 read + at least 1 write)
@@ -665,8 +682,13 @@ class TestGenerateFinalMarkdown:
         test_threads = {
             "threads_by_category": {
                 "political": [
-                    {"thread_id": f"00{i}", "smushed_text": f"Thread {i}", "word_count": 10,
-                     "tweet_count": 1, "first_tweet_date": "2024-01-01T00:00:00Z"}
+                    {
+                        "thread_id": f"00{i}",
+                        "smushed_text": f"Thread {i}",
+                        "word_count": 10,
+                        "tweet_count": 1,
+                        "first_tweet_date": "2024-01-01T00:00:00Z",
+                    }
                     for i in range(10)
                 ]
             }
@@ -684,8 +706,9 @@ class TestGenerateFinalMarkdown:
                 # Subsequent calls are writing
                 return mock_open()(*args, **kwargs)
 
-        with patch('builtins.open', side_effect=count_writes), \
-             patch('pathlib.Path.mkdir'):
+        with patch("builtins.open", side_effect=count_writes), patch(
+            "pathlib.Path.mkdir"
+        ):
             classifier.generate_final_markdown("political", limit=5)
 
             # Should have 1 read + 5 writes = 6 total
@@ -700,7 +723,7 @@ class TestGenerateFinalMarkdown:
             "confidence": 0.75,
             "word_count": 7,
             "tweet_count": 2,
-            "first_tweet_date": "2024-01-15T10:30:00Z"
+            "first_tweet_date": "2024-01-15T10:30:00Z",
         }
 
         test_data = {"threads_by_category": {"both": [test_thread]}}
@@ -722,12 +745,13 @@ class TestGenerateFinalMarkdown:
                 mock_file.__exit__ = lambda self, *args: None
                 return mock_file
 
-        with patch('builtins.open', side_effect=mock_open_handler), \
-             patch('pathlib.Path.mkdir'):
+        with patch("builtins.open", side_effect=mock_open_handler), patch(
+            "pathlib.Path.mkdir"
+        ):
             classifier.generate_final_markdown("both", limit=1)
 
         # Verify frontmatter structure
-        full_content = ''.join(written_content)
+        full_content = "".join(written_content)
         assert "---" in full_content
         assert "title:" in full_content
         assert "date:" in full_content
@@ -741,15 +765,16 @@ class TestGenerateFinalMarkdown:
             "smushed_text": "Content",
             "word_count": 1,
             "tweet_count": 1,
-            "first_tweet_date": "invalid-date"
+            "first_tweet_date": "invalid-date",
         }
 
         test_data = {"threads_by_category": {"other": [test_thread]}}
 
         classifier = ThemeClassifier()
 
-        with patch('builtins.open', mock_open(read_data=json.dumps(test_data))), \
-             patch('pathlib.Path.mkdir'):
+        with patch("builtins.open", mock_open(read_data=json.dumps(test_data))), patch(
+            "pathlib.Path.mkdir"
+        ):
             classifier.generate_final_markdown("other", limit=1)
 
         captured = capsys.readouterr()
@@ -761,8 +786,9 @@ class TestGenerateFinalMarkdown:
 
         classifier = ThemeClassifier()
 
-        with patch('builtins.open', mock_open(read_data=json.dumps(test_data))), \
-             patch('pathlib.Path.mkdir'):
+        with patch("builtins.open", mock_open(read_data=json.dumps(test_data))), patch(
+            "pathlib.Path.mkdir"
+        ):
             classifier.generate_final_markdown("philosophical")
 
         captured = capsys.readouterr()
@@ -800,7 +826,7 @@ class TestIntegration:
                     "word_count": 7,
                     "tweet_count": 2,
                     "first_tweet_date": "2024-01-01T00:00:00Z",
-                    "tweets": []
+                    "tweets": [],
                 }
             ]
         }
@@ -818,9 +844,9 @@ class TestIntegration:
         output_file = tmp_path / "data" / "classified_threads.json"
 
         # Mock the file operations more precisely
-        with patch('builtins.open', mock_open(read_data=json.dumps(test_data))), \
-             patch('pathlib.Path.exists', return_value=True), \
-             patch('json.dump'):
+        with patch("builtins.open", mock_open(read_data=json.dumps(test_data))), patch(
+            "pathlib.Path.exists", return_value=True
+        ), patch("json.dump"):
             result = classifier.process_all_threads()
 
         assert result is not None
@@ -834,7 +860,7 @@ class TestIntegration:
         assert classifier.load_human_themes() is False
 
         # Try to process without themes
-        with patch('pathlib.Path.exists', return_value=False):
+        with patch("pathlib.Path.exists", return_value=False):
             result = classifier.process_all_threads()
 
         assert result is None
@@ -855,7 +881,7 @@ class TestEdgeCases:
         thread = {
             "smushed_text": "Text with émoji 🎉 and special chars",
             "word_count": 7,
-            "thread_id": "unicode_test"
+            "thread_id": "unicode_test",
         }
 
         themes, confidence = classifier.classify_thread(thread)
@@ -870,7 +896,7 @@ class TestEdgeCases:
         thread = {
             "smushed_text": long_text,
             "word_count": 10000,
-            "thread_id": "long_test"
+            "thread_id": "long_test",
         }
 
         themes, confidence = classifier.classify_thread(thread)
@@ -896,7 +922,7 @@ class TestEdgeCases:
         classifier.thread_theme_map = {
             "Theme1": [1, 2, 3],
             "Theme2": [2, 3, 4],
-            "Theme3": [1, 4]
+            "Theme3": [1, 4],
         }
 
         # Should not cause infinite loops
@@ -909,20 +935,23 @@ class TestEdgeCases:
         """Test generating markdown with minimal data."""
         test_data = {
             "threads_by_category": {
-                "other": [{
-                    "thread_id": "",
-                    "smushed_text": "",
-                    "word_count": 0,
-                    "tweet_count": 0,
-                    "first_tweet_date": ""
-                }]
+                "other": [
+                    {
+                        "thread_id": "",
+                        "smushed_text": "",
+                        "word_count": 0,
+                        "tweet_count": 0,
+                        "first_tweet_date": "",
+                    }
+                ]
             }
         }
 
         classifier = ThemeClassifier()
 
-        with patch('builtins.open', mock_open(read_data=json.dumps(test_data))), \
-             patch('pathlib.Path.mkdir'):
+        with patch("builtins.open", mock_open(read_data=json.dumps(test_data))), patch(
+            "pathlib.Path.mkdir"
+        ):
             # Should not crash
             classifier.generate_final_markdown("other", limit=1)
 
@@ -943,16 +972,16 @@ class TestPerformance:
                 "word_count": 5,
                 "tweet_count": 1,
                 "first_tweet_date": "2024-01-01",
-                "tweets": []
+                "tweets": [],
             }
             for i in range(1000)
         ]
 
         test_data = {"threads": threads}
 
-        with patch('pathlib.Path.exists', return_value=True), \
-             patch('builtins.open', mock_open(read_data=json.dumps(test_data))), \
-             patch('json.dump'):
+        with patch("pathlib.Path.exists", return_value=True), patch(
+            "builtins.open", mock_open(read_data=json.dumps(test_data))
+        ), patch("json.dump"):
             result = classifier.process_all_threads()
 
         assert result is not None
@@ -969,7 +998,7 @@ class TestPerformance:
         thread = {
             "smushed_text": " ".join([f"keyword_{i}" for i in range(50)]),
             "word_count": 50,
-            "thread_id": "test"
+            "thread_id": "test",
         }
 
         themes, confidence = classifier.classify_thread(thread)

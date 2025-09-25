@@ -2,19 +2,22 @@
 Shared pytest configuration and fixtures for the Twitter archive processing pipeline tests.
 """
 
-import pytest
+import shutil
 import sys
 import tempfile
-import shutil
 from pathlib import Path
+
+import pytest
 
 # Add the scripts directory to Python path for all tests
 sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
+
 
 @pytest.fixture(scope="session")
 def test_data_dir():
     """Fixture providing path to test data directory."""
     return Path(__file__).parent / "fixtures"
+
 
 @pytest.fixture
 def temp_dir():
@@ -23,15 +26,16 @@ def temp_dir():
     yield Path(temp_path)
     shutil.rmtree(temp_path)
 
+
 @pytest.fixture
 def sample_workspace(temp_dir):
     """Fixture providing a complete workspace structure for testing."""
     workspace = {
-        'root': temp_dir,
-        'data': temp_dir / 'data',
-        'docs': temp_dir / 'docs',
-        'heavy_hitters': temp_dir / 'docs' / 'heavy_hitters',
-        'scripts': temp_dir / 'scripts'
+        "root": temp_dir,
+        "data": temp_dir / "data",
+        "docs": temp_dir / "docs",
+        "heavy_hitters": temp_dir / "docs" / "heavy_hitters",
+        "scripts": temp_dir / "scripts",
     }
 
     # Create all directories
@@ -41,15 +45,18 @@ def sample_workspace(temp_dir):
 
     return workspace
 
+
 @pytest.fixture(scope="session")
 def spacy_model():
     """Fixture to ensure spaCy model is available for tests."""
     try:
         import spacy
+
         nlp = spacy.load("en_core_web_sm")
         return nlp
     except (ImportError, OSError):
         pytest.skip("spaCy model 'en_core_web_sm' not available")
+
 
 # Pytest collection hooks
 def pytest_collection_modifyitems(config, items):
@@ -69,8 +76,12 @@ def pytest_collection_modifyitems(config, items):
             item.add_marker("integration")
 
         # Add slow marker to tests that likely take time
-        if any(keyword in item.name.lower() for keyword in ["end_to_end", "large", "complete"]):
+        if any(
+            keyword in item.name.lower()
+            for keyword in ["end_to_end", "large", "complete"]
+        ):
             item.add_marker("slow")
+
 
 # Test data validation
 @pytest.fixture(autouse=True, scope="session")
@@ -81,7 +92,9 @@ def validate_test_environment():
     scripts_dir = project_root / "scripts"
 
     if not scripts_dir.exists():
-        pytest.exit("Scripts directory not found. Tests require access to pipeline scripts.")
+        pytest.exit(
+            "Scripts directory not found. Tests require access to pipeline scripts."
+        )
 
     # Check for required Python modules (non-critical)
     missing_modules = []
@@ -99,6 +112,7 @@ def validate_test_environment():
         print(f"Warning: Missing optional modules: {missing_modules}")
         print("Some tests may be skipped.")
 
+
 # Skip conditions
 def pytest_runtest_setup(item):
     """Setup hook to skip tests based on conditions."""
@@ -106,6 +120,7 @@ def pytest_runtest_setup(item):
     if "spacy" in item.keywords:
         try:
             import spacy
+
             spacy.load("en_core_web_sm")
         except (ImportError, OSError):
             pytest.skip("spaCy with en_core_web_sm model required")
@@ -115,26 +130,22 @@ def pytest_runtest_setup(item):
         if "slow" in item.keywords:
             pytest.skip("Skipping slow test due to --fast option")
 
+
 def pytest_addoption(parser):
     """Add custom command line options."""
     parser.addoption(
-        "--fast",
-        action="store_true",
-        default=False,
-        help="Skip slow tests"
+        "--fast", action="store_true", default=False, help="Skip slow tests"
     )
     parser.addoption(
         "--integration-only",
         action="store_true",
         default=False,
-        help="Run only integration tests"
+        help="Run only integration tests",
     )
     parser.addoption(
-        "--unit-only",
-        action="store_true",
-        default=False,
-        help="Run only unit tests"
+        "--unit-only", action="store_true", default=False, help="Run only unit tests"
     )
+
 
 def pytest_configure(config):
     """Configure test collection based on options."""
