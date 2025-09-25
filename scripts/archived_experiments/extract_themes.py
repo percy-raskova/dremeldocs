@@ -11,169 +11,166 @@ from collections import Counter, defaultdict
 from typing import Dict, List, Tuple
 import yaml
 
+
 class ThemeExtractor:
     """Extract philosophical and political themes from heavy hitters."""
 
     def __init__(self):
-        self.heavy_dir = Path('docs/heavy_hitters')
-        self.vocab_dir = Path('data/vocabularies')
-        self.threads_file = Path('data/filtered_threads.json')
+        self.heavy_dir = Path("docs/heavy_hitters")
+        self.vocab_dir = Path("data/vocabularies")
+        self.threads_file = Path("data/filtered_threads.json")
 
         # Theme definitions based on our analysis
         self.theme_definitions = {
             # Political Philosophy
-            'Marxism/Historical Materialism': [
-                r'\b(marx|marxis[mt]|communi[st][mt]|class struggle|proletaria[nt]|bourgeois\w*)\b',
-                r'\b(means of production|surplus value|dialectical materialis[mt]|base.*superstructure)\b',
-                r'\b(primitive accumulation|capital\w* accumulation|labor power)\b'
+            "Marxism/Historical Materialism": [
+                r"\b(marx|marxis[mt]|communi[st][mt]|class struggle|proletaria[nt]|bourgeois\w*)\b",
+                r"\b(means of production|surplus value|dialectical materialis[mt]|base.*superstructure)\b",
+                r"\b(primitive accumulation|capital\w* accumulation|labor power)\b",
             ],
-            'Anarchism': [
-                r'\b(anarchis[mt]|mutual aid|horizontal organiz|direct action|autonomy)\b',
-                r'\b(hierarch\w* abolition|stateless|anti-authoritarian)\b'
+            "Anarchism": [
+                r"\b(anarchis[mt]|mutual aid|horizontal organiz|direct action|autonomy)\b",
+                r"\b(hierarch\w* abolition|stateless|anti-authoritarian)\b",
             ],
-            'Liberalism Critique': [
-                r'\b(liberal\w* (decay|regime|hegemony|ideology))\b',
-                r'\b(bourgeois democracy|false consciousness|individualis[mt] critique)\b',
-                r'\b(liberal\w* fail|liberal\w* hypocrisy)\b'
+            "Liberalism Critique": [
+                r"\b(liberal\w* (decay|regime|hegemony|ideology))\b",
+                r"\b(bourgeois democracy|false consciousness|individualis[mt] critique)\b",
+                r"\b(liberal\w* fail|liberal\w* hypocrisy)\b",
             ],
-            'Fascism Analysis': [
-                r'\b(fascis[mt]|proto-?fascis[mt]|neo-?fascis[mt]|great.?nation)\b',
-                r'\b(national consciousness|national relation|liberal.*fascis[mt])\b',
-                r'\b(fascist violence|class collaboration)\b'
+            "Fascism Analysis": [
+                r"\b(fascis[mt]|proto-?fascis[mt]|neo-?fascis[mt]|great.?nation)\b",
+                r"\b(national consciousness|national relation|liberal.*fascis[mt])\b",
+                r"\b(fascist violence|class collaboration)\b",
             ],
-            'Democracy Theory': [
-                r'\b(democratic centralis[mt]|bourgeois democracy|electoral\w*)\b',
-                r'\b(democracy.*(sham|false|limited))\b',
-                r'\b(popular sovereignty|direct democracy)\b'
+            "Democracy Theory": [
+                r"\b(democratic centralis[mt]|bourgeois democracy|electoral\w*)\b",
+                r"\b(democracy.*(sham|false|limited))\b",
+                r"\b(popular sovereignty|direct democracy)\b",
             ],
-            'Political Economy': [
-                r'\b(political economy|econom\w* exploit|capital\w* relation)\b',
-                r'\b(debt mechanic|money creation|financiali[sz]ation)\b',
-                r'\b(rent extraction|surplus extraction|labor aristocracy)\b'
+            "Political Economy": [
+                r"\b(political economy|econom\w* exploit|capital\w* relation)\b",
+                r"\b(debt mechanic|money creation|financiali[sz]ation)\b",
+                r"\b(rent extraction|surplus extraction|labor aristocracy)\b",
             ],
-            'Imperialism/Colonialism': [
-                r'\b(imperial\w*|colonial\w*|settler colonial\w*)\b',
-                r'\b(palestine|zionist|national (oppression|liberation))\b',
-                r'\b(global (north|south)|core.?peripher|comprador)\b'
+            "Imperialism/Colonialism": [
+                r"\b(imperial\w*|colonial\w*|settler colonial\w*)\b",
+                r"\b(palestine|zionist|national (oppression|liberation))\b",
+                r"\b(global (north|south)|core.?peripher|comprador)\b",
             ],
-            'Class Analysis': [
-                r'\b(class (consciousness|struggle|war|analysis|position))\b',
-                r'\b(working class|ruling class|owning class|petit[- ]bourgeois)\b',
-                r'\b(class relation|class dynamic|class interest)\b'
+            "Class Analysis": [
+                r"\b(class (consciousness|struggle|war|analysis|position))\b",
+                r"\b(working class|ruling class|owning class|petit[- ]bourgeois)\b",
+                r"\b(class relation|class dynamic|class interest)\b",
             ],
-
             # General Philosophy
-            'Epistemology': [
-                r'\b(epistemolog|knowledge production|truth.*power)\b',
-                r'\b(scientific method|empiricis[mt]|positivis[mt])\b',
-                r'\b(objective reality|subjective.*objective)\b'
+            "Epistemology": [
+                r"\b(epistemolog|knowledge production|truth.*power)\b",
+                r"\b(scientific method|empiricis[mt]|positivis[mt])\b",
+                r"\b(objective reality|subjective.*objective)\b",
             ],
-            'Ethics/Moral Philosophy': [
-                r'\b(ethic[s]|moral\w*|normative|deontolog)\b',
-                r'\b(consequentialis[mt]|utilitarian|virtue ethic)\b',
-                r'\b(moral.*political|ethical.*obligation)\b'
+            "Ethics/Moral Philosophy": [
+                r"\b(ethic[s]|moral\w*|normative|deontolog)\b",
+                r"\b(consequentialis[mt]|utilitarian|virtue ethic)\b",
+                r"\b(moral.*political|ethical.*obligation)\b",
             ],
-            'Ontology/Metaphysics': [
-                r'\b(ontolog|metaphysic|being.*becoming)\b',
-                r'\b(material\w* reality|idealis[mt].*material)\b',
-                r'\b(essence.*existence|fundamental nature)\b'
+            "Ontology/Metaphysics": [
+                r"\b(ontolog|metaphysic|being.*becoming)\b",
+                r"\b(material\w* reality|idealis[mt].*material)\b",
+                r"\b(essence.*existence|fundamental nature)\b",
             ],
-            'Philosophy of Mind': [
-                r'\b(consciousness|cogniti\w*|phenomenolog)\b',
-                r'\b(mind.*body|mental.*physical|qualia)\b',
-                r'\b(intentionality|subjective experience)\b'
+            "Philosophy of Mind": [
+                r"\b(consciousness|cogniti\w*|phenomenolog)\b",
+                r"\b(mind.*body|mental.*physical|qualia)\b",
+                r"\b(intentionality|subjective experience)\b",
             ],
-            'Critical Theory': [
-                r'\b(critical theory|frankfurt school|cultural critique)\b',
-                r'\b(ideology critique|false consciousness|reification)\b',
-                r'\b(cultural hegemony|ideological apparatus)\b'
+            "Critical Theory": [
+                r"\b(critical theory|frankfurt school|cultural critique)\b",
+                r"\b(ideology critique|false consciousness|reification)\b",
+                r"\b(cultural hegemony|ideological apparatus)\b",
             ],
-            'Dialectics': [
-                r'\b(dialectic\w*|thesis.*antithesis|contradiction)\b',
-                r'\b(negation.*negation|quantity.*quality|interpenetration)\b',
-                r'\b(dialectical (method|logic|process))\b'
+            "Dialectics": [
+                r"\b(dialectic\w*|thesis.*antithesis|contradiction)\b",
+                r"\b(negation.*negation|quantity.*quality|interpenetration)\b",
+                r"\b(dialectical (method|logic|process))\b",
             ],
-
             # Applied Topics
-            'Technology Critique': [
-                r'\b(technolog\w* (critique|alienation|control))\b',
-                r'\b(surveillance capitalis[mt]|digital.*exploit)\b',
-                r'\b(automation.*labor|artificial intelligence.*bias)\b'
+            "Technology Critique": [
+                r"\b(technolog\w* (critique|alienation|control))\b",
+                r"\b(surveillance capitalis[mt]|digital.*exploit)\b",
+                r"\b(automation.*labor|artificial intelligence.*bias)\b",
             ],
-            'Environmental Philosophy': [
-                r'\b(ecolog\w*|climate (change|crisis|justice))\b',
-                r'\b(environmental (justice|racism|destruction))\b',
-                r'\b(metabolic rift|anthropocene|extractivis[mt])\b'
+            "Environmental Philosophy": [
+                r"\b(ecolog\w*|climate (change|crisis|justice))\b",
+                r"\b(environmental (justice|racism|destruction))\b",
+                r"\b(metabolic rift|anthropocene|extractivis[mt])\b",
             ],
-            'Urban Theory': [
-                r'\b(urban (theory|planning|development|gentrif))\b',
-                r'\b(right to the city|spatial.*justice|housing)\b',
-                r'\b(suburbanization|urbanization.*capital)\b'
+            "Urban Theory": [
+                r"\b(urban (theory|planning|development|gentrif))\b",
+                r"\b(right to the city|spatial.*justice|housing)\b",
+                r"\b(suburbanization|urbanization.*capital)\b",
             ],
-            'Labor/Work': [
-                r'\b(labor (power|process|aristocracy|exploit))\b',
-                r'\b(wage (labor|slave|theft)|surplus value)\b',
-                r'\b(work\w* condition|union\w*|strike|solidarity)\b'
+            "Labor/Work": [
+                r"\b(labor (power|process|aristocracy|exploit))\b",
+                r"\b(wage (labor|slave|theft)|surplus value)\b",
+                r"\b(work\w* condition|union\w*|strike|solidarity)\b",
             ],
-            'Education Theory': [
-                r'\b(education\w*|pedagog\w*|critical pedagog)\b',
-                r'\b(banking education|liberatory education|praxis)\b',
-                r'\b(consciousness raising|political education)\b'
+            "Education Theory": [
+                r"\b(education\w*|pedagog\w*|critical pedagog)\b",
+                r"\b(banking education|liberatory education|praxis)\b",
+                r"\b(consciousness raising|political education)\b",
             ],
-            'Media Analysis': [
-                r'\b(media (critique|analysis|manipulation))\b',
-                r'\b(manufacturing consent|propaganda|spectacle)\b',
-                r'\b(cultural production|ideological.*media)\b'
+            "Media Analysis": [
+                r"\b(media (critique|analysis|manipulation))\b",
+                r"\b(manufacturing consent|propaganda|spectacle)\b",
+                r"\b(cultural production|ideological.*media)\b",
             ],
-            'Cultural Criticism': [
-                r'\b(cultural (critique|criticism|hegemony))\b',
-                r'\b(commodity fetishis[mt]|consumer\w* culture)\b',
-                r'\b(alienation|reification|spectacle society)\b'
+            "Cultural Criticism": [
+                r"\b(cultural (critique|criticism|hegemony))\b",
+                r"\b(commodity fetishis[mt]|consumer\w* culture)\b",
+                r"\b(alienation|reification|spectacle society)\b",
             ],
-
             # Historical Analysis
-            'American History': [
-                r'\b(american (history|empire|exceptional))\b',
-                r'\b(US (imperial|history|founding)|1776|civil war)\b',
-                r'\b(slavery.*america|indigenous genocide)\b'
+            "American History": [
+                r"\b(american (history|empire|exceptional))\b",
+                r"\b(US (imperial|history|founding)|1776|civil war)\b",
+                r"\b(slavery.*america|indigenous genocide)\b",
             ],
-            'Revolutionary Theory': [
-                r'\b(revolution\w*|insurrection|uprising|revolt)\b',
-                r'\b(vanguard|mass line|protracted.*war)\b',
-                r'\b(dual power|revolutionary (strategy|theory))\b'
+            "Revolutionary Theory": [
+                r"\b(revolution\w*|insurrection|uprising|revolt)\b",
+                r"\b(vanguard|mass line|protracted.*war)\b",
+                r"\b(dual power|revolutionary (strategy|theory))\b",
             ],
-            'Historical Materialism Applied': [
-                r'\b(historical materialis[mt]|material conditions)\b',
-                r'\b(mode.*production|historical.*development)\b',
-                r'\b(class formation|social formation)\b'
+            "Historical Materialism Applied": [
+                r"\b(historical materialis[mt]|material conditions)\b",
+                r"\b(mode.*production|historical.*development)\b",
+                r"\b(class formation|social formation)\b",
             ],
-
             # Additional themes from analysis
-            'COVID/Public Health Politics': [
-                r'\b(covid|pandemic|long covid|public health)\b',
-                r'\b(mask\w*|vaccine|variant|infection)\b',
-                r'\b(pandemic erasure|collective care|disability)\b'
+            "COVID/Public Health Politics": [
+                r"\b(covid|pandemic|long covid|public health)\b",
+                r"\b(mask\w*|vaccine|variant|infection)\b",
+                r"\b(pandemic erasure|collective care|disability)\b",
             ],
-            'Scientific Materialism': [
-                r'\b(scientific (materialis[mt]|method|socialism))\b',
-                r'\b(empirical\w*|hypothesis|evidence.?based)\b',
-                r'\b(thermodynamic|quantum|evolution\w*)\b'
+            "Scientific Materialism": [
+                r"\b(scientific (materialis[mt]|method|socialism))\b",
+                r"\b(empirical\w*|hypothesis|evidence.?based)\b",
+                r"\b(thermodynamic|quantum|evolution\w*)\b",
             ],
-            'Organizational Theory': [
-                r'\b(organizational|party (building|formation|discipline))\b',
-                r'\b(democratic centralis[mt]|cadre|mass work)\b',
-                r'\b(base building|social investigation)\b'
-            ]
+            "Organizational Theory": [
+                r"\b(organizational|party (building|formation|discipline))\b",
+                r"\b(democratic centralis[mt]|cadre|mass work)\b",
+                r"\b(base building|social investigation)\b",
+            ],
         }
 
     def analyze_thread(self, file_path: Path) -> Dict[str, float]:
         """Analyze a single thread for themes."""
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(file_path, "r", encoding="utf-8") as f:
             content = f.read().lower()
 
         # Skip frontmatter
-        if content.startswith('---'):
-            parts = content.split('---', 2)
+        if content.startswith("---"):
+            parts = content.split("---", 2)
             if len(parts) >= 3:
                 content = parts[2]
 
@@ -187,7 +184,7 @@ class ThemeExtractor:
                 found = re.findall(pattern, content, re.IGNORECASE)
                 matches += len(found)
                 # Weight by pattern complexity
-                if 'production' in pattern or 'consciousness' in pattern:
+                if "production" in pattern or "consciousness" in pattern:
                     score += len(found) * 2
                 else:
                     score += len(found)
@@ -208,11 +205,11 @@ class ThemeExtractor:
         theme_threads = defaultdict(list)  # theme -> [(thread_num, strength)]
 
         # Get all numbered markdown files
-        thread_files = sorted(self.heavy_dir.glob('[0-9]*.md'))
+        thread_files = sorted(self.heavy_dir.glob("[0-9]*.md"))
 
         for thread_file in thread_files:
             # Extract thread number
-            thread_num = int(thread_file.name.split('-')[0])
+            thread_num = int(thread_file.name.split("-")[0])
 
             # Analyze themes
             themes = self.analyze_thread(thread_file)
@@ -223,11 +220,11 @@ class ThemeExtractor:
                 # Categorize by strength
                 for theme, score in themes.items():
                     if score > 10:
-                        strength = 'strong'
+                        strength = "strong"
                     elif score > 5:
-                        strength = 'moderate'
+                        strength = "moderate"
                     else:
-                        strength = 'light'
+                        strength = "light"
 
                     theme_threads[theme].append((thread_num, strength, score))
 
@@ -246,15 +243,15 @@ class ThemeExtractor:
         # Load our vocabularies
         key_phrases = []
 
-        for vocab_file in self.vocab_dir.glob('*.yaml'):
-            if vocab_file.name == 'master_vocabulary.yaml':
+        for vocab_file in self.vocab_dir.glob("*.yaml"):
+            if vocab_file.name == "master_vocabulary.yaml":
                 continue
 
-            with open(vocab_file, 'r') as f:
+            with open(vocab_file, "r") as f:
                 vocab_data = yaml.safe_load(f)
 
-            if vocab_data and 'terms' in vocab_data:
-                for term in vocab_data['terms']:
+            if vocab_data and "terms" in vocab_data:
+                for term in vocab_data["terms"]:
                     if len(term.split()) > 1:  # Multi-word phrases
                         key_phrases.append(term)
 
@@ -275,13 +272,15 @@ class ThemeExtractor:
             "political education",
             "social investigation",
             "democratic centralism",
-            "from the masses to the masses"
+            "from the masses to the masses",
         ]
 
         key_phrases.extend(additional_phrases)
         return sorted(list(set(key_phrases)))
 
-    def generate_themes_extracted(self, thread_themes: Dict, theme_threads: Dict, key_phrases: List[str]):
+    def generate_themes_extracted(
+        self, thread_themes: Dict, theme_threads: Dict, key_phrases: List[str]
+    ):
         """Generate THEMES_EXTRACTED.md file."""
         print("\n✍️ Generating THEMES_EXTRACTED.md...")
 
@@ -296,16 +295,21 @@ class ThemeExtractor:
 
         # Political Philosophy themes
         political_themes = [
-            'Marxism/Historical Materialism', 'Anarchism', 'Liberalism Critique',
-            'Fascism Analysis', 'Democracy Theory', 'Political Economy',
-            'Imperialism/Colonialism', 'Class Analysis'
+            "Marxism/Historical Materialism",
+            "Anarchism",
+            "Liberalism Critique",
+            "Fascism Analysis",
+            "Democracy Theory",
+            "Political Economy",
+            "Imperialism/Colonialism",
+            "Class Analysis",
         ]
 
         for theme in political_themes:
             if theme in theme_threads and len(theme_threads[theme]) > 0:
                 count = len(theme_threads[theme])
                 top_threads = theme_threads[theme][:5]
-                thread_list = ', '.join([f"#{t[0]} ({t[1]})" for t in top_threads])
+                thread_list = ", ".join([f"#{t[0]} ({t[1]})" for t in top_threads])
                 content += f"- [x] **{theme}**: {count} threads - {thread_list}\n"
             else:
                 content += f"- [ ] {theme}: Not found\n"
@@ -313,15 +317,19 @@ class ThemeExtractor:
         content += "\n### General Philosophy\n"
 
         philosophy_themes = [
-            'Epistemology', 'Ethics/Moral Philosophy', 'Ontology/Metaphysics',
-            'Philosophy of Mind', 'Critical Theory', 'Dialectics'
+            "Epistemology",
+            "Ethics/Moral Philosophy",
+            "Ontology/Metaphysics",
+            "Philosophy of Mind",
+            "Critical Theory",
+            "Dialectics",
         ]
 
         for theme in philosophy_themes:
             if theme in theme_threads and len(theme_threads[theme]) > 0:
                 count = len(theme_threads[theme])
                 top_threads = theme_threads[theme][:5]
-                thread_list = ', '.join([f"#{t[0]} ({t[1]})" for t in top_threads])
+                thread_list = ", ".join([f"#{t[0]} ({t[1]})" for t in top_threads])
                 content += f"- [x] **{theme}**: {count} threads - {thread_list}\n"
             else:
                 content += f"- [ ] {theme}: Not found\n"
@@ -329,15 +337,20 @@ class ThemeExtractor:
         content += "\n### Applied Topics\n"
 
         applied_themes = [
-            'Technology Critique', 'Environmental Philosophy', 'Urban Theory',
-            'Labor/Work', 'Education Theory', 'Media Analysis', 'Cultural Criticism'
+            "Technology Critique",
+            "Environmental Philosophy",
+            "Urban Theory",
+            "Labor/Work",
+            "Education Theory",
+            "Media Analysis",
+            "Cultural Criticism",
         ]
 
         for theme in applied_themes:
             if theme in theme_threads and len(theme_threads[theme]) > 0:
                 count = len(theme_threads[theme])
                 top_threads = theme_threads[theme][:5]
-                thread_list = ', '.join([f"#{t[0]} ({t[1]})" for t in top_threads])
+                thread_list = ", ".join([f"#{t[0]} ({t[1]})" for t in top_threads])
                 content += f"- [x] **{theme}**: {count} threads - {thread_list}\n"
             else:
                 content += f"- [ ] {theme}: Not found\n"
@@ -345,14 +358,16 @@ class ThemeExtractor:
         content += "\n### Historical Analysis\n"
 
         history_themes = [
-            'American History', 'Revolutionary Theory', 'Historical Materialism Applied'
+            "American History",
+            "Revolutionary Theory",
+            "Historical Materialism Applied",
         ]
 
         for theme in history_themes:
             if theme in theme_threads and len(theme_threads[theme]) > 0:
                 count = len(theme_threads[theme])
                 top_threads = theme_threads[theme][:5]
-                thread_list = ', '.join([f"#{t[0]} ({t[1]})" for t in top_threads])
+                thread_list = ", ".join([f"#{t[0]} ({t[1]})" for t in top_threads])
                 content += f"- [x] **{theme}**: {count} threads - {thread_list}\n"
             else:
                 content += f"- [ ] {theme}: Not found\n"
@@ -360,21 +375,25 @@ class ThemeExtractor:
         content += "\n### Additional Themes Identified\n"
 
         additional_themes = [
-            'COVID/Public Health Politics', 'Scientific Materialism', 'Organizational Theory'
+            "COVID/Public Health Politics",
+            "Scientific Materialism",
+            "Organizational Theory",
         ]
 
         for theme in additional_themes:
             if theme in theme_threads and len(theme_threads[theme]) > 0:
                 count = len(theme_threads[theme])
                 top_threads = theme_threads[theme][:5]
-                thread_list = ', '.join([f"#{t[0]} ({t[1]})" for t in top_threads])
+                thread_list = ", ".join([f"#{t[0]} ({t[1]})" for t in top_threads])
                 content += f"- [x] **{theme}**: {count} threads - {thread_list}\n"
 
         # Add detailed thread-theme mapping
         content += "\n## Detailed Thread-Theme Mapping\n\n"
 
         # Get top themes by frequency
-        theme_counts = [(theme, len(threads)) for theme, threads in theme_threads.items()]
+        theme_counts = [
+            (theme, len(threads)) for theme, threads in theme_threads.items()
+        ]
         theme_counts.sort(key=lambda x: x[1], reverse=True)
 
         for theme, count in theme_counts[:15]:  # Top 15 themes
@@ -391,7 +410,7 @@ class ThemeExtractor:
         content += "*These phrases appear frequently in the corpus:*\n\n"
 
         for i in range(0, len(key_phrases), 3):
-            batch = key_phrases[i:i+3]
+            batch = key_phrases[i : i + 3]
             content += "- " + ", ".join([f'"{p}"' for p in batch]) + "\n"
 
         # Add observations
@@ -423,8 +442,8 @@ Based on automated analysis of 59 heavy hitter threads:
 """
 
         # Write the file
-        output_path = self.heavy_dir / 'THEMES_EXTRACTED.md'
-        with open(output_path, 'w', encoding='utf-8') as f:
+        output_path = self.heavy_dir / "THEMES_EXTRACTED.md"
+        with open(output_path, "w", encoding="utf-8") as f:
             f.write(content)
 
         print(f"✅ Generated {output_path}")
@@ -451,7 +470,9 @@ Based on automated analysis of 59 heavy hitter threads:
 
         # Top themes
         print("\n🏆 Top 5 Themes by Frequency:")
-        theme_counts = [(theme, len(threads)) for theme, threads in theme_threads.items()]
+        theme_counts = [
+            (theme, len(threads)) for theme, threads in theme_threads.items()
+        ]
         theme_counts.sort(key=lambda x: x[1], reverse=True)
 
         for theme, count in theme_counts[:5]:
@@ -459,6 +480,7 @@ Based on automated analysis of 59 heavy hitter threads:
 
         print("\n✊ Theme extraction complete!")
         print("📄 Review docs/heavy_hitters/THEMES_EXTRACTED.md")
+
 
 if __name__ == "__main__":
     extractor = ThemeExtractor()

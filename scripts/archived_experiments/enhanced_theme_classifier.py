@@ -19,20 +19,22 @@ from text_processing import (
     format_frontmatter_value,
     extract_entities,
     generate_filename,
-    parse_to_yyyymmdd
+    parse_to_yyyymmdd,
 )
 
 
 class EnhancedThemeClassifier:
     """Enhanced classifier using THEMES_EXTRACTED.md structure."""
 
-    def __init__(self, themes_file: str = 'docs/heavy_hitters/THEMES_EXTRACTED.md'):
+    def __init__(self, themes_file: str = "docs/heavy_hitters/THEMES_EXTRACTED.md"):
         self.themes_file = Path(themes_file)
 
         # Theme data structures
         self.themes: Dict[str, List[int]] = {}  # theme -> thread numbers
         self.keywords: Dict[str, str] = {}  # keyword -> category
-        self.thread_theme_map: Dict[int, List[str]] = defaultdict(list)  # thread_num -> themes
+        self.thread_theme_map: Dict[int, List[str]] = defaultdict(
+            list
+        )  # thread_num -> themes
 
         # Categories for classification
         self.philosophical_themes = set()
@@ -46,7 +48,7 @@ class EnhancedThemeClassifier:
 
         print(f"📖 Loading themes from {self.themes_file}")
 
-        with open(self.themes_file, 'r', encoding='utf-8') as f:
+        with open(self.themes_file, "r", encoding="utf-8") as f:
             content = f.read()
 
         # Parse different sections
@@ -62,14 +64,14 @@ class EnhancedThemeClassifier:
     def _parse_identified_themes(self, content: str) -> None:
         """Parse the Identified Themes section with checkboxes."""
         # Find all checked themes with thread numbers
-        pattern = r'\[x\]\s+\*?\*?([^:*]+)\*?\*?:\s*(\d+)\s*threads?\s*-\s*([^\\n]+)'
+        pattern = r"\[x\]\s+\*?\*?([^:*]+)\*?\*?:\s*(\d+)\s*threads?\s*-\s*([^\\n]+)"
         matches = re.findall(pattern, content)
 
         for theme_name, count, thread_list in matches:
             theme = theme_name.strip()
 
             # Extract thread numbers
-            thread_nums = re.findall(r'#(\d+)', thread_list)
+            thread_nums = re.findall(r"#(\d+)", thread_list)
             thread_nums = [int(n) for n in thread_nums]
 
             self.themes[theme] = thread_nums
@@ -81,28 +83,43 @@ class EnhancedThemeClassifier:
             print(f"  ✓ {theme}: {count} threads → {len(thread_nums)} mapped")
 
             # Categorize themes
-            if any(word in theme.lower() for word in ['marxism', 'fascism', 'imperialism', 'political', 'colonialism']):
+            if any(
+                word in theme.lower()
+                for word in [
+                    "marxism",
+                    "fascism",
+                    "imperialism",
+                    "political",
+                    "colonialism",
+                ]
+            ):
                 self.political_themes.add(theme)
-            elif any(word in theme.lower() for word in ['dialectics', 'epistemology', 'ontology', 'philosophy']):
+            elif any(
+                word in theme.lower()
+                for word in ["dialectics", "epistemology", "ontology", "philosophy"]
+            ):
                 self.philosophical_themes.add(theme)
 
     def _parse_thread_mappings(self, content: str) -> None:
         """Parse the Thread-Theme Mapping section for strength indicators."""
         # Find mapping sections
-        sections = re.findall(r'### ([^\\n]+)\\n- \*\*Strong presence\*\*: Threads ([^\\n]+)\\n- \*\*Moderate presence\*\*: Threads ([^\\n]+)', content)
+        sections = re.findall(
+            r"### ([^\\n]+)\\n- \*\*Strong presence\*\*: Threads ([^\\n]+)\\n- \*\*Moderate presence\*\*: Threads ([^\\n]+)",
+            content,
+        )
 
         for theme, strong_threads, moderate_threads in sections:
             theme = theme.strip()
 
             # Extract strong presence threads
-            strong_nums = re.findall(r'#(\d+)', strong_threads)
+            strong_nums = re.findall(r"#(\d+)", strong_threads)
             for num in strong_nums:
                 thread_num = int(num)
                 if theme not in self.thread_theme_map[thread_num]:
                     self.thread_theme_map[thread_num].append(theme)
 
             # Extract moderate presence threads
-            moderate_nums = re.findall(r'#(\d+)', moderate_threads)
+            moderate_nums = re.findall(r"#(\d+)", moderate_threads)
             for num in moderate_nums:
                 thread_num = int(num)
                 if theme not in self.thread_theme_map[thread_num]:
@@ -111,7 +128,9 @@ class EnhancedThemeClassifier:
     def _parse_keywords(self, content: str) -> None:
         """Parse the Keywords/Phrases section."""
         # Find keywords section
-        keywords_match = re.search(r'## Keywords/Phrases You Actually Use(.*?)(?=##|\\Z)', content, re.DOTALL)
+        keywords_match = re.search(
+            r"## Keywords/Phrases You Actually Use(.*?)(?=##|\\Z)", content, re.DOTALL
+        )
 
         if keywords_match:
             keywords_section = keywords_match.group(1)
@@ -126,17 +145,21 @@ class EnhancedThemeClassifier:
                 for keyword in keyword_matches:
                     self.keywords[keyword.lower()] = category
 
-            print(f"  ✓ Loaded {len(self.keywords)} keywords across {len(set(self.keywords.values()))} categories")
+            print(
+                f"  ✓ Loaded {len(self.keywords)} keywords across {len(set(self.keywords.values()))} categories"
+            )
 
-    def classify_thread(self, thread: Dict[str, Any]) -> Tuple[List[str], float, Dict[str, float]]:
+    def classify_thread(
+        self, thread: Dict[str, Any]
+    ) -> Tuple[List[str], float, Dict[str, float]]:
         """
         Classify a thread based on themes and keywords.
 
         Returns:
             Tuple of (themes list, confidence score, detailed scores dict)
         """
-        text = thread.get('smushed_text', '').lower()
-        word_count = thread.get('word_count', 0)
+        text = thread.get("smushed_text", "").lower()
+        word_count = thread.get("word_count", 0)
 
         # Score tracking
         theme_scores: Dict[str, float] = defaultdict(float)
@@ -147,43 +170,83 @@ class EnhancedThemeClassifier:
             if keyword in text:
                 keyword_matches.append(keyword)
                 # Map keyword categories to themes
-                if 'political economy' in category.lower():
-                    theme_scores['Political Economy'] += 2.0
-                elif 'organizational' in category.lower():
-                    theme_scores['Organizational Theory'] += 2.0
-                elif 'philosophical method' in category.lower():
-                    theme_scores['Dialectics'] += 1.5
-                elif 'public health' in category.lower():
-                    theme_scores['COVID/Public Health Politics'] += 2.0
+                if "political economy" in category.lower():
+                    theme_scores["Political Economy"] += 2.0
+                elif "organizational" in category.lower():
+                    theme_scores["Organizational Theory"] += 2.0
+                elif "philosophical method" in category.lower():
+                    theme_scores["Dialectics"] += 1.5
+                elif "public health" in category.lower():
+                    theme_scores["COVID/Public Health Politics"] += 2.0
 
         # Check for theme-specific patterns
         theme_patterns = {
-            'Marxism/Historical Materialism': [
-                'class struggle', 'bourgeois', 'proletariat', 'capital', 'labor power',
-                'means of production', 'historical materialism', 'marx'
+            "Marxism/Historical Materialism": [
+                "class struggle",
+                "bourgeois",
+                "proletariat",
+                "capital",
+                "labor power",
+                "means of production",
+                "historical materialism",
+                "marx",
             ],
-            'Fascism Analysis': [
-                'fascis', 'authoritarian', 'reactionary', 'ultranational', 'corporatis'
+            "Fascism Analysis": [
+                "fascis",
+                "authoritarian",
+                "reactionary",
+                "ultranational",
+                "corporatis",
             ],
-            'Imperialism/Colonialism': [
-                'imperial', 'colonial', 'settler', 'extraction', 'periphery', 'core',
-                'palestine', 'occupation', 'zionism'
+            "Imperialism/Colonialism": [
+                "imperial",
+                "colonial",
+                "settler",
+                "extraction",
+                "periphery",
+                "core",
+                "palestine",
+                "occupation",
+                "zionism",
             ],
-            'COVID/Public Health Politics': [
-                'covid', 'pandemic', 'mask', 'vaccine', 'long covid', 'public health',
-                'disability', 'eugenics'
+            "COVID/Public Health Politics": [
+                "covid",
+                "pandemic",
+                "mask",
+                "vaccine",
+                "long covid",
+                "public health",
+                "disability",
+                "eugenics",
             ],
-            'Dialectics': [
-                'dialectic', 'contradiction', 'synthesis', 'thesis', 'antithesis',
-                'negation', 'qualitative', 'quantitative'
+            "Dialectics": [
+                "dialectic",
+                "contradiction",
+                "synthesis",
+                "thesis",
+                "antithesis",
+                "negation",
+                "qualitative",
+                "quantitative",
             ],
-            'Political Economy': [
-                'capital', 'labor', 'profit', 'exploitation', 'commodity', 'exchange',
-                'surplus', 'accumulation'
+            "Political Economy": [
+                "capital",
+                "labor",
+                "profit",
+                "exploitation",
+                "commodity",
+                "exchange",
+                "surplus",
+                "accumulation",
             ],
-            'Cultural Criticism': [
-                'ideology', 'hegemony', 'culture', 'spectacle', 'alienation', 'reification'
-            ]
+            "Cultural Criticism": [
+                "ideology",
+                "hegemony",
+                "culture",
+                "spectacle",
+                "alienation",
+                "reification",
+            ],
         }
 
         for theme, patterns in theme_patterns.items():
@@ -201,7 +264,9 @@ class EnhancedThemeClassifier:
 
         # Select themes above threshold
         threshold = 1.5
-        selected_themes = [theme for theme, score in theme_scores.items() if score >= threshold]
+        selected_themes = [
+            theme for theme, score in theme_scores.items() if score >= threshold
+        ]
 
         # Calculate confidence
         total_score = sum(theme_scores.values())
@@ -218,21 +283,21 @@ class EnhancedThemeClassifier:
         print("\n🚀 Processing all threads with enhanced classifier...")
 
         # Load filtered threads
-        data_file = Path('data/filtered_threads.json')
+        data_file = Path("data/filtered_threads.json")
         if not data_file.exists():
             print(f"❌ Data file not found: {data_file}")
             return None
 
-        with open(data_file, 'r', encoding='utf-8') as f:
+        with open(data_file, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         # Classification results
         classified_threads = {
-            'philosophical': [],
-            'political': [],
-            'both': [],
-            'uncertain': [],
-            'other': []
+            "philosophical": [],
+            "political": [],
+            "both": [],
+            "uncertain": [],
+            "other": [],
         }
 
         theme_frequency = defaultdict(int)
@@ -241,7 +306,7 @@ class EnhancedThemeClassifier:
 
         print(f"📊 Classifying {len(data['threads'])} threads...")
 
-        for i, thread in enumerate(data['threads']):
+        for i, thread in enumerate(data["threads"]):
             # Classify thread
             themes, confidence, scores = self.classify_thread(thread)
 
@@ -250,26 +315,26 @@ class EnhancedThemeClassifier:
             has_politics = any(t in self.political_themes for t in themes)
 
             if has_philosophy and has_politics:
-                category = 'both'
+                category = "both"
             elif has_philosophy:
-                category = 'philosophical'
+                category = "philosophical"
             elif has_politics:
-                category = 'political'
+                category = "political"
             elif themes and confidence > 0.5:
-                category = 'uncertain'
+                category = "uncertain"
             else:
-                category = 'other'
+                category = "other"
 
             # Create enhanced thread record
             classified_thread = {
-                'thread_id': thread['thread_id'],
-                'themes': themes,
-                'confidence': round(confidence, 3),
-                'category': category,
-                'word_count': thread['word_count'],
-                'tweet_count': thread['tweet_count'],
-                'first_tweet_date': thread['first_tweet_date'],
-                'theme_scores': {k: round(v, 2) for k, v in scores.items() if v > 0}
+                "thread_id": thread["thread_id"],
+                "themes": themes,
+                "confidence": round(confidence, 3),
+                "category": category,
+                "word_count": thread["word_count"],
+                "tweet_count": thread["tweet_count"],
+                "first_tweet_date": thread["first_tweet_date"],
+                "theme_scores": {k: round(v, 2) for k, v in scores.items() if v > 0},
             }
 
             classified_threads[category].append(classified_thread)
@@ -287,43 +352,51 @@ class EnhancedThemeClassifier:
                 print(f"  Processed {i + 1}/{len(data['threads'])} threads...")
 
         # Generate summary statistics
-        total_classified = sum(len(v) for k, v in classified_threads.items() if k != 'other')
+        total_classified = sum(
+            len(v) for k, v in classified_threads.items() if k != "other"
+        )
 
         output = {
-            'metadata': {
-                'total_threads': len(data['threads']),
-                'classified': total_classified,
-                'high_confidence': high_confidence_count,
-                'classification_rate': round(total_classified / len(data['threads']) * 100, 1),
-                'timestamp': datetime.now().isoformat()
+            "metadata": {
+                "total_threads": len(data["threads"]),
+                "classified": total_classified,
+                "high_confidence": high_confidence_count,
+                "classification_rate": round(
+                    total_classified / len(data["threads"]) * 100, 1
+                ),
+                "timestamp": datetime.now().isoformat(),
             },
-            'statistics': {
-                'by_category': {
-                    'philosophical': len(classified_threads['philosophical']),
-                    'political': len(classified_threads['political']),
-                    'both': len(classified_threads['both']),
-                    'uncertain': len(classified_threads['uncertain']),
-                    'other': len(classified_threads['other'])
+            "statistics": {
+                "by_category": {
+                    "philosophical": len(classified_threads["philosophical"]),
+                    "political": len(classified_threads["political"]),
+                    "both": len(classified_threads["both"]),
+                    "uncertain": len(classified_threads["uncertain"]),
+                    "other": len(classified_threads["other"]),
                 },
-                'theme_frequency': dict(sorted(theme_frequency.items(), key=lambda x: x[1], reverse=True))
+                "theme_frequency": dict(
+                    sorted(theme_frequency.items(), key=lambda x: x[1], reverse=True)
+                ),
             },
-            'threads_by_category': classified_threads,
-            'detailed_results': detailed_results
+            "threads_by_category": classified_threads,
+            "detailed_results": detailed_results,
         }
 
         # Save classification results
-        output_file = Path('data/classified_threads_enhanced.json')
-        with open(output_file, 'w', encoding='utf-8') as f:
+        output_file = Path("data/classified_threads_enhanced.json")
+        with open(output_file, "w", encoding="utf-8") as f:
             json.dump(output, f, indent=2)
 
         print(f"\n✅ Classification complete!")
         print(f"📈 Results:")
         print(f"  • Total threads: {output['metadata']['total_threads']}")
-        print(f"  • Successfully classified: {total_classified} ({output['metadata']['classification_rate']}%)")
+        print(
+            f"  • Successfully classified: {total_classified} ({output['metadata']['classification_rate']}%)"
+        )
         print(f"  • High confidence: {high_confidence_count}")
         print(f"\n📊 By Category:")
-        for category, count in output['statistics']['by_category'].items():
-            percentage = round(count / len(data['threads']) * 100, 1)
+        for category, count in output["statistics"]["by_category"].items():
+            percentage = round(count / len(data["threads"]) * 100, 1)
             print(f"  • {category.capitalize()}: {count} ({percentage}%)")
 
         print(f"\n🏆 Top Themes:")
@@ -336,26 +409,36 @@ class EnhancedThemeClassifier:
 
     def generate_report(self, classification_data: Dict[str, Any]) -> None:
         """Generate a detailed classification report."""
-        report_file = Path('docs/CLASSIFICATION_REPORT.md')
+        report_file = Path("docs/CLASSIFICATION_REPORT.md")
 
-        with open(report_file, 'w', encoding='utf-8') as f:
+        with open(report_file, "w", encoding="utf-8") as f:
             f.write("# Thread Classification Report\n\n")
             f.write(f"*Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}*\n\n")
 
             # Summary
             f.write("## Executive Summary\n\n")
-            f.write(f"- **Total Threads Analyzed**: {classification_data['metadata']['total_threads']}\n")
-            f.write(f"- **Successfully Classified**: {classification_data['metadata']['classified']} ")
+            f.write(
+                f"- **Total Threads Analyzed**: {classification_data['metadata']['total_threads']}\n"
+            )
+            f.write(
+                f"- **Successfully Classified**: {classification_data['metadata']['classified']} "
+            )
             f.write(f"({classification_data['metadata']['classification_rate']}%)\n")
-            f.write(f"- **High Confidence Classifications**: {classification_data['metadata']['high_confidence']}\n\n")
+            f.write(
+                f"- **High Confidence Classifications**: {classification_data['metadata']['high_confidence']}\n\n"
+            )
 
             # Category breakdown
             f.write("## Classification by Category\n\n")
             f.write("| Category | Count | Percentage |\n")
             f.write("|----------|-------|------------|\n")
 
-            for category, count in classification_data['statistics']['by_category'].items():
-                percentage = round(count / classification_data['metadata']['total_threads'] * 100, 1)
+            for category, count in classification_data["statistics"][
+                "by_category"
+            ].items():
+                percentage = round(
+                    count / classification_data["metadata"]["total_threads"] * 100, 1
+                )
                 f.write(f"| {category.capitalize()} | {count} | {percentage}% |\n")
 
             # Theme frequency
@@ -363,14 +446,16 @@ class EnhancedThemeClassifier:
             f.write("| Theme | Thread Count |\n")
             f.write("|-------|-------------|\n")
 
-            for theme, count in list(classification_data['statistics']['theme_frequency'].items())[:10]:
+            for theme, count in list(
+                classification_data["statistics"]["theme_frequency"].items()
+            )[:10]:
                 f.write(f"| {theme} | {count} |\n")
 
             # Sample classifications
             f.write("\n## Sample Classifications\n\n")
 
-            for category in ['political', 'philosophical', 'both']:
-                threads = classification_data['threads_by_category'].get(category, [])
+            for category in ["political", "philosophical", "both"]:
+                threads = classification_data["threads_by_category"].get(category, [])
                 if threads:
                     f.write(f"### {category.capitalize()} Threads (Top 3)\n\n")
                     for thread in threads[:3]:

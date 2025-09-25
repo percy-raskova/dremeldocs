@@ -8,29 +8,30 @@ import yaml
 from pathlib import Path
 from collections import defaultdict, Counter
 
+
 class ThemeGenerator:
     """Generate themes using our existing tags and vocabularies."""
 
     def __init__(self):
-        self.heavy_dir = Path('docs/heavy_hitters')
-        self.vocab_dir = Path('data/vocabularies')
+        self.heavy_dir = Path("docs/heavy_hitters")
+        self.vocab_dir = Path("data/vocabularies")
 
         # Map our tag categories to theme names
         self.tag_to_theme = {
-            'marxism-communism': 'Marxism/Historical Materialism',
-            'fascism-analysis': 'Fascism Analysis',
-            'imperialism-colonialism': 'Imperialism/Colonialism',
-            'public-health-politics': 'COVID/Public Health Politics',
-            'political-economy': 'Political Economy',
-            'dialectical-historical-materialism': 'Dialectics',
-            'social-criticism': 'Cultural Criticism',
-            'operational-organizational-theory': 'Organizational Theory',
+            "marxism-communism": "Marxism/Historical Materialism",
+            "fascism-analysis": "Fascism Analysis",
+            "imperialism-colonialism": "Imperialism/Colonialism",
+            "public-health-politics": "COVID/Public Health Politics",
+            "political-economy": "Political Economy",
+            "dialectical-historical-materialism": "Dialectics",
+            "social-criticism": "Cultural Criticism",
+            "operational-organizational-theory": "Organizational Theory",
             # Specific tags
-            'fascism': 'Fascism Analysis',
-            'imperialism': 'Imperialism/Colonialism',
-            'marxism': 'Marxism/Historical Materialism',
-            'covid': 'COVID/Public Health Politics',
-            'palestine': 'Imperialism/Colonialism'
+            "fascism": "Fascism Analysis",
+            "imperialism": "Imperialism/Colonialism",
+            "marxism": "Marxism/Historical Materialism",
+            "covid": "COVID/Public Health Politics",
+            "palestine": "Imperialism/Colonialism",
         }
 
     def collect_thread_tags(self):
@@ -40,19 +41,19 @@ class ThemeGenerator:
         thread_tags = {}  # thread_num -> [tags]
         theme_threads = defaultdict(list)  # theme -> [thread_nums]
 
-        for md_file in sorted(self.heavy_dir.glob('[0-9]*.md')):
-            thread_num = int(md_file.name.split('-')[0])
+        for md_file in sorted(self.heavy_dir.glob("[0-9]*.md")):
+            thread_num = int(md_file.name.split("-")[0])
 
-            with open(md_file, 'r', encoding='utf-8') as f:
+            with open(md_file, "r", encoding="utf-8") as f:
                 content = f.read()
 
-            if content.startswith('---'):
-                parts = content.split('---', 2)
+            if content.startswith("---"):
+                parts = content.split("---", 2)
                 if len(parts) >= 3:
                     try:
                         fm_data = yaml.safe_load(parts[1])
-                        if fm_data and 'tags' in fm_data:
-                            tags = fm_data['tags']
+                        if fm_data and "tags" in fm_data:
+                            tags = fm_data["tags"]
                             thread_tags[thread_num] = tags
 
                             # Map to themes
@@ -73,16 +74,16 @@ class ThemeGenerator:
 
         key_phrases = []
 
-        for vocab_file in self.vocab_dir.glob('*.yaml'):
-            if vocab_file.name == 'master_vocabulary.yaml':
+        for vocab_file in self.vocab_dir.glob("*.yaml"):
+            if vocab_file.name == "master_vocabulary.yaml":
                 continue
 
             try:
-                with open(vocab_file, 'r') as f:
+                with open(vocab_file, "r") as f:
                     vocab_data = yaml.safe_load(f)
 
-                if vocab_data and 'terms' in vocab_data:
-                    for term in vocab_data['terms']:
+                if vocab_data and "terms" in vocab_data:
+                    for term in vocab_data["terms"]:
                         # Add multi-word phrases
                         if isinstance(term, str) and len(term.split()) > 1:
                             key_phrases.append(term)
@@ -115,7 +116,7 @@ class ThemeGenerator:
             "wage labor",
             "imperial core",
             "global north",
-            "global south"
+            "global south",
         ]
 
         key_phrases.extend(important_phrases)
@@ -126,7 +127,9 @@ class ThemeGenerator:
         print("\n✍️ Generating THEMES_EXTRACTED.md...")
 
         # Count threads per theme
-        theme_counts = {theme: len(set(threads)) for theme, threads in theme_threads.items()}
+        theme_counts = {
+            theme: len(set(threads)) for theme, threads in theme_threads.items()
+        }
 
         content = """# Themes Extracted from Heavy Hitters
 
@@ -139,21 +142,21 @@ class ThemeGenerator:
 
         # Political Philosophy themes
         political_themes = [
-            ('Marxism/Historical Materialism', 'Core theoretical framework'),
-            ('Anarchism', 'Anti-authoritarian perspectives'),
-            ('Liberalism Critique', 'Analysis of liberal ideology'),
-            ('Fascism Analysis', 'Understanding fascist mechanics'),
-            ('Democracy Theory', 'Critique of bourgeois democracy'),
-            ('Political Economy', 'Economic and political relations'),
-            ('Imperialism/Colonialism', 'Global oppression systems'),
-            ('Class Analysis', 'Class dynamics and struggle')
+            ("Marxism/Historical Materialism", "Core theoretical framework"),
+            ("Anarchism", "Anti-authoritarian perspectives"),
+            ("Liberalism Critique", "Analysis of liberal ideology"),
+            ("Fascism Analysis", "Understanding fascist mechanics"),
+            ("Democracy Theory", "Critique of bourgeois democracy"),
+            ("Political Economy", "Economic and political relations"),
+            ("Imperialism/Colonialism", "Global oppression systems"),
+            ("Class Analysis", "Class dynamics and struggle"),
         ]
 
         for theme_name, description in political_themes:
             if theme_name in theme_counts:
                 count = theme_counts[theme_name]
                 threads = sorted(set(theme_threads[theme_name]))[:8]
-                thread_list = ', '.join([f"#{t}" for t in threads])
+                thread_list = ", ".join([f"#{t}" for t in threads])
                 content += f"- [x] **{theme_name}**: {count} threads - {thread_list}\n"
             else:
                 content += f"- [ ] {theme_name}: {description}\n"
@@ -161,20 +164,20 @@ class ThemeGenerator:
         content += "\n### General Philosophy\n"
 
         philosophy_themes = [
-            ('Epistemology', 'Theory of knowledge'),
-            ('Ethics/Moral Philosophy', 'Moral and ethical questions'),
-            ('Ontology/Metaphysics', 'Nature of being'),
-            ('Philosophy of Mind', 'Consciousness and cognition'),
-            ('Phenomenology', 'Experience and perception'),
-            ('Critical Theory', 'Ideology critique'),
-            ('Dialectics', 'Dialectical method and logic')
+            ("Epistemology", "Theory of knowledge"),
+            ("Ethics/Moral Philosophy", "Moral and ethical questions"),
+            ("Ontology/Metaphysics", "Nature of being"),
+            ("Philosophy of Mind", "Consciousness and cognition"),
+            ("Phenomenology", "Experience and perception"),
+            ("Critical Theory", "Ideology critique"),
+            ("Dialectics", "Dialectical method and logic"),
         ]
 
         for theme_name, description in philosophy_themes:
             if theme_name in theme_counts:
                 count = theme_counts[theme_name]
                 threads = sorted(set(theme_threads[theme_name]))[:8]
-                thread_list = ', '.join([f"#{t}" for t in threads])
+                thread_list = ", ".join([f"#{t}" for t in threads])
                 content += f"- [x] **{theme_name}**: {count} threads - {thread_list}\n"
             else:
                 content += f"- [ ] {theme_name}: {description}\n"
@@ -182,20 +185,20 @@ class ThemeGenerator:
         content += "\n### Applied Topics\n"
 
         applied_themes = [
-            ('Technology Critique', 'Tech and society'),
-            ('Environmental Philosophy', 'Climate and ecology'),
-            ('Urban Theory', 'Cities and space'),
-            ('Labor/Work', 'Work and exploitation'),
-            ('Education Theory', 'Political education'),
-            ('Media Analysis', 'Media critique'),
-            ('Cultural Criticism', 'Cultural hegemony')
+            ("Technology Critique", "Tech and society"),
+            ("Environmental Philosophy", "Climate and ecology"),
+            ("Urban Theory", "Cities and space"),
+            ("Labor/Work", "Work and exploitation"),
+            ("Education Theory", "Political education"),
+            ("Media Analysis", "Media critique"),
+            ("Cultural Criticism", "Cultural hegemony"),
         ]
 
         for theme_name, description in applied_themes:
             if theme_name in theme_counts:
                 count = theme_counts[theme_name]
                 threads = sorted(set(theme_threads[theme_name]))[:8]
-                thread_list = ', '.join([f"#{t}" for t in threads])
+                thread_list = ", ".join([f"#{t}" for t in threads])
                 content += f"- [x] **{theme_name}**: {count} threads - {thread_list}\n"
             else:
                 content += f"- [ ] {theme_name}: {description}\n"
@@ -203,17 +206,17 @@ class ThemeGenerator:
         content += "\n### Historical Analysis\n"
 
         history_themes = [
-            ('American History', 'US historical analysis'),
-            ('Revolutionary Theory', 'Revolutionary strategy'),
-            ('Historical Materialism Applied', 'Historical method'),
-            ('Comparative History', 'Cross-cultural analysis')
+            ("American History", "US historical analysis"),
+            ("Revolutionary Theory", "Revolutionary strategy"),
+            ("Historical Materialism Applied", "Historical method"),
+            ("Comparative History", "Cross-cultural analysis"),
         ]
 
         for theme_name, description in history_themes:
             if theme_name in theme_counts:
                 count = theme_counts[theme_name]
                 threads = sorted(set(theme_threads[theme_name]))[:8]
-                thread_list = ', '.join([f"#{t}" for t in threads])
+                thread_list = ", ".join([f"#{t}" for t in threads])
                 content += f"- [x] **{theme_name}**: {count} threads - {thread_list}\n"
             else:
                 content += f"- [ ] {theme_name}: {description}\n"
@@ -221,23 +224,25 @@ class ThemeGenerator:
         content += "\n### Other Themes\n"
 
         other_themes = [
-            ('COVID/Public Health Politics', 'Pandemic as class war'),
-            ('Scientific Materialism', 'Science and philosophy'),
-            ('Organizational Theory', 'Party building and organizing')
+            ("COVID/Public Health Politics", "Pandemic as class war"),
+            ("Scientific Materialism", "Science and philosophy"),
+            ("Organizational Theory", "Party building and organizing"),
         ]
 
         for theme_name, description in other_themes:
             if theme_name in theme_counts:
                 count = theme_counts[theme_name]
                 threads = sorted(set(theme_threads[theme_name]))[:8]
-                thread_list = ', '.join([f"#{t}" for t in threads])
+                thread_list = ", ".join([f"#{t}" for t in threads])
                 content += f"- [x] **{theme_name}**: {count} threads - {thread_list}\n"
 
         # Thread-Theme Mapping
         content += "\n## Thread-Theme Mapping\n\n"
 
         # Group threads by primary theme
-        for theme in sorted(theme_counts.keys(), key=lambda x: theme_counts[x], reverse=True)[:10]:
+        for theme in sorted(
+            theme_counts.keys(), key=lambda x: theme_counts[x], reverse=True
+        )[:10]:
             if theme_counts[theme] > 0:
                 content += f"### {theme}\n"
                 threads = sorted(set(theme_threads[theme]))
@@ -258,10 +263,26 @@ class ThemeGenerator:
         content += "*Extracted from your corpus using the mass line method:*\n\n"
 
         # Group phrases by category
-        political_phrases = [p for p in key_phrases if any(w in p for w in ['class', 'bourgeois', 'capital', 'imperial'])]
-        organizing_phrases = [p for p in key_phrases if any(w in p for w in ['mass', 'party', 'democratic', 'organization'])]
-        philosophical_phrases = [p for p in key_phrases if any(w in p for w in ['consciousness', 'material', 'dialectic'])]
-        health_phrases = [p for p in key_phrases if any(w in p for w in ['covid', 'pandemic', 'health'])]
+        political_phrases = [
+            p
+            for p in key_phrases
+            if any(w in p for w in ["class", "bourgeois", "capital", "imperial"])
+        ]
+        organizing_phrases = [
+            p
+            for p in key_phrases
+            if any(w in p for w in ["mass", "party", "democratic", "organization"])
+        ]
+        philosophical_phrases = [
+            p
+            for p in key_phrases
+            if any(w in p for w in ["consciousness", "material", "dialectic"])
+        ]
+        health_phrases = [
+            p
+            for p in key_phrases
+            if any(w in p for w in ["covid", "pandemic", "health"])
+        ]
 
         if political_phrases:
             content += "### Political Economy\n"
@@ -314,8 +335,8 @@ class ThemeGenerator:
 """
 
         # Write the file
-        output_path = self.heavy_dir / 'THEMES_EXTRACTED.md'
-        with open(output_path, 'w', encoding='utf-8') as f:
+        output_path = self.heavy_dir / "THEMES_EXTRACTED.md"
+        with open(output_path, "w", encoding="utf-8") as f:
             f.write(content)
 
         print(f"✅ Generated {output_path}")
@@ -333,7 +354,9 @@ class ThemeGenerator:
         key_phrases = self.load_key_phrases()
 
         # Generate THEMES_EXTRACTED.md
-        theme_counts = self.generate_themes_extracted(thread_tags, theme_threads, key_phrases)
+        theme_counts = self.generate_themes_extracted(
+            thread_tags, theme_threads, key_phrases
+        )
 
         # Summary
         print("\n📊 Summary:")
@@ -342,11 +365,14 @@ class ThemeGenerator:
         print(f"  Key phrases: {len(key_phrases)}")
 
         print("\n🏆 Top Themes by Thread Count:")
-        for theme, count in sorted(theme_counts.items(), key=lambda x: x[1], reverse=True)[:5]:
+        for theme, count in sorted(
+            theme_counts.items(), key=lambda x: x[1], reverse=True
+        )[:5]:
             print(f"  - {theme}: {count} threads")
 
         print("\n✊ Theme extraction complete!")
         print("📄 Review docs/heavy_hitters/THEMES_EXTRACTED.md")
+
 
 if __name__ == "__main__":
     generator = ThemeGenerator()
