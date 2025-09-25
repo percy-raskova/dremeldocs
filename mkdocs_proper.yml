@@ -1,0 +1,161 @@
+# DremelDocs Revolutionary Theory Archive
+site_name: DremelDocs Archive
+site_url: https://dremeldocs.org
+site_author: BmoreOrganized
+site_description: >-
+  A curated archive of revolutionary theory, political analysis,
+  and critical discourse from over a decade of philosophical inquiry.
+
+# Repository
+repo_url: https://github.com/yourusername/dremeldocs
+repo_name: dremeldocs
+
+# Theme configuration
+theme:
+  name: material
+  language: en
+
+  # Color scheme
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  # Typography
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+  # Features
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+    - toc.integrate
+
+  # Icons
+  icon:
+    logo: material/library
+    repo: fontawesome/brands/github
+
+# Plugins
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+      lang:
+        - en
+
+  - tags:
+      enabled: true
+      tags_file: tags/index.md
+      tags_hierarchy: true
+      tags_hierarchy_separator: "/"
+      tags_slugify_separator: "-"
+
+      # Shadow tags for internal use
+      shadow_tags:
+        - Draft
+        - Archive
+        - Internal
+
+      # Listings configuration
+      listings_map:
+        by-category:
+          scope: false
+          toc: true
+        by-theme:
+          scope: true
+          exclude: [Draft, Internal]
+
+# Extensions
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - admonition
+  - abbr
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - md_in_html
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+# Navigation
+nav:
+  - Home: index.md
+
+  - About:
+    - About This Archive: about/index.md
+    - Usage Guide: about/usage.md
+    - AI Collaboration: about/ai-collaboration.md
+
+  - Browse by Tags:
+    - All Tags: tags.md
+
+  - Themes:
+    - Overview: themes/index.md
+
+  - Analysis:
+    - Critical Analysis: analysis/index.md
+
+# Extra configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yourusername
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/BmoreOrganized
+
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/tags.css
+
+extra_javascript:
+  - javascripts/tags.js
