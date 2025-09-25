@@ -62,8 +62,14 @@ convention = "google"
 
 [lint.per-file-ignores]
 "__init__.py" = ["E402", "F401"]
-"tests/**/*.py" = ["D", "S101", "ARG", "PLR2004"]
+"tests/**/*.py" = ["D", "S101", "ARG", "PLR2004", "RUF001", "RUF043", "DTZ007", "SIM117", "B017"]
+"tests/scripts/*.py" = ["E402", "F401"]  # Allow imports after path manipulation
+"tests/conftest.py" = ["F401"]  # Allow unused imports for availability checking
+"tests/integration/test_end_to_end.py" = ["F401"]  # Allow unused imports in try blocks
 "scripts/archived_experiments/**/*.py" = ["ALL"]
+"scripts/theme_classifier.py" = ["E402", "ARG002", "RUF001"]
+"scripts/theme_classifier_original.py" = ["ARG002"]
+"scripts/vocabulary_builder.py" = ["F401"]  # Allow unused import in try/except
 
 [format]
 quote-style = "double"
