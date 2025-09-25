@@ -1,38 +1,52 @@
-# EditorConfig helps maintain consistent coding styles across different editors
+# EditorConfig for DremelDocs
 # https://editorconfig.org
 
 root = true
 
+# Universal settings
 [*]
 charset = utf-8
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
-
-[*.py]
 indent_style = space
 indent_size = 4
-max_line_length = 100
 
-[*.{js,json,yml,yaml}]
-indent_style = space
+# Python files
+[*.py]
+indent_size = 4
+max_line_length = 88
+
+# YAML files (including MkDocs config)
+[*.{yml,yaml}]
 indent_size = 2
 
+# Markdown files
 [*.md]
+indent_size = 2
 trim_trailing_whitespace = false
-max_line_length = 80
+max_line_length = 100
 
-[*.sh]
-indent_style = space
+# JSON files
+[*.json]
+indent_size = 2
+
+# TOML files
+[*.toml]
 indent_size = 4
 
+# Shell scripts
+[*.{sh,bash}]
+indent_size = 2
+
+# Makefile
 [Makefile]
 indent_style = tab
 
-[*.{html,css,scss}]
-indent_style = space
+# Git files
+[{.gitignore,.gitattributes}]
 indent_size = 2
 
-[.git*]
-indent_style = space
+# HTML/CSS (for MkDocs customization)
+[*.{html,css,scss}]
 indent_size = 2

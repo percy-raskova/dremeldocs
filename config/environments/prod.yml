@@ -1,0 +1,44 @@
+# Production Environment Configuration
+environment: production
+
+# Site settings
+site:
+  url: "https://dremeldocs.org"
+  debug: false
+  reload: false
+
+# Plugin overrides
+plugins:
+  search:
+    enabled: true
+  social:
+    enabled: true
+  optimize:
+    enabled: true
+    optimize_avif: true # Full optimization
+  privacy:
+    enabled: true
+  rss:
+    enabled: true
+
+# Performance settings
+performance:
+  parallel_processing: true
+  max_workers: 4
+  cache_enabled: true
+  cdn_enabled: false # Self-hosted
+
+# Logging
+logging:
+  level: "WARNING"
+  console: false
+  file: "logs/production.log"
+  sentry_dsn: !ENV SENTRY_DSN
+
+# Production specific
+production:
+  ssl_enabled: true
+  force_https: true
+  security_headers: true
+  backup_enabled: true
+  monitoring_enabled: true

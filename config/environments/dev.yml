@@ -1,0 +1,38 @@
+# Development Environment Configuration
+environment: development
+
+# Site settings
+site:
+  url: "http://localhost:8001"
+  debug: true
+  reload: true
+
+# Plugin overrides
+plugins:
+  search:
+    enabled: true
+  social:
+    enabled: false # Disable for faster builds
+  optimize:
+    enabled: false # Skip optimization in dev
+  privacy:
+    enabled: false # Use CDN in dev
+
+# Performance settings
+performance:
+  parallel_processing: false # Easier debugging
+  max_workers: 1
+  cache_enabled: false
+
+# Logging
+logging:
+  level: "DEBUG"
+  console: true
+  file: "logs/dev.log"
+
+# Development helpers
+dev:
+  mock_data: true
+  skip_validation: false
+  verbose_output: true
+  hot_reload: true

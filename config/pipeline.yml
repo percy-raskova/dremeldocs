@@ -1,0 +1,77 @@
+# DremelDocs Pipeline Configuration
+# Central configuration for data processing pipeline
+
+pipeline:
+  name: "DremelDocs Processing Pipeline"
+  version: "2.0.0"
+  description: "Twitter archive to MkDocs Material transformation"
+
+# Source data
+source:
+  twitter_archive:
+    path: "source/data/tweets.js"
+    format: "twitter_archive"
+    encoding: "utf-8"
+
+# Processing stages
+stages:
+  filtering:
+    script: "scripts/local_filter_pipeline.py"
+    input: "source/data/tweets.js"
+    output: "data/filtered_threads.json"
+    settings:
+      min_length: 100
+      exclude_retweets: true
+      thread_detection:
+        enabled: true
+        min_tweets: 2
+
+  heavy_hitters:
+    script: "scripts/generate_heavy_hitters.py"
+    input: "data/filtered_threads.json"
+    output: "docs/heavy_hitters/"
+    settings:
+      min_word_count: 500
+      max_threads: 100
+
+  theme_extraction:
+    type: "manual"
+    template: "docs/heavy_hitters/THEME_TEMPLATE.md"
+    output: "docs/heavy_hitters/THEMES_EXTRACTED.md"
+
+  classification:
+    script: "scripts/theme_classifier.py"
+    input: "docs/heavy_hitters/THEMES_EXTRACTED.md"
+    output: "data/classified_threads.json"
+    settings:
+      confidence_threshold: 0.7
+      clear_existing: true
+
+  markdown_generation:
+    script: "scripts/theme_classifier.py"
+    output: "markdown/"
+    settings:
+      clear_existing: true
+      generate_navigation: true
+
+# Data paths
+paths:
+  raw_data: "source/data/"
+  intermediate_data: "data/"
+  staging_content: "docs/"
+  production_content: "markdown/"
+  build_output: "site/"
+  cache: ".cache/"
+  logs: "logs/"
+
+# Performance
+performance:
+  parallel_processing: true
+  max_workers: 4
+  chunk_size: 100
+
+# Logging
+logging:
+  level: "INFO"
+  file: "logs/pipeline.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

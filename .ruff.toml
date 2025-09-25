@@ -1,0 +1,74 @@
+# Ruff - Fast Python Linter Configuration
+# For DremelDocs revolutionary theory archive project
+
+# Python version target
+target-version = "py38"
+
+# Line length matching Black
+line-length = 88
+indent-width = 4
+
+# Files to process
+include = ["*.py", "*.pyi", "**/pyproject.toml"]
+
+# Exclusions
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "build",
+    "dist",
+    "site",
+    "source/data",
+    ".cache",
+    ".serena",
+    "__pycache__",
+]
+
+[lint]
+# Enable comprehensive rule sets
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # Pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+    "TCH",    # flake8-type-checking
+    "DTZ",    # flake8-datetimez
+    "RUF",    # Ruff-specific rules
+]
+
+ignore = [
+    "E501",   # Line too long (formatter handles)
+    "B008",   # Do not perform function calls in argument defaults
+    "B904",   # Allow raising without from in except
+    "SIM105", # Use contextlib.suppress - too aggressive
+]
+
+# Autofix configuration
+fixable = ["ALL"]
+unfixable = ["B"]
+
+# Type checking imports
+[lint.isort]
+known-first-party = ["scripts", "tests"]
+
+[lint.pydocstyle]
+convention = "google"
+
+[lint.per-file-ignores]
+"__init__.py" = ["E402", "F401"]
+"tests/**/*.py" = ["D", "S101", "ARG", "PLR2004"]
+"scripts/archived_experiments/**/*.py" = ["ALL"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = 72

@@ -1,0 +1,115 @@
+# MkDocs Material Plugin Configuration
+# Following best practices from squidfunk/mkdocs-material
+
+# Search plugin (always first)
+- search:
+    enabled: !ENV [SEARCH_ENABLED, true]
+    separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])'
+    lang:
+      - en
+
+# Meta plugin for .meta.yml support
+- meta:
+    enabled: true
+
+# Tags plugin for theme tagging
+- tags:
+    enabled: true
+    tags_file: tags.md
+    tags_hierarchy: true
+    tags_hierarchy_separator: "/"
+    listings_map:
+      themes:
+        scope: true
+        exclude:
+          - draft
+          - internal
+    tags_allowed:
+      - Marxism
+      - Dialectics
+      - Political Economy
+      - Fascism Analysis
+      - Cultural Criticism
+      - COVID Analysis
+      - Imperialism
+      - Organizational Theory
+
+# Social cards plugin
+- social:
+    enabled: !ENV [SOCIAL_ENABLED, true]
+    cards: !ENV [CARDS_ENABLED, true]
+    cards_layout: default/variant
+    cards_layout_options:
+      background_color: "#006064"
+      color: "#FFFFFF"
+    cache: !ENV [CI, false]
+
+# Blog plugin for chronological organization
+- blog:
+    enabled: false # Can be enabled for blog-style view
+    blog_dir: chronological
+    post_dir: "{blog}/posts"
+    categories: true
+    categories_allowed:
+      - Revolutionary Theory
+      - Critical Analysis
+      - Applied Theory
+    archive: true
+    archive_date_format: "MMMM yyyy"
+    pagination: true
+    pagination_per_page: 10
+
+# Privacy plugin for self-hosting assets
+- privacy:
+    enabled: !ENV [PRIVACY_ENABLED, true]
+    assets: true
+    assets_fetch: true
+    assets_fetch_dir: assets/external
+    cache: true
+    cache_dir: .cache/plugin/privacy
+
+# Optimize plugin for performance
+- optimize:
+    enabled: !ENV [OPTIMIZE_ENABLED, false] # Enable for production
+    cache: true
+    cache_dir: .cache/plugin/optimize
+    optimize_png: true
+    optimize_jpg: true
+    optimize_svg: true
+    optimize_webp: true
+    optimize_avif: false
+
+# Group plugin for conditional plugin groups
+- group:
+    enabled: !ENV [CI, false]
+    plugins:
+      - minify:
+          minify_html: true
+          minify_js: true
+          minify_css: true
+      - git-revision-date-localized:
+          enabled: true
+          type: timeago
+          enable_creation_date: true
+
+# RSS plugin for feed generation
+- rss:
+    enabled: !ENV [RSS_ENABLED, false]
+    match_path: "themes/.*"
+    date_from_meta:
+      as_creation: date
+    categories:
+      - categories
+      - tags
+    pretty_print: !ENV [CI, false]
+
+# External plugins (require installation)
+- awesome-pages:
+    enabled: false # Enable for automatic navigation
+
+- mkdocstrings:
+    enabled: false # Enable for code documentation
+    handlers:
+      python:
+        options:
+          show_source: true
