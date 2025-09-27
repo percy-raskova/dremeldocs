@@ -212,9 +212,10 @@ class TestFiltering:
         """Test stage 1 filter passes tweets > 100 chars."""
         extractor = Mock(spec=LocalThreadExtractor)
 
-        tweet_long = {"full_text": "x" * 101}
-        tweet_short = {"full_text": "x" * 100}
-        tweet_empty = {"full_text": ""}
+        # Add required fields for validation
+        tweet_long = {"full_text": "x" * 101, "id": "123"}
+        tweet_short = {"full_text": "x" * 100, "id": "124"}
+        tweet_empty = {"full_text": "", "id": "125"}
 
         assert LocalThreadExtractor.apply_stage1_filter(extractor, tweet_long) is True
         assert LocalThreadExtractor.apply_stage1_filter(extractor, tweet_short) is False

@@ -1,0 +1,80 @@
+# Theme configuration for DremelDocs
+themes:
+  marxism_historical_materialism:
+    name: "Marxism & Historical Materialism"
+    description: "Analysis of class relations and material conditions"
+    keywords:
+      - dialectical materialism
+      - class struggle
+      - mode of production
+
+  political_economy:
+    name: "Political Economy"
+    description: "Critique of capitalist economic systems"
+    keywords:
+      - capital
+      - surplus value
+      - labor theory
+
+  organizational_theory:
+    name: "Organizational Theory"
+    description: "Revolutionary organizing and movement building"
+    keywords:
+      - democratic centralism
+      - vanguard
+      - mass line
+
+  covid_public_health_politics:
+    name: "COVID & Public Health Politics"
+    description: "Pandemic response and healthcare analysis"
+    keywords:
+      - pandemic
+      - public health
+      - medical apartheid
+
+  fascism_analysis:
+    name: "Fascism Analysis"
+    description: "Contemporary fascist movements and resistance"
+    keywords:
+      - fascism
+      - antifascism
+      - authoritarianism
+
+  cultural_criticism:
+    name: "Cultural Criticism"
+    description: "Media, propaganda, and ideological analysis"
+    keywords:
+      - ideology
+      - cultural hegemony
+      - propaganda
+
+  imperialism_colonialism:
+    name: "Imperialism & Colonialism"
+    description: "Global capital and colonial relations"
+    keywords:
+      - imperialism
+      - decolonization
+      - global south
+
+  dialectics:
+    name: "Dialectics"
+    description: "Dialectical method and philosophy"
+    keywords:
+      - dialectics
+      - contradiction
+      - thesis antithesis
+
+  intersectional:
+    name: "Intersectional Analysis"
+    description: "Race, gender, and class intersections"
+    keywords:
+      - intersectionality
+      - patriarchy
+      - white supremacy
+
+  other:
+    name: "Other Topics"
+    description: "Uncategorized revolutionary content"
+    keywords:
+      - misc
+      - general

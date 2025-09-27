@@ -10,10 +10,13 @@ from typing import Any, List, Optional, Union
 
 from dateutil import parser
 
-# Import from our new modules
-from nlp_core import clean_social_text, nlp
+# Import from interfaces to avoid circular dependencies
+from interfaces import clean_social_text, get_nlp_instance
 from spacy.tokens import Doc, Span
 from tag_extraction import EnhancedTagExtractor, extract_concept_tags
+
+# Get NLP instance using the singleton pattern
+nlp = get_nlp_instance()
 
 
 def skip_common_starters(doc: Doc, min_chunk_words: int = 2) -> Optional[str]:

@@ -14,6 +14,14 @@ from typing import Any, Dict, Generator, List, Optional, Set
 
 import ijson
 
+try:
+    from . import security_utils
+    from .input_validator import InputValidator, ValidationError as InputValidationError
+except ImportError:
+    # Support direct imports when not run as package
+    import security_utils
+    from input_validator import InputValidator, ValidationError as InputValidationError
+
 
 class LocalThreadExtractor:
     def __init__(self, archive_path: Path) -> None:
@@ -73,7 +81,7 @@ class LocalThreadExtractor:
 
         # Quick validation that it looks like a tweets.js file
         try:
-            with open(tweets_file, "rb") as f:
+            with security_utils.safe_open(tweets_file, "rb") as f:
                 # Check if it's binary data first
                 data = f.read(100)
                 # Check for binary content (non-text bytes)
@@ -104,7 +112,7 @@ class LocalThreadExtractor:
         """Stream tweets from the JS file without loading it all into memory"""
         print("🔄 Streaming tweets from archive...")
 
-        with open(self.tweets_file, "rb") as f:
+        with security_utils.safe_open(self.tweets_file, "rb") as f:
             # Read first 100 bytes to find where JSON starts
             header = f.read(100)
 
@@ -134,6 +142,12 @@ class LocalThreadExtractor:
 
     def apply_stage1_filter(self, tweet: Dict[str, Any]) -> bool:
         """Stage 1: Length filter - must be >100 chars"""
+        # Validate tweet structure
+        try:
+            InputValidator.validate_tweet(tweet)
+        except InputValidationError:
+            return False  # Skip invalid tweets
+
         text = tweet.get("full_text", "")
         return len(text) > 100
 
@@ -305,7 +319,7 @@ class LocalThreadExtractor:
         output_file = Path("data/filtered_threads.json")
         output_file.parent.mkdir(exist_ok=True)
 
-        with open(output_file, "w", encoding="utf-8") as f:
+        with security_utils.safe_open(output_file, "w", encoding="utf-8") as f:
             json.dump(output, f, indent=2, ensure_ascii=False)
 
         print(f"✅ Saved JSON to {output_file}")
@@ -313,6 +327,10 @@ class LocalThreadExtractor:
 
     def generate_sample_markdown(self, sample_count: int = 5) -> None:
         """Generate a few sample markdown files to see what they look like"""
+        if not self.threads:
+            print("\n📄 No threads to generate markdown from")
+            return
+
         print(f"\n📄 Generating {sample_count} sample markdown files...")
 
         md_dir = Path("data/sample_threads")
@@ -349,7 +367,7 @@ class LocalThreadExtractor:
 *Thread IDs: {", ".join([t.get("id_str", "") for t in thread])}*
 """
 
-            with open(filepath, "w", encoding="utf-8") as f:
+            with security_utils.safe_open(filepath, "w", encoding="utf-8") as f:
                 f.write(content)
 
             print(f"  Created: {filename}")
@@ -372,10 +390,14 @@ class LocalThreadExtractor:
         print("📊 Results:")
         print(f"  • Filtered from 21,723 to {len(self.filtered_tweets)} tweets")
         print(f"  • Found {len(self.threads)} conversation threads")
-        print(
-            f"  • Average thread length: {sum(len(t) for t in self.threads) / len(self.threads):.1f} tweets"
-        )
-        print(f"  • Longest thread: {max(len(t) for t in self.threads)} tweets")
+
+        if self.threads:
+            avg_length = sum(len(t) for t in self.threads) / len(self.threads)
+            max_length = max(len(t) for t in self.threads)
+            print(f"  • Average thread length: {avg_length:.1f} tweets")
+            print(f"  • Longest thread: {max_length} tweets")
+        else:
+            print("  • No threads found - check your filtering criteria")
         print("\n📁 Output files:")
         print("  • JSON for Claude: data/filtered_threads.json")
         print("  • Sample markdowns: data/sample_threads/")

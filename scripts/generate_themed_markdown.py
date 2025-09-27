@@ -9,11 +9,17 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List
 
+try:
+    from . import security_utils
+except ImportError:
+    # Support direct imports when not run as package
+    import security_utils
+
 
 def organize_by_themes() -> Dict[str, List[Any]]:
     """Reorganize threads by their specific themes"""
 
-    with open("data/classified_threads.json") as f:
+    with security_utils.safe_open("data/classified_threads.json") as f:
         data = json.load(f)
 
     # Create new organization by specific themes
@@ -100,7 +106,7 @@ def generate_theme_markdown(theme: str, threads: List[Dict], output_dir: Path):
         frontmatter_lines.extend(["---", "", f"# {title}", "", thread["smushed_text"]])
 
         filepath = output_dir / filename
-        with open(filepath, "w", encoding="utf-8") as f:
+        with security_utils.safe_open(filepath, "w", encoding="utf-8") as f:
             f.write("\n".join(frontmatter_lines))
 
 
@@ -125,7 +131,7 @@ This section contains **{thread_count} threads** related to {theme_display.lower
 """
 
     index_file = output_dir / "index.md"
-    with open(index_file, "w", encoding="utf-8") as f:
+    with security_utils.safe_open(index_file, "w", encoding="utf-8") as f:
         f.write(index_content)
 
 

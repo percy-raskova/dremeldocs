@@ -5,20 +5,33 @@ Clears old markdown files before regeneration to prevent duplicates.
 """
 
 import json
+import shlex
 import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 
-def run_command(cmd: str, description: str) -> bool:
-    """Run a command and return success status."""
+def run_command(cmd, description: str) -> bool:
+    """Run a command and return success status.
+
+    Args:
+        cmd: Either a string command or list of command arguments
+        description: Human-readable description of the operation
+    """
     print(f"\n{'=' * 60}")
     print(f"🚀 {description}")
     print(f"{'=' * 60}")
 
     try:
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        # Security fix: Use list arguments instead of shell=True to prevent injection
+        if isinstance(cmd, str):
+            # Parse the command safely using shlex
+            cmd_list = shlex.split(cmd)
+        else:
+            cmd_list = cmd
+
+        result = subprocess.run(cmd_list, capture_output=True, text=True)
         if result.returncode == 0:
             print(f"✅ {description} completed successfully")
             if result.stdout:
@@ -50,7 +63,7 @@ def check_prerequisites() -> bool:
     # Check for scripts
     required_scripts = [
         "scripts/local_filter_pipeline.py",
-        "scripts/generate_heavy_hitters.py",
+        "scripts/generate_themed_markdown.py",
         "scripts/theme_classifier.py",
     ]
 
@@ -112,12 +125,12 @@ def main():
             "Stage 1: Extract and filter threads from Twitter archive",
         ),
         (
-            "uv run python scripts/generate_heavy_hitters.py",
-            "Stage 2: Generate heavy hitter documents (500+ words)",
+            "uv run python scripts/theme_classifier.py",
+            "Stage 2: Classify threads by revolutionary themes",
         ),
         (
-            "echo 'Manual theme extraction required' && ls docs/heavy_hitters/*.md | wc -l",
-            "Stage 3: Check heavy hitters generated",
+            "uv run python scripts/generate_themed_markdown.py",
+            "Stage 3: Generate markdown organized by themes",
         ),
     ]
 
@@ -128,31 +141,28 @@ def main():
             print("Please fix the issue and run again.")
             sys.exit(1)
 
-    # Check if themes have been extracted
-    themes_file = Path("docs/heavy_hitters/THEMES_EXTRACTED.md")
-    if not themes_file.exists():
+    # Check if we have classified threads
+    classified_file = Path("data/classified_threads.json")
+    if not classified_file.exists():
         print("\n" + "=" * 60)
-        print("⏸️  MANUAL STEP REQUIRED")
+        print("⚠️  No classified threads found")
         print("=" * 60)
-        print("\n📝 Please complete manual theme extraction:")
-        print("1. Review the threads in docs/heavy_hitters/")
-        print("2. Fill out THEME_TEMPLATE.md with your insights")
-        print("3. Save as docs/heavy_hitters/THEMES_EXTRACTED.md")
-        print("4. Run this script again to continue!")
-        sys.exit(0)
+        print("\nThe classification step should have created data/classified_threads.json")
+        print("Please check the previous step for errors.")
+        sys.exit(1)
 
-    # Run classification with clearing
+    # Final step - build the site
     print("\n" + "=" * 60)
-    print("🚀 Stage 4: Classify all threads and generate markdown")
+    print("🚀 Stage 4: Build documentation site")
     print("=" * 60)
 
-    # This will clear existing markdown and generate new files
+    # Build the MkDocs site
     if not run_command(
-        "uv run python scripts/theme_classifier.py",
-        "Theme classification and markdown generation",
+        "mkdocs build",
+        "Building static documentation site",
     ):
-        print("\n❌ Classification failed")
-        sys.exit(1)
+        print("\n⚠️  Site build failed (non-critical)")
+        # Don't exit - the markdown is still generated
 
     # Final statistics
     print("\n" + "=" * 60)

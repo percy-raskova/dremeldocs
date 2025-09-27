@@ -1,0 +1,14 @@
+---
+title: "Queer liberation"
+date: Tue May 14
+description: "Queer liberation is one of the many fronts in the global struggle."
+thread_id: thread_0285
+word_count: 384
+reading_time: 2
+primary_theme: marxism_historical materialism
+tags: ["marxism_historical materialism", "fascism analysis", "political economy", "imperialism_colonialism", "cultural criticism", "covid_public health politics", "organizational theory"]
+---
+
+# Queer liberation
+
+Queer liberation is one of the many fronts in the global struggle. Paring it down to "wearing a mini skirt" is reactionary rhetoric that erases the material forces driving all vectors of oppression and the way those particular oppressions feed back into the hegemonic structure. https://t.co/xgTHvF6vFH There is not a single serious Marxist out there who thinks "queerness is inherently revolutionary," the same way being Palestinian is not inherently revolutionary, or being Black, etc. What *is* revolutionary is the unity of these myriad struggles into one theory of liberation. A theory that understands and directly tackles capitalist property relations and the superstructure that regiments the world around its reproduction. These aren't disparate issues, any more than the exploitation of the proletariat is separable from the US settler colonial empire. To point to a strawman of liberal, individualist conceptions of "queer acceptance" and say it is "holding the revolution back" is to conflate those of us fighting for liberation on all fronts with our deepest enemies: the willing scions of imperialism. You cannot possibly mistake the two, because the latter is clearly not swayed by exhortations of "holding back the revolution." They would love nothing more than to squash revolution like a bug. They have no relation to us -- other than the aesthetic relation of "being queer" And *that* is the error that is causing such vitriol to messages like this one. Because conflating ideologically and materially disparate groups on the grounds of aesthetics is a key feature of false consciousness, and is one of the central methods of laundering fascist ideology. In the wake of any liberation struggle, there are always opportunists lurking, angling for some way to peel off politically naïve, nascent radicals and subvert their radicalism into a more reactionary direction. That is what political education is meant to avert. Posts like this are a mistaken attempt at exactly that -- heading off people getting peeled away from the revolutionary politics of the Palestinian liberation movement in favor of a passive liberal "queer acceptance." But that's a marginal danger, one that preys only on liberals. The greater danger by far is the one presented by those positioning *themselves* as revolutionaries, and subverting the radical instincts of those novice revolutionaries-in-potentia to move them *away* from the war-on-all-fronts we need revolution to be.

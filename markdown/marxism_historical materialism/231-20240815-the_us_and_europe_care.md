@@ -1,0 +1,14 @@
+---
+title: "the US and Europe 'care"
+date: Thu Aug 15
+description: "The only reason that the US and Europe 'care' about Ukraine is because the utmost geopolitical priority of the US is maintaining its energy hegemony."
+thread_id: thread_0606
+word_count: 393
+reading_time: 2
+primary_theme: marxism_historical materialism
+tags: ["marxism_historical materialism", "political economy", "imperialism_colonialism", "cultural criticism", "covid_public health politics", "organizational theory"]
+---
+
+# the US and Europe "care
+
+The only reason that the US and Europe "care" about Ukraine is because the utmost geopolitical priority of the US is maintaining its energy hegemony. Russian oil and gas has long presented the biggest challenge to that hegemony. https://t.co/PEOwd3kivb Following the dissolution of the Soviet Union, the vultures immediately set in to rend flesh from bone. The now-infamous "Russian oligarchs" were made fabulously wealthy by providing US capitalists with access to the country's unfathomably large fossil fuel reserves. A mere decade later, Russia began renationalizing those reserves, and quickly exited its period of economic subjugation to western capital. Their explicit goal has always been economic sovereignty, while the US would have loved to turn it into another Middle East. Obviously this was never in the cards, due to Russia's nuclear weapons (and the US already focused on the *actual* Middle East imperial project). Instead, it had to resort to economically isolating it. Another decade after Russia began rebuilding itself, the plan came to a head. Having already expanded NATO and the EU to the majority of the former Warsaw Pact, the US set its sights on Ukraine, the gateway to Russia. Russian oil and natural gas exports, bound for Europe, flowed freely through Ukraine before the US-backed 2014 coup. Before 2014, the idea of Ukraine joining NATO was a fringe political position, with public opinion strongly opposed. Nevertheless, the new pro-west regime has been consistently courting NATO, and NATO has consistently strung them along -- to Russia's repeated consternation. The 2022 invasion of Ukraine did not come out of nowhere, nor was it the result of Russia being arbitrarily and uniquely "violent." It was the culmination of decades of openly telegraphed moves by both Russia and the US, both attempting to lay claim to the European energy market. Russia is not "good," and it's not "bad." It's a capitalist state: a major power  with vast resources and a nuclear arsenal, attempting to avoid being yet another vassal of the US. Meanwhile, Ukraine already *has* become such a vassal. None of this has to do with "care." The US "cares about" Ukraine for the exact same reason it "doesn't care about" Palestine. It's invested in both regions as part of its global empire. In both cases, the conflict revolves around US control of fossil fuels. In neither is support contingent on the people themselves.

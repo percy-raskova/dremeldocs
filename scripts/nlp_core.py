@@ -6,56 +6,25 @@ Handles SpaCy model initialization and configuration management.
 
 import re
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, TYPE_CHECKING
 
-import spacy
-import yaml
-from spacy.tokens import Doc
+# Import from interfaces to break circular dependencies
+from interfaces import MODEL_TYPE, NLP_CONFIG, get_nlp_instance
 
-# Load SpaCy model once at module level for efficiency
-# NUCLEAR FUSION MODE: Using LARGE model for MAXIMUM VOCABULARY POWER!
-try:
-    # First try the LARGE model for MASSIVE vocabulary and vectors
-    nlp = spacy.load("en_core_web_lg")
-    print("🚀💥 LARGE MODEL LOADED - MAXIMUM VOCABULARY POWER ENGAGED!")
-    MODEL_TYPE = "large"
-except OSError:
-    try:
-        # Fallback to transformer for contextual understanding
-        nlp = spacy.load("en_core_web_trf")
-        print("🚀 TRANSFORMER MODEL LOADED - CONTEXTUAL POWER ENGAGED!")
-        MODEL_TYPE = "transformer"
-    except OSError:
-        try:
-            # Fallback to medium if large/transformer not available
-            nlp = spacy.load("en_core_web_md")
-            print("💪 Medium model loaded with word vectors")
-            MODEL_TYPE = "medium"
-        except OSError:
-            try:
-                # Final fallback to small model
-                nlp = spacy.load("en_core_web_sm")
-                print("📦 Small model loaded - basic functionality")
-                MODEL_TYPE = "small"
-            except OSError:
-                print("⚠️  No SpaCy model found. Please install one with:")
-                print("    # For MAXIMUM VOCABULARY (recommended):")
-                print(
-                    "    uv pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl"
-                )
-                print("    # Or for contextual understanding:")
-                print(
-                    "    uv pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.8.0/en_core_web_trf-3.8.0-py3-none-any.whl"
-                )
-                import sys
+# Import Doc type for type hints only
+if TYPE_CHECKING:
+    from spacy.tokens import Doc
 
-                sys.exit(1)
-
-# Keep all components enabled for full functionality
+# Lazy loading of nlp instance to avoid import issues
+def get_nlp():
+    """Get NLP instance when needed."""
+    return get_nlp_instance()
 
 
 def load_nlp_config() -> Dict[str, Any]:
     """Load NLP configuration from YAML file."""
+    import yaml
+
     config_path = Path(__file__).parent.parent / "config" / "nlp_settings.yaml"
     try:
         with open(config_path, encoding="utf-8") as f:
@@ -91,13 +60,17 @@ def load_nlp_config() -> Dict[str, Any]:
         }
 
 
-# Global configuration
-NLP_CONFIG = load_nlp_config()
+# Load additional configuration from YAML file
+# Base config comes from interfaces, this extends it
+_yaml_config = load_nlp_config()
+# Merge with base config from interfaces
+NLP_CONFIG.update(_yaml_config)
 
 
-def clean_social_text(doc: Doc) -> str:
+def clean_social_text_doc(doc: 'Doc') -> str:
     """
     Remove URLs, mentions, and hashtags using SpaCy token attributes.
+    This is the Doc-based version for internal use.
 
     Args:
         doc: SpaCy Doc object
@@ -141,6 +114,7 @@ def calculate_reading_time(text: str) -> int:
     Returns:
         Estimated reading time in minutes
     """
+    nlp = get_nlp()
     doc = nlp.make_doc(text)  # Fast tokenization only
 
     # Count only alphabetic tokens (exclude punctuation, symbols)
@@ -150,7 +124,7 @@ def calculate_reading_time(text: str) -> int:
     return max(1, round(word_count / 225))
 
 
-def process_batch(texts: List[str], batch_size: int = 100) -> List[Doc]:
+def process_batch(texts: List[str], batch_size: int = 100):
     """
     Process multiple texts efficiently using SpaCy's pipe method.
 
@@ -161,4 +135,5 @@ def process_batch(texts: List[str], batch_size: int = 100) -> List[Doc]:
     Returns:
         List of processed Doc objects
     """
+    nlp = get_nlp()
     return list(nlp.pipe(texts, batch_size=batch_size))

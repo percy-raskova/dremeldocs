@@ -10,7 +10,11 @@ from pathlib import Path
 scripts_dir = Path(__file__).parent.parent.parent / "scripts"
 sys.path.insert(0, str(scripts_dir))
 
-from nlp_core import MODEL_TYPE, nlp
+from nlp_core import MODEL_TYPE
+from interfaces import get_nlp_instance
+
+# Get the nlp instance
+nlp = get_nlp_instance()
 from text_utilities import extract_entities, generate_title
 
 print("=" * 80)

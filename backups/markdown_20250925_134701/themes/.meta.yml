@@ -1,0 +1,31 @@
+# Global content metadata
+# Applied to all content unless overridden
+
+# Default front matter
+template: |
+  ---
+  author: "@BmoreOrganized"
+  generator: "DremelDocs Pipeline v2.0"
+  license: "CC BY-SA 4.0"
+  ---
+
+# Global tags
+tags:
+  - Revolutionary Theory
+  - Political Archive
+
+# Navigation
+nav:
+  - Home: index.md
+  - About:
+      - about/index.md
+      - Usage: about/usage.md
+
+# Page settings
+hide:
+  - toc
+  - navigation.prev
+
+# Social cards
+social:
+  cards: true

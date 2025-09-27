@@ -1,0 +1,15 @@
+---
+title: "evolving to become mild"
+date: Mon Jun 12
+description: "The optical illusion of 'evolving to become mild' has come about largely because of omicron's innate ability to evade immunity while having a relatively lower..."
+thread_id: thread_1074
+word_count: 424
+reading_time: 2
+primary_theme: intersectional
+tags: ["political economy", "covid_public health politics"]
+intersectional_themes: ["political economy", "covid_public health politics"]
+---
+
+# evolving to become mild
+
+The optical illusion of "evolving to become mild" has come about largely because of omicron's innate ability to evade immunity while having a relatively lower fatality rate. This was always a coincidence. It was not a case of transmissibility winning out over lethality. Omicron emerged in an evolutionary landscape filled with people who had already been infected and/or vaccinated, and millions of human incubators packed with viruses containing a wide range of genetic variation. Any variation that enhanced transmission was being selected for. The primary roadblock to infection was widespread (partial) immunity. COVID messes with your immune system, turns your T cells against you, but humoral immunity (the antibodies that circulate for a time following exposure) has a protective effect against infection. In this context, the primary way to enhance transmissibility is the ability to evade antibodies to the predominant viral strains. This is really easy to do, since a virus being different in *any way* makes it unrecognizable to those antibodies. The only caveat, of course, is that variations that also happen to make the virus worse at infection (e.g. worse at binding to cells) will obviously be selected *against*. Omicron passed the test by being distinct from ancestral strains and NOT having its infectiousness hampered. The reason I call this an optical illusion is that it only *looks* like transmissibility came at the cost of lower CFR because omicron happened to kill less quickly than delta or the original strain. It didn't have to be that way. CFR wasn't being selected *against*. In fact, part of the way COVID is able to be so successful at spreading is the same reason it kills AND causes long COVID. It has a number of traits that allow it to suppress your immune response, infiltrate deep into your body, and turn your body into a viral production factory. Variations that enhance its ability to -- for example -- suppress interferon, make infection both more dangerous AND more transmissible. Omicron didn't need to be more dangerous if it could just be more immune evasive by being unrecognizable. We have seen a swarm of lineages emerge from that success -- variants that are distinct from ancestral omicron (immune evasive) and simultaneously more deadly. They haven't been quite as omnipresent as omicron, since they aren't working in the same evolutionary landscape. But don't be surprised when the right combination of naturally-occurring variations happens to line up to give us another, even more deadly omicron level event -- this time, unleashed on a population that isn't even paying attention.

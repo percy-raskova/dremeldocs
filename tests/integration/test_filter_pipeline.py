@@ -36,6 +36,9 @@ class TestLocalThreadExtractor:
         data_dir = archive_path / "data"
         data_dir.mkdir(parents=True)
 
+        # Create required archive.html file
+        (archive_path / "Your archive.html").write_text("<html></html>")
+
         # Create a minimal tweets.js file
         tweets_file = data_dir / "tweets.js"
         tweets_file.write_text("window.YTD.tweets.part0 = [];")
@@ -54,6 +57,9 @@ class TestLocalThreadExtractor:
         archive_path = tmp_path / "test_archive"
         data_dir = archive_path / "data"
         data_dir.mkdir(parents=True)
+
+        # Create required archive.html file
+        (archive_path / "Your archive.html").write_text("<html></html>")
 
         # Create an empty tweets.js file
         tweets_file = data_dir / "tweets.js"
@@ -109,6 +115,9 @@ class TestLocalThreadExtractor:
         archive_path = tmp_path / "test_archive"
         data_dir = archive_path / "data"
         data_dir.mkdir(parents=True)
+
+        # Create required archive.html file
+        (archive_path / "Your archive.html").write_text("<html></html>")
 
         # Create a minimal tweets.js file
         tweets_file = data_dir / "tweets.js"

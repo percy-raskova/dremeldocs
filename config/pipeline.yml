@@ -27,9 +27,9 @@ stages:
         min_tweets: 2
 
   heavy_hitters:
-    script: "scripts/generate_heavy_hitters.py"
+    script: "scripts/generate_themed_markdown.py"
     input: "data/filtered_threads.json"
-    output: "docs/heavy_hitters/"
+    output: "markdown/"
     settings:
       min_word_count: 500
       max_threads: 100

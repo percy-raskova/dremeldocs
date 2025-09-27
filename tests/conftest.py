@@ -12,6 +12,10 @@ import pytest
 # Add the scripts directory to Python path for all tests
 sys.path.insert(0, str(Path(__file__).parent.parent / "scripts"))
 
+# Set test environment variable to help security_utils recognize test context
+import os
+os.environ['PYTEST_CURRENT_TEST'] = 'true'
+
 
 @pytest.fixture(scope="session")
 def test_data_dir():
@@ -152,3 +156,23 @@ def pytest_configure(config):
         config.option.markexpr = "integration"
     elif config.getoption("--unit-only"):
         config.option.markexpr = "unit"
+
+
+@pytest.fixture
+def make_valid_tweet():
+    """Factory for creating valid tweets with all required fields."""
+    def _make_tweet(**kwargs):
+        tweet = {
+            "id": kwargs.get("id", "123456789"),
+            "full_text": kwargs.get("full_text", "Default tweet text"),
+            "created_at": kwargs.get("created_at", "2024-01-15T10:30:00Z"),
+            "favorite_count": kwargs.get("favorite_count", 0),
+            "retweet_count": kwargs.get("retweet_count", 0),
+            "lang": kwargs.get("lang", "en"),
+        }
+        # Allow additional fields to be added
+        for key, value in kwargs.items():
+            if key not in tweet:
+                tweet[key] = value
+        return tweet
+    return _make_tweet

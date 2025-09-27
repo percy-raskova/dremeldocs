@@ -162,7 +162,7 @@ heavy-hitters: $(FILTERED_DATA) ## Stage 2: Generate heavy hitter documents
 		echo "No filtered data found. Running filter first..."; \
 		$(MAKE) filter; \
 	fi
-	$(PYTHON) $(SCRIPTS_DIR)/generate_heavy_hitters.py
+	$(PYTHON) $(SCRIPTS_DIR)/generate_themed_markdown.py
 	@echo "[OK] Heavy hitters generated"
 
 .PHONY: classify

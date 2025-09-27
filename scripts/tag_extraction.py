@@ -7,9 +7,12 @@ Contains EnhancedTagExtractor, ChunkScorer, DomainVocabulary, and PatternMatcher
 import re
 from typing import Any, Dict, List, Optional, Tuple
 
-# Import from our new nlp_core module
-from nlp_core import MODEL_TYPE, NLP_CONFIG, nlp
+# Import from interfaces to avoid circular dependencies
+from interfaces import MODEL_TYPE, NLP_CONFIG, get_nlp_instance
 from spacy.tokens import Doc, Token
+
+# Get NLP instance using the singleton pattern
+nlp = get_nlp_instance()
 
 
 class DomainVocabulary:
