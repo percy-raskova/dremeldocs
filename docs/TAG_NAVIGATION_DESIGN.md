@@ -35,7 +35,7 @@ site_description: >-
   and critical discourse from over a decade of philosophical inquiry.
 
 # Repository
-repo_url: https://github.com/yourusername/dremeldocs
+repo_url: https://github.com/percy-raskova/dremeldocs
 repo_name: dremeldocs
 
 # Theme configuration
@@ -271,7 +271,7 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/yourusername
+      link: https://github.com/percy-raskova
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/BmoreOrganized
 

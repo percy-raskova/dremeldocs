@@ -11,7 +11,7 @@
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/dremeldocs
+git clone https://github.com/percy-raskova/dremeldocs
 cd dremeldocs
 ```
 

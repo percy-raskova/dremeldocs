@@ -340,7 +340,7 @@ uv run mkdocs gh-deploy
 ### Quick Start
 ```bash
 # 1. Clone repository
-git clone https://github.com/yourusername/dremeldocs
+git clone https://github.com/percy-raskova/dremeldocs
 cd dremeldocs
 
 # 2. Install dependencies

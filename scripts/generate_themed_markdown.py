@@ -15,6 +15,29 @@ except ImportError:
     # Support direct imports when not run as package
     import security_utils
 
+# Theme name to directory mapping (short, clean names)
+THEME_DIR_MAPPING = {
+    "marxism_historical materialism": "marxism",
+    "marxism_historical_materialism": "marxism",
+    "political economy": "economy",
+    "political_economy": "economy",
+    "organizational theory": "organizing",
+    "organizational_theory": "organizing",
+    "covid_public health politics": "covid",
+    "covid_public_health_politics": "covid",
+    "fascism analysis": "fascism",
+    "fascism_analysis": "fascism",
+    "cultural criticism": "culture",
+    "cultural_criticism": "culture",
+    "imperialism_colonialism": "imperialism",
+    "dialectics": "dialectics",
+    "uncategorized": "uncategorized"
+}
+
+def get_clean_dir_name(theme: str) -> str:
+    """Get the clean, short directory name for a theme"""
+    return THEME_DIR_MAPPING.get(theme, theme.replace(" ", "_").lower())
+
 
 def organize_by_themes() -> Dict[str, List[Any]]:
     """Reorganize threads by their specific themes"""
@@ -38,12 +61,6 @@ def organize_by_themes() -> Dict[str, List[Any]]:
             # Primary theme is first or most relevant
             primary_theme = themes[0] if themes else "uncategorized"
             threads_by_theme[primary_theme].append(thread)
-
-            # Also add to intersectional if multiple themes
-            if len(themes) > 1:
-                threads_by_theme["intersectional"].append(
-                    {**thread, "all_themes": themes}
-                )
         else:
             threads_by_theme["uncategorized"].append(thread)
 
@@ -97,12 +114,6 @@ def generate_theme_markdown(theme: str, threads: List[Dict], output_dir: Path):
                 f"tags: {format_frontmatter_value(thread['themes'])}"
             )
 
-        # Add intersectional themes if present
-        if thread.get("all_themes"):
-            frontmatter_lines.append(
-                f"intersectional_themes: {format_frontmatter_value(thread['all_themes'])}"
-            )
-
         frontmatter_lines.extend(["---", "", f"# {title}", "", thread["smushed_text"]])
 
         filepath = output_dir / filename
@@ -114,6 +125,7 @@ def generate_theme_index(theme: str, thread_count: int, output_dir: Path):
     """Generate index page for each theme"""
 
     theme_display = theme.replace("_", " ").title()
+    clean_theme = get_clean_dir_name(theme)
 
     index_content = f"""---
 title: {theme_display}
@@ -150,18 +162,14 @@ def update_mkdocs_nav(themes_data: Dict[str, List]):
     themes_nav = []
     for theme, threads in sorted_themes[:10]:  # Top 10 themes
         theme_display = theme.replace("_", " ").title()
-        themes_nav.append({theme_display: f"{theme}/index.md"})
-        print(f"  - {theme_display}: {theme}/index.md  # ({len(threads)} threads)")
+        clean_dir = get_clean_dir_name(theme)
+        themes_nav.append({theme_display: f"{clean_dir}/index.md"})
+        print(f"  - {theme_display}: {clean_dir}/index.md  # ({len(threads)} threads)")
 
     print("  - Themes:")
     for item in themes_nav:
         for k, v in item.items():
             print(f"    - {k}: {v}")
-
-    if "intersectional" in themes_data:
-        print(
-            f"  - Intersectional: intersectional/index.md  # ({len(themes_data['intersectional'])} threads)"
-        )
 
     print("\n💡 Add this navigation to your mkdocs.yml!")
 
@@ -185,8 +193,9 @@ def main():
 
     for theme, threads in threads_by_theme.items():
         if threads:  # Only create directories for themes with content
-            theme_dir = base_dir / theme
-            print(f"\n📝 Generating {theme} ({len(threads)} threads)...")
+            clean_dir = get_clean_dir_name(theme)
+            theme_dir = base_dir / clean_dir
+            print(f"\n📝 Generating {theme} -> {clean_dir} ({len(threads)} threads)...")
 
             generate_theme_markdown(theme, threads, theme_dir)
             generate_theme_index(theme, len(threads), theme_dir)

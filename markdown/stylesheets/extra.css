@@ -1,88 +1,105 @@
-/* Revolutionary Theory Archive - Professional Theme */
-/* High-contrast color palette for accessibility and readability */
+/* Revolutionary Archive - Earth Tones & Red Banner Aesthetic */
+/* Color scheme representing material base, struggle, and solidarity */
 
 :root {
-  /* Light mode colors - Professional dark text on light backgrounds */
-  --rt-primary: #006064;          /* Deep teal - primary brand */
-  --rt-accent: #FF5722;           /* Deep orange - accent */
-  --rt-background: #FAFAFA;       /* Light gray background */
-  --rt-surface: #FFFFFF;          /* Pure white surfaces */
-  --rt-text-primary: #212121;     /* Dark gray text */
-  --rt-text-secondary: #757575;   /* Medium gray text */
-  --rt-text-disabled: #BDBDBD;    /* Light gray text */
-  --rt-link: #00838F;             /* Teal links */
-  --rt-link-visited: #4527A0;     /* Purple visited links */
-  --rt-border: #E0E0E0;           /* Light borders */
+  /* Core Revolutionary Palette */
+  --forest-base: #2E4E3C;        /* Dark forest green - header/footer, material foundation */
+  --paper-cream: #F8F4E9;        /* Cream - text background, like aged revolutionary texts */
+  --earth-text: #5D4037;         /* Dark brown - primary text, connection to soil */
+  --golden-solidarity: #B38B59;  /* Golden tan - accents/links, collective strength */
+  --red-struggle: #8E2C3D;       /* Deep red - visited links, revolutionary banner */
 
-  /* Dark mode colors - High contrast light text on dark backgrounds */
-  --rt-dark-primary: #4DB6AC;     /* Light teal - primary brand */
-  --rt-dark-accent: #FF7043;      /* Light orange - accent */
-  --rt-dark-background: #121212;  /* True dark background */
-  --rt-dark-surface: #1E1E1E;     /* Dark gray surfaces */
-  --rt-dark-surface-variant: #2A2A2A; /* Slightly lighter surfaces */
-  --rt-dark-text-primary: #E0E0E0;    /* Light gray text */
-  --rt-dark-text-secondary: #BDBDBD;  /* Medium gray text */
-  --rt-dark-text-disabled: #757575;   /* Dark gray text */
-  --rt-dark-link: #4DB6AC;            /* Light teal links */
-  --rt-dark-link-visited: #9575CD;    /* Light purple visited links */
-  --rt-dark-border: #424242;          /* Dark borders */
+  /* Extended Revolutionary Palette */
+  --forest-light: #3A6350;       /* Lighter forest - hover states, growth */
+  --forest-dark: #1E2E24;        /* Darker forest - borders, depth */
+  --cream-dark: #E8DFC5;         /* Darker cream - cards, surfaces */
+  --earth-light: #795548;        /* Light brown - secondary text */
+  --earth-muted: #A1887F;        /* Muted brown - disabled states */
+  --golden-bright: #D4A574;      /* Bright gold - hover accents, victory */
+  --red-bright: #B33A4D;         /* Bright red - emphasis, call to action */
+  --red-dark: #6B1F28;           /* Dark red - borders, foundation */
 }
 
-/* Light mode theme colors */
+/* Light Mode - Paper and Earth */
 [data-md-color-scheme="default"] {
-  --md-primary-fg-color: var(--rt-primary);
-  --md-primary-bg-color: var(--rt-surface);
-  --md-accent-fg-color: var(--rt-accent);
-  --md-default-bg-color: var(--rt-background);
-  --md-default-fg-color: var(--rt-text-primary);
-  --md-typeset-color: var(--rt-text-primary);
-  --md-typeset-a-color: var(--rt-link);
-  --md-code-bg-color: var(--rt-surface);
-  --md-code-fg-color: var(--rt-text-primary);
+  /* Base colors */
+  --md-primary-fg-color: var(--forest-base);
+  --md-primary-bg-color: var(--paper-cream);
+  --md-accent-fg-color: var(--red-struggle);
+  --md-default-bg-color: var(--paper-cream);
+  --md-default-fg-color: var(--earth-text);
+
+  /* Typography */
+  --md-typeset-color: var(--earth-text);
+  --md-typeset-a-color: var(--golden-solidarity);
+
+  /* Code blocks - like ink on aged paper */
+  --md-code-bg-color: var(--cream-dark);
+  --md-code-fg-color: var(--earth-text);
+  --md-code-hl-color: rgba(179, 139, 89, 0.2);
+
+  /* Navigation - forest canopy */
+  --md-nav-bg-color: var(--paper-cream);
+  --md-nav-fg-color: var(--earth-text);
+
+  /* Footer - rooted in earth */
+  --md-footer-bg-color: var(--forest-base);
+  --md-footer-fg-color: var(--paper-cream);
 }
 
-/* Dark mode with proper contrast ratios (WCAG AA compliant) */
+/* Dark Mode - Night Struggle */
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color: var(--rt-dark-primary);
-  --md-primary-bg-color: var(--rt-dark-surface);
-  --md-accent-fg-color: var(--rt-dark-accent);
-  --md-default-bg-color: var(--rt-dark-background);
-  --md-default-fg-color: var(--rt-dark-text-primary);
-  --md-typeset-color: var(--rt-dark-text-primary);
-  --md-typeset-a-color: var(--rt-dark-link);
-  --md-code-bg-color: var(--rt-dark-surface-variant);
-  --md-code-fg-color: var(--rt-dark-text-primary);
+  /* Base colors - revolutionary night */
+  --md-primary-fg-color: var(--forest-light);
+  --md-primary-bg-color: var(--forest-dark);
+  --md-accent-fg-color: var(--red-bright);
+  --md-default-bg-color: #1A1A1A;
+  --md-default-fg-color: var(--cream-dark);
 
-  /* Ensure proper contrast for navigation and UI elements */
-  --md-nav-bg-color: var(--rt-dark-surface);
-  --md-nav-fg-color: var(--rt-dark-text-primary);
-  --md-footer-bg-color: var(--rt-dark-surface);
-  --md-footer-fg-color: var(--rt-dark-text-secondary);
+  /* Typography */
+  --md-typeset-color: var(--cream-dark);
+  --md-typeset-a-color: var(--golden-bright);
+
+  /* Code blocks */
+  --md-code-bg-color: var(--forest-dark);
+  --md-code-fg-color: var(--cream-dark);
+
+  /* Navigation */
+  --md-nav-bg-color: var(--forest-dark);
+  --md-nav-fg-color: var(--cream-dark);
+
+  /* Footer */
+  --md-footer-bg-color: var(--forest-base);
+  --md-footer-fg-color: var(--paper-cream);
 }
 
-/* Professional Typography */
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+/* Typography - Voice of the Working Class */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Source+Code+Pro:wght@400;500;700&display=swap');
 
 .md-typeset {
-  font-family: 'Source Sans Pro', system-ui, -apple-system, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--rt-text-primary);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--earth-text);
 }
 
-/* Professional header hierarchy */
+[data-md-color-scheme="slate"] .md-typeset {
+  color: var(--cream-dark);
+}
+
+/* Headers - Revolutionary Declarations */
 .md-typeset h1,
 .md-typeset h2,
 .md-typeset h3,
 .md-typeset h4,
 .md-typeset h5,
 .md-typeset h6 {
-  font-family: 'Source Sans Pro', system-ui, sans-serif;
-  font-weight: 600;
-  color: var(--rt-primary);
-  letter-spacing: -0.025em;
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-weight: 700;
+  color: var(--forest-base);
+  letter-spacing: -0.02em;
+  margin-top: 1.8em;
+  margin-bottom: 0.6em;
 }
 
 [data-md-color-scheme="slate"] .md-typeset h1,
@@ -91,370 +108,400 @@
 [data-md-color-scheme="slate"] .md-typeset h4,
 [data-md-color-scheme="slate"] .md-typeset h5,
 [data-md-color-scheme="slate"] .md-typeset h6 {
-  color: var(--rt-dark-primary);
+  color: var(--golden-bright);
 }
 
 .md-typeset h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  border-bottom: 2px solid var(--rt-primary);
+  font-size: 2.6rem;
+  border-bottom: 3px solid var(--red-struggle);
   padding-bottom: 0.5rem;
   margin-bottom: 1.5rem;
 }
 
 [data-md-color-scheme="slate"] .md-typeset h1 {
-  border-bottom-color: var(--rt-dark-primary);
+  border-bottom-color: var(--red-bright);
 }
 
 .md-typeset h2 {
-  font-size: 2rem;
-  margin-top: 2rem;
+  font-size: 2.1rem;
+  margin-top: 2.5rem;
+  border-left: 4px solid var(--golden-solidarity);
+  padding-left: 1rem;
+}
+
+[data-md-color-scheme="slate"] .md-typeset h2 {
+  border-left-color: var(--golden-bright);
 }
 
 .md-typeset h3 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
 }
 
 .md-typeset h4 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
-/* Professional link styling */
+/* Links - Chains of Solidarity */
 .md-typeset a {
-  color: var(--rt-link);
+  color: var(--golden-solidarity);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: all 0.2s ease;
+  font-weight: 500;
 }
 
 .md-typeset a:hover {
-  color: var(--rt-primary);
-  border-bottom-color: var(--rt-primary);
+  color: var(--golden-bright);
+  border-bottom-color: var(--golden-bright);
 }
 
 .md-typeset a:visited {
-  color: var(--rt-link-visited);
+  color: var(--red-struggle);
 }
 
 [data-md-color-scheme="slate"] .md-typeset a {
-  color: var(--rt-dark-link);
+  color: var(--golden-bright);
 }
 
 [data-md-color-scheme="slate"] .md-typeset a:hover {
-  color: var(--rt-dark-primary);
-  border-bottom-color: var(--rt-dark-primary);
+  color: var(--golden-solidarity);
+  border-bottom-color: var(--golden-solidarity);
 }
 
 [data-md-color-scheme="slate"] .md-typeset a:visited {
-  color: var(--rt-dark-link-visited);
+  color: var(--red-bright);
 }
 
-/* Professional header and navigation */
+/* Header - Red Banner */
 .md-header {
-  background-color: var(--rt-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-[data-md-color-scheme="slate"] .md-header {
-  background-color: var(--rt-dark-surface);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: var(--forest-base);
+  box-shadow: 0 2px 8px rgba(46, 78, 60, 0.3);
 }
 
 .md-header__title {
-  font-family: 'Source Sans Pro', system-ui, sans-serif;
-  font-weight: 600;
-  letter-spacing: 0.025em;
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--paper-cream);
 }
 
-/* Navigation tabs */
+.md-header-nav__button {
+  color: var(--paper-cream);
+}
+
+/* Navigation Tabs - Unity */
 .md-tabs {
-  background-color: var(--rt-primary);
-}
-
-[data-md-color-scheme="slate"] .md-tabs {
-  background-color: var(--rt-dark-surface);
+  background-color: var(--forest-base);
+  border-top: 2px solid var(--golden-solidarity);
 }
 
 .md-tabs__link {
+  color: var(--cream-dark);
   font-weight: 500;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
-.md-tabs__link--active {
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: var(--paper-cream);
   opacity: 1;
   font-weight: 600;
 }
 
-/* Sidebar navigation */
-.md-sidebar {
-  background-color: transparent;
-}
-
+/* Sidebar Navigation - Organized Resistance */
 .md-nav__item--active > .md-nav__link {
-  color: var(--rt-primary);
+  color: var(--red-struggle);
   font-weight: 600;
-  background-color: rgba(0, 96, 100, 0.1);
-  border-left: 3px solid var(--rt-primary);
+  background-color: rgba(142, 44, 61, 0.1);
+  border-left: 3px solid var(--red-struggle);
+  padding-left: calc(1rem - 3px);
 }
 
 [data-md-color-scheme="slate"] .md-nav__item--active > .md-nav__link {
-  color: var(--rt-dark-primary);
-  background-color: rgba(77, 182, 172, 0.1);
-  border-left-color: var(--rt-dark-primary);
+  color: var(--red-bright);
+  background-color: rgba(179, 58, 77, 0.15);
+  border-left-color: var(--red-bright);
+}
+
+.md-nav__link {
+  color: var(--earth-text);
+}
+
+[data-md-color-scheme="slate"] .md-nav__link {
+  color: var(--cream-dark);
 }
 
 .md-nav__link:hover {
-  color: var(--rt-primary);
+  color: var(--golden-solidarity);
 }
 
 [data-md-color-scheme="slate"] .md-nav__link:hover {
-  color: var(--rt-dark-primary);
+  color: var(--golden-bright);
 }
 
-/* Professional thread metadata cards */
+/* Thread Metadata - Documentation of Struggle */
 .thread-metadata {
-  background: var(--rt-surface);
-  border: 1px solid var(--rt-border);
+  background: var(--cream-dark);
+  border: 2px solid var(--golden-solidarity);
   border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
-  font-size: 0.9rem;
+  padding: 1.2rem 1.5rem;
+  margin: 2rem 0;
+  font-size: 0.95rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(93, 64, 55, 0.15);
 }
 
 [data-md-color-scheme="slate"] .thread-metadata {
-  background: var(--rt-dark-surface);
-  border-color: var(--rt-dark-border);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background: var(--forest-dark);
+  border-color: var(--golden-bright);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .thread-metadata .metadata-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .thread-metadata .metadata-label {
-  color: var(--rt-text-secondary);
+  color: var(--earth-light);
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
 }
 
 [data-md-color-scheme="slate"] .thread-metadata .metadata-label {
-  color: var(--rt-dark-text-secondary);
+  color: var(--earth-muted);
 }
 
 .thread-metadata .metadata-value {
-  color: var(--rt-text-primary);
-  font-weight: 500;
+  color: var(--earth-text);
+  font-weight: 600;
 }
 
 [data-md-color-scheme="slate"] .thread-metadata .metadata-value {
-  color: var(--rt-dark-text-primary);
+  color: var(--cream-dark);
 }
 
-/* Professional quote blocks */
+/* Quote Blocks - Words of the Theorists */
 .md-typeset blockquote {
-  border-left: 4px solid var(--rt-primary);
-  background-color: rgba(0, 96, 100, 0.05);
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
+  border-left: 5px solid var(--red-struggle);
+  background-color: rgba(142, 44, 61, 0.08);
+  padding: 1.2rem 1.8rem;
+  margin: 2rem 0;
   font-style: italic;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 6px 6px 0;
+  color: var(--earth-text);
 }
 
 [data-md-color-scheme="slate"] .md-typeset blockquote {
-  border-left-color: var(--rt-dark-primary);
-  background-color: rgba(77, 182, 172, 0.1);
+  border-left-color: var(--red-bright);
+  background-color: rgba(179, 58, 77, 0.12);
+  color: var(--cream-dark);
 }
 
-/* Professional admonitions */
-.md-typeset .admonition {
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-[data-md-color-scheme="slate"] .md-typeset .admonition {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* Code blocks */
+/* Code Blocks - Technical Infrastructure */
 .md-typeset pre {
-  background-color: var(--rt-surface);
-  border: 1px solid var(--rt-border);
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: var(--cream-dark);
+  border: 1px solid var(--earth-muted);
+  border-left: 4px solid var(--golden-solidarity);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(93, 64, 55, 0.1);
 }
 
 [data-md-color-scheme="slate"] .md-typeset pre {
-  background-color: var(--rt-dark-surface-variant);
-  border-color: var(--rt-dark-border);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  background-color: var(--forest-dark);
+  border-color: var(--forest-base);
+  border-left-color: var(--golden-bright);
 }
 
 .md-typeset code {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-  background-color: rgba(0, 96, 100, 0.1);
-  color: var(--rt-primary);
-  padding: 0.1rem 0.3rem;
+  font-family: 'Source Code Pro', 'Courier New', monospace;
+  background-color: rgba(179, 139, 89, 0.15);
+  color: var(--forest-base);
+  padding: 0.15rem 0.4rem;
   border-radius: 4px;
   font-size: 0.9em;
 }
 
 [data-md-color-scheme="slate"] .md-typeset code {
-  background-color: rgba(77, 182, 172, 0.2);
-  color: var(--rt-dark-primary);
+  background-color: rgba(179, 139, 89, 0.25);
+  color: var(--golden-bright);
 }
 
-/* Content containers */
-.md-content__inner {
-  padding-top: 1.5rem;
-  max-width: 900px;
-}
-
-/* Professional tables */
+/* Tables - Organized Data */
 .md-typeset table {
-  border: 1px solid var(--rt-border);
+  border: 2px solid var(--earth-muted);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(93, 64, 55, 0.15);
 }
 
 [data-md-color-scheme="slate"] .md-typeset table {
-  border-color: var(--rt-dark-border);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border-color: var(--forest-base);
 }
 
 .md-typeset table th {
-  background-color: var(--rt-primary);
-  color: white;
-  font-weight: 600;
+  background-color: var(--forest-base);
+  color: var(--paper-cream);
+  font-weight: 700;
   text-align: left;
-  padding: 0.75rem 1rem;
+  padding: 0.9rem 1.2rem;
+  border-bottom: 2px solid var(--golden-solidarity);
 }
 
 [data-md-color-scheme="slate"] .md-typeset table th {
-  background-color: var(--rt-dark-primary);
-  color: var(--rt-dark-background);
+  background-color: var(--forest-light);
+  border-bottom-color: var(--golden-bright);
 }
 
 .md-typeset table td {
-  border-color: var(--rt-border);
-  padding: 0.75rem 1rem;
+  border-color: var(--earth-muted);
+  padding: 0.8rem 1.2rem;
+  background-color: var(--paper-cream);
 }
 
 [data-md-color-scheme="slate"] .md-typeset table td {
-  border-color: var(--rt-dark-border);
+  border-color: var(--forest-dark);
+  background-color: transparent;
 }
 
-/* Professional footer */
+.md-typeset table tr:hover td {
+  background-color: rgba(179, 139, 89, 0.1);
+}
+
+/* Footer - Grounded in Material Base */
 .md-footer {
-  background-color: var(--rt-primary);
-  color: white;
+  background-color: var(--forest-base);
+  color: var(--paper-cream);
+  border-top: 3px solid var(--red-struggle);
 }
 
-[data-md-color-scheme="slate"] .md-footer {
-  background-color: var(--rt-dark-surface);
-  color: var(--rt-dark-text-primary);
+.md-footer__inner {
+  padding: 1.5rem 1rem;
 }
 
 .md-footer a {
-  color: var(--rt-accent) !important;
+  color: var(--golden-solidarity) !important;
+  font-weight: 500;
 }
 
-[data-md-color-scheme="slate"] .md-footer a {
-  color: var(--rt-dark-accent) !important;
+.md-footer a:hover {
+  color: var(--golden-bright) !important;
+  text-decoration: underline;
 }
 
-/* Professional reading progress indicator */
-.reading-progress {
-  position: fixed;
-  top: 64px;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background-color: rgba(0, 96, 100, 0.1);
-  z-index: 10;
+/* Admonitions - Revolutionary Warnings and Notes */
+.md-typeset .admonition {
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(93, 64, 55, 0.2);
+  border-left: 4px solid var(--golden-solidarity);
 }
 
-[data-md-color-scheme="slate"] .reading-progress {
-  background-color: rgba(77, 182, 172, 0.2);
+[data-md-color-scheme="slate"] .md-typeset .admonition {
+  border-left-color: var(--golden-bright);
 }
 
-.reading-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--rt-primary), var(--rt-accent));
-  width: 0%;
-  transition: width 0.2s ease;
+.md-typeset .admonition.note {
+  border-left-color: var(--golden-solidarity);
+  background-color: rgba(179, 139, 89, 0.1);
 }
 
-[data-md-color-scheme="slate"] .reading-progress-bar {
-  background: linear-gradient(90deg, var(--rt-dark-primary), var(--rt-dark-accent));
+.md-typeset .admonition.warning {
+  border-left-color: var(--red-struggle);
+  background-color: rgba(142, 44, 61, 0.1);
 }
 
-/* Professional thread navigation */
-.thread-nav {
-  display: flex;
-  justify-content: space-between;
-  margin: 2rem 0;
-  padding: 1rem 0;
-  border-top: 1px solid var(--rt-border);
-  border-bottom: 1px solid var(--rt-border);
+/* Search - Finding Revolutionary Tools */
+.md-search__input {
+  background-color: var(--cream-dark);
+  color: var(--earth-text);
+  border: 1px solid var(--earth-muted);
 }
 
-[data-md-color-scheme="slate"] .thread-nav {
-  border-color: var(--rt-dark-border);
+[data-md-color-scheme="slate"] .md-search__input {
+  background-color: var(--forest-dark);
+  color: var(--cream-dark);
+  border-color: var(--forest-base);
 }
 
-.thread-nav a {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background-color: var(--rt-surface);
-  border: 1px solid var(--rt-border);
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  text-decoration: none;
+.md-search__input::placeholder {
+  color: var(--earth-muted);
 }
 
-[data-md-color-scheme="slate"] .thread-nav a {
-  background-color: var(--rt-dark-surface);
-  border-color: var(--rt-dark-border);
+.md-search__input:focus {
+  border-color: var(--golden-solidarity);
 }
 
-.thread-nav a:hover {
-  background-color: rgba(0, 96, 100, 0.05);
-  border-color: var(--rt-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Content Width - Revolutionary Texts */
+.md-content__inner {
+  padding-top: 2rem;
+  max-width: 900px;
 }
 
-[data-md-color-scheme="slate"] .thread-nav a:hover {
-  background-color: rgba(77, 182, 172, 0.1);
-  border-color: var(--rt-dark-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+/* Strong Emphasis - Revolutionary Urgency */
+.md-typeset strong,
+.md-typeset b {
+  color: var(--red-struggle);
+  font-weight: 700;
 }
 
-/* Responsive adjustments */
+[data-md-color-scheme="slate"] .md-typeset strong,
+[data-md-color-scheme="slate"] .md-typeset b {
+  color: var(--red-bright);
+}
+
+/* Emphasis - Theoretical Nuance */
+.md-typeset em,
+.md-typeset i {
+  color: var(--earth-light);
+}
+
+[data-md-color-scheme="slate"] .md-typeset em,
+[data-md-color-scheme="slate"] .md-typeset i {
+  color: var(--golden-solidarity);
+}
+
+/* Horizontal Rules - Divisions in Struggle */
+.md-typeset hr {
+  border-bottom: 2px solid var(--golden-solidarity);
+  opacity: 0.6;
+}
+
+[data-md-color-scheme="slate"] .md-typeset hr {
+  border-bottom-color: var(--golden-bright);
+}
+
+/* Lists - Organized Points of Analysis */
+.md-typeset ul li::marker,
+.md-typeset ol li::marker {
+  color: var(--red-struggle);
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .md-typeset ul li::marker,
+[data-md-color-scheme="slate"] .md-typeset ol li::marker {
+  color: var(--red-bright);
+}
+
+/* Responsive Typography */
 @media (max-width: 768px) {
   .md-typeset {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .md-typeset h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   .md-typeset h2 {
-    font-size: 1.75rem;
+    font-size: 1.8rem;
   }
 
   .thread-metadata {
@@ -462,12 +509,25 @@
     align-items: flex-start;
   }
 
-  .thread-nav {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
   .md-content__inner {
     max-width: 100%;
+  }
+}
+
+/* Print Styles - Preserve Revolutionary Texts */
+@media print {
+  .md-typeset {
+    color: #000;
+  }
+
+  .md-typeset a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .md-header,
+  .md-footer,
+  .md-sidebar {
+    display: none;
   }
 }

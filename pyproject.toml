@@ -3,7 +3,10 @@ name = "dremeldocs"
 version = "0.8.1"
 description = "Pipeline for transforming Twitter/X archive into curated MkDocs knowledge base"
 readme = "README.md"
-authors = [{ name = "@BmoreOrganized" }]
+authors = [
+  { name = "Percy Raskova", email = "percy@raskova.dev" },
+  { name = "@BmoreOrganized" }
+]
 license = { text = "MIT" }
 requires-python = ">=3.8"
 keywords = [
@@ -64,9 +67,9 @@ extras = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/percy-raskova/astradocs"
+"Homepage" = "https://github.com/percy-raskova/dremeldocs"
 "Bug Tracker" = "https://github.com/percy-raskova/dremeldocs/issues"
-"Documentation" = "https://yourusername.github.io/dremeldocs"
+"Documentation" = "https://percy-raskova.github.io/dremeldocs"
 
 [build-system]
 requires = ["hatchling"]

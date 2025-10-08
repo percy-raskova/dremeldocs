@@ -32,7 +32,7 @@ Your MkDocs site has **critical content integration issues** preventing access t
 
 ### 4. **GitHub Configuration (Severity: MEDIUM)**
 - **Problems**:
-  - Generic username: `https://github.com/yourusername/dremeldocs`
+  - Generic username: `https://github.com/percy-raskova/dremeldocs`
   - Console errors: Failed GitHub API requests (404)
 - **Impact**: Broken repository links, API errors in console
 - **Fix Required**: Update repository URL or disable GitHub features
@@ -108,7 +108,7 @@ Create proper index.md files for each theme directory that:
 ### 4. Fix Repository Configuration
 ```yaml
 # Update in mkdocs.yml:
-repo_url: https://github.com/[actual-username]/dremeldocs
+repo_url: https://github.com/percy-raskova/dremeldocs
 # Or remove if repository doesn't exist
 ```
 

@@ -68,7 +68,7 @@ By maintaining this archive outside corporate platforms, we ensure that revoluti
 ## Contact and Contribution
 
 - Follow ongoing work: [@BmoreOrganized](https://twitter.com/BmoreOrganized)
-- Technical issues: [GitHub repository](https://github.com/example/dremeldocs)
+- Technical issues: [GitHub repository](https://github.com/percy-raskova/dremeldocs)
 - Content corrections: Via Twitter or GitHub issues
 
 ---
