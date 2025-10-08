@@ -54,7 +54,7 @@ source/
 
 # Data files (large Twitter archive and generated artifacts)
 data/filtered_threads.json
-data/classified_threads.json
+# data/classified_threads.json - NOW COMMITTED: Classification complete, needed for CI/CD
 data/classified_threads_enhanced.json
 data/tweets_media/
 data/direct_messages_media/
