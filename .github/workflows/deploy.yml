@@ -35,12 +35,22 @@ jobs:
         uses: astral-sh/setup-uv@v3
         with:
           version: "latest"
+          enable-cache: true
+
+      # Cache the SpaCy model to speed up builds
+      - name: Cache SpaCy model
+        id: cache-spacy
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/spacy
+          key: spacy-model-en_core_web_lg-3.8.0-${{ runner.os }}
 
       - name: Install dependencies
         run: |
-          uv pip install --system -e .
-          # Install SpaCy model
-          uv pip install --system https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl
+          # Install project dependencies in virtual environment
+          uv sync --frozen
+          # Install SpaCy model in the same virtual environment
+          uv pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl
 
       - name: Generate markdown (if needed)
         run: |
