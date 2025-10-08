@@ -1,13 +1,13 @@
 # DremelDocs Revolutionary Theory Archive
 site_name: DremelDocs Archive
-site_url: https://dremeldocs.org
-site_author: BmoreOrganized
+site_url: https://percy-raskova.github.io/dremeldocs
+site_author: Percy Raskova
 site_description: >-
   A curated archive of revolutionary theory, political analysis,
   and critical discourse from over a decade of philosophical inquiry.
 
 # Repository
-repo_url: https://github.com/yourusername/dremeldocs
+repo_url: https://github.com/percy-raskova/dremeldocs
 repo_name: dremeldocs
 
 # Use markdown directory for the actual content
@@ -68,11 +68,9 @@ plugins:
       lang:
         - en
 
-  # Correct tags plugin configuration for Material theme
+  # Tags plugin for Material theme
   - tags:
       enabled: true
-      tags_file: tags.md
-      # Remove invalid options: tags_hierarchy, shadow_tags, listings_map
 
   - minify:
       minify_html: true
@@ -121,32 +119,58 @@ markdown_extensions:
       permalink: true
       toc_depth: 3
 
-# Navigation - using markdown directory structure
+# Navigation - simplified structure
+# Individual thread files accessible via theme index pages and search
 nav:
   - Home: index.md
 
   - About:
-    - About This Archive: about/index.md
-    - Usage Guide: about/usage.md
-    - AI Collaboration: about/ai-collaboration.md
+      - About This Archive: about/index.md
+      - Usage Guide: about/usage.md
+
+  - Themes:
+      - Overview: themes/index.md
+      - Marxism: marxism/index.md
+      - Political Economy: economy/index.md
+      - Organizing: organizing/index.md
+      - COVID: covid/index.md
+      - Fascism: fascism/index.md
+      - Culture: culture/index.md
+      - Imperialism: imperialism/index.md
+      - Dialectics: dialectics/index.md
+      - Uncategorized: uncategorized/index.md
+
+  - Analysis:
+      - Overview: analysis/index.md
 
   - Tags: tags.md
 
-  - Themes:
-    - Overview: themes/index.md
-
-  - Analysis:
-    - Overview: analysis/index.md
+# Suppress warnings for thread files not in nav (they're accessible via theme pages)
+not_in_nav: |
+  /INSURRECTION.md
+  /covid/*.md
+  /marxism/*.md
+  /economy/*.md
+  /organizing/*.md
+  /fascism/*.md
+  /culture/*.md
+  /imperialism/*.md
+  /dialectics/*.md
+  /uncategorized/*.md
+  !/*/index.md
 
 # Extra configuration
 extra:
+  # Disable version checking to prevent 404 errors
+  version:
+    provider: none
+
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/yourusername
+      link: https://github.com/percy-raskova
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/BmoreOrganized
 
 extra_css:
   - stylesheets/extra.css
-
-# Remove tags.css and tags.js as they don't exist and cause issues
+  - stylesheets/tags.css
