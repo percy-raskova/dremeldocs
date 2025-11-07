@@ -1,0 +1,19 @@
+---
+title: "a fun little illustration"
+date: 2025-03-18
+description: "Here's a fun little illustration of the dynamics of imperialism: the flavor of vanilla comes almost entirely from a single compound, vanillin, which is so easy..."
+thread_id: "thread_0293"
+word_count: 491
+reading_time: 2
+primary_theme: "marxism_historical materialism"
+tags: ["marxism_historical materialism", "political economy", "imperialism_colonialism"]
+---
+
+
+# a fun little illustration
+
+Here's a fun little illustration of the dynamics of imperialism: the flavor of vanilla comes almost entirely from a single compound, vanillin, which is so easy to synthesize that it can be done with the leftover wood pulp discarded as industrial waste. (1/11) https://t.co/X8rIRIlLSE In blind taste tests, participants cannot tell the difference at all between baked goods made with real and synthetic vanilla, and in uncooked applications (such as ice cream), a slight preference for real vanilla disappears when a bit of alcohol is added to the synthetic stuff. (Real vanilla extract is over 1/3 alcohol, while synthetic can be much lower, so bringing them to the same alcohol concentration removes bias.)
+
+Additionally, whole vanilla beans are way more expensive, and way LESS flavorful than either extract. The reason "real" vanilla is so much more expensive than "fake" vanilla, despite being literally indistinguishable, is purely because of the amount of labor that goes into it. You are not paying for the deliciousness, you are paying for the extraction of surplus value. Contrary to liberal conceptions of economics, the vanilla industry does not simply invest all of its capital into the "lower cost" production of synthetic vanillin, because their profit does not come from "supply and demand." It comes from the extraction of surplus value. If the natural vanilla industry did not exist, consumers would still want just as much vanilla -- demand would stay the same. But prices overall would fall, and the marginal rate of profit would plummet without that vast labor investment into vanilla production. When you purchase "real" vanilla, what you are actually doing is exchanging a small amount of your labor (exchanged for wages) for a much MUCH larger amount of labor from third world workers (embodied in the commodity). This unequal exchange forms the bedrock of imperialism. Of course, vanilla is just one tiiiiiiiny piece of the imperial puzzle. It's not always so blatant, where a virtually indistinguishable substitute can be produced for a fraction of the cost. We can't synthesize coffee or grow bananas in the global north. It's not just the final product that matters -- it's every step of the production, including the production of the means of production used in that process! Everything down to the metals hauled out of the earth itself to craft the heavy machinery necessary for economies of scale. Even if you try to "do it yourself," to grow your own vegetables, to roast your own coffee, to bake your own bread, you are constantly, inescapably dependant on the fruits of someone else's labor, just in increasingly invisible ways. There is no way to avoid the exploitation. We see a lot about "treatlerism" these days. That's good: it's the beginnings of reckoning with the nature of the world we live in -- a society inextricable from exploitation.
+
+There's no way to "ethical consumer" your way around it. All you can do is fight to *end* it. (11/11)

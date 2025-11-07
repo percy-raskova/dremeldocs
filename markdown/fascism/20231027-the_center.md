@@ -1,0 +1,19 @@
+---
+title: "the center"
+date: 2023-10-27
+description: "If 'the center' sits out the revolution because they are mad that communism isn't pure enough, they will help elect a Christo Fascist government--"
+thread_id: "thread_1195"
+word_count: 136
+reading_time: 1
+primary_theme: "fascism analysis"
+tags: ["fascism analysis", "political economy"]
+---
+
+
+# the center
+
+If "the center" sits out the revolution because they are mad that communism isn't pure enough, they will help elect a Christo Fascist government--
+
+Oh, what's that? You fundamentally disagree with our political vision, and don't accept our framing that it's the only viable path? https://t.co/zxbPlo91np You are not entitled to our support any more than we are entitled to yours. We have equal and opposite convictions, equal and opposite certainty that our goals are the only way forward for society, and equal and opposite attitudes toward the existing political system. You won't support us, even to prevent "Christo Fascism," because it is also something you really want to avoid? You won't support us because you think our plan is not capable of defeating fascism?
+
+Cool, we are on exactly the same page. Equal and opposite.

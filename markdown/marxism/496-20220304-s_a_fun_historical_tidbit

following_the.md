@@ -1,17 +1,16 @@
 ---
 title: "s a fun historical tidbit:
-
 Following the formation of..."
-date: Fri Mar 04
+date: 2022-03-04
 description: "Here's a fun historical tidbit: Following the formation of NATO, the USSR's first response was not to form the Warsaw Pact."
-thread_id: thread_1255
+thread_id: "thread_1255"
 word_count: 170
 reading_time: 1
-primary_theme: marxism_historical materialism
+primary_theme: "marxism_historical materialism"
 tags: ["marxism_historical materialism"]
 ---
-
 # s a fun historical tidbit:
+Following the formation of...
 
 Following the formation of...
 

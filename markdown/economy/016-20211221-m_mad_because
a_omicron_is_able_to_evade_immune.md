@@ -1,16 +1,14 @@
 ---
-title: "m mad because
-A) omicron is able to evade immune response,..."
-date: Tue Dec 21
+title: "m mad because A) omicron is able to evade immune response,..."
+date: 2021-12-21
 description: "I'm mad because A) omicron is able to evade immune response, so being vaccinated is not even close to a guarantee that you personally will be fine B) omicron..."
-thread_id: thread_0370
+thread_id: "thread_0370"
 word_count: 98
 reading_time: 1
-primary_theme: political economy
+primary_theme: "political economy"
 tags: ["political economy", "covid_public health politics"]
 ---
-
-# m mad because
+# m mad because A) omicron is able to evade immune response,...
 A) omicron is able to evade immune response,...
 
 @socialistboomer I'm mad because

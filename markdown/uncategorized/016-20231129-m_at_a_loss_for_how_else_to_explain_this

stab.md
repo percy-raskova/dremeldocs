@@ -1,16 +1,15 @@
 ---
 title: "m at a loss for how else to explain this:
-
 *stab stab stab..."
-date: Wed Nov 29
+date: 2023-11-29
 description: "I'm at a loss for how else to explain this: *stab stab stab stab stab stab stab stab stab stab stab stab stab stab stab stab stab stab stab stab stab stab stab..."
-thread_id: thread_0050
+thread_id: "thread_0050"
 word_count: 103
 reading_time: 1
-primary_theme: uncategorized
+primary_theme: "uncategorized"
 ---
-
 # m at a loss for how else to explain this:
+*stab stab stab...
 
 *stab stab stab...
 

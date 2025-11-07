@@ -1,15 +1,13 @@
 ---
-title: "Bully for you, you're almost caught up
-to where I was an..."
-date: Wed Nov 29
+title: "Bully for you, you're almost caught up to where I was an..."
+date: 2023-11-29
 description: "Bully for you, you're almost caught up to where I was an hour ago. Let's chat again in an hour when you've gotten to where I'm at now!"
-thread_id: thread_0049
+thread_id: "thread_0049"
 word_count: 67
 reading_time: 1
-primary_theme: uncategorized
+primary_theme: "uncategorized"
 ---
-
-# Bully for you, you're almost caught up
+# Bully for you, you're almost caught up to where I was an...
 to where I was an...
 
 Bully for you, you're almost caught up

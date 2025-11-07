@@ -1,17 +1,16 @@
 ---
 title: "Why I am not a liberal:
-
 Imagine society as a classroom in..."
-date: Thu Jul 07
+date: 2022-07-07
 description: "Why I am not a liberal: Imagine society as a classroom in which a child is being disruptive."
-thread_id: thread_0525
+thread_id: "thread_0525"
 word_count: 81
 reading_time: 1
-primary_theme: marxism_historical materialism
+primary_theme: "marxism_historical materialism"
 tags: ["marxism_historical materialism", "fascism analysis"]
 ---
-
 # Why I am not a liberal:
+Imagine society as a classroom in...
 
 Imagine society as a classroom in...
 

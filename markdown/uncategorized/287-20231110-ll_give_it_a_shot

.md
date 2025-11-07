@@ -1,16 +1,15 @@
 ---
 title: "ll give it a shot:
-
 "
-date: Fri Nov 10
+date: 2023-11-10
 description: "My Hebrew is a bit rusty, but I'll give it a shot: 'Hello, My name is Yagil Yaakov. I am 13 years old. I miss my family and my friends."
-thread_id: thread_1216
+thread_id: "thread_1216"
 word_count: 264
 reading_time: 1
-primary_theme: uncategorized
+primary_theme: "uncategorized"
 ---
-
 # ll give it a shot:
+
 
 
 

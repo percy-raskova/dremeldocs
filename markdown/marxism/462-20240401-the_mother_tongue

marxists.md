@@ -1,17 +1,16 @@
 ---
 title: "the Mother Tongue
-
 Marxists"
-date: Mon Apr 01
+date: 2024-04-01
 description: "On the Mother Tongue Marxists are, above all, scientists and historians."
-thread_id: thread_1166
+thread_id: "thread_1166"
 word_count: 463
 reading_time: 2
-primary_theme: marxism_historical materialism
+primary_theme: "marxism_historical materialism"
 tags: ["marxism_historical materialism", "fascism analysis", "cultural criticism", "organizational theory"]
 ---
-
 # the Mother Tongue
+Marxists
 
 Marxists
 

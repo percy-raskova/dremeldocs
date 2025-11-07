@@ -1,0 +1,15 @@
+---
+title: "if you are working 40 hours a week"
+date: 2024-10-05
+description: "Especially because 'if you are working 40 hours a week' is specifically referring to selling your labor power to a capitalist in exchange for wages, which is..."
+thread_id: "thread_0827"
+word_count: 376
+reading_time: 2
+primary_theme: "marxism_historical materialism"
+tags: ["marxism_historical materialism", "fascism analysis", "political economy", "imperialism_colonialism", "organizational theory"]
+---
+
+
+# if you are working 40 hours a week
+
+Especially because "if you are working 40 hours a week" is specifically referring to selling your labor power to a capitalist in exchange for wages, which is the only method of stably accessing those means of survival already enclosed and violently barricaded by capital. https://t.co/YqEfvh7ctu In order to create a bourgeoisie, a proletariat must be created, and in order to create a proletariat, it must become increasingly difficult to survive without selling your labor. The totality of the imperial apparatus -- especially settler colonialism -- is arranged to maintain and expand this status quo. Empire is not just about expanding the resources and labor available to capitalist production, but about *compelling* it, by edging out any alternative. The capitalist edifice necessarily creates not only a vast population of people who must sell their labor in exchange for wages, but a significant subpopulation of people *excluded* from being able to do so. The colonized, the criminalized, the ostracized, the disabled, etc. The downfall of economistic "labor organizing" is in ignoring the central role of the persistence of that precariat for the existence of the entire apparatus. To simply advance the standing of the "workers" without unseating the entire regime is to run an accelerating treadmill. As long as the colonial framework remains in place, capital can continue to dictate the terms of access to the means of survival. The more the working class works to negotiate its stability, the more the empire works to exclude people from that class. The "workerists" point to an ever-increasing pie in order to demand that workers deserve a larger piece. But if they organize hard enough to succeed in their demands, capital simply compensates by excluding more people from accessing the pie altogether. Fascism then can be described as the collection of the methods of that exclusion, and the enforcement of "proletarian" as a privilege. These methods have always existed as a necessary component of the capitalist system, they have simply undergone evolution in scope and form. The "rise of fascism" we're observing (visible even to liberals) is nothing more or less than yet more expansion of that scope in order to exclude an even broader population -- and intensify that exclusion -- from accessing the vaunted 40 Hour Work Week.

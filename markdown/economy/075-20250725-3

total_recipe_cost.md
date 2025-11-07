@@ -1,17 +1,16 @@
 ---
 title: "$3
-
 Total recipe cost"
-date: Fri Jul 25
+date: 2025-07-25
 description: "Italian sausage: $5 Shallot and garlic: $1 Tomato paste: $1 Vodka: $2 Heavy cream: $5 Parmesan: $3 Pasta: $3 Total recipe cost is $20 and that makes 4 servings."
-thread_id: thread_1281
+thread_id: "thread_1281"
 word_count: 192
 reading_time: 1
-primary_theme: political economy
+primary_theme: "political economy"
 tags: ["political economy"]
 ---
-
 # $3
+Total recipe cost
 
 Total recipe cost
 

@@ -1,16 +1,15 @@
 ---
 title: "Let's talk about bioaccumulation!
-
 To understand this, you..."
-date: Fri Jan 20
+date: 2023-01-20
 description: "Let's talk about bioaccumulation! To understand this, you need to know about trophic levels:"
-thread_id: thread_1301
+thread_id: "thread_1301"
 word_count: 359
 reading_time: 2
-primary_theme: uncategorized
+primary_theme: "uncategorized"
 ---
-
 # Let's talk about bioaccumulation!
+To understand this, you...
 
 To understand this, you...
 

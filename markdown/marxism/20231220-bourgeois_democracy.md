@@ -1,0 +1,15 @@
+---
+title: "Bourgeois democracy"
+date: 2023-12-20
+description: "Bourgeois democracy is, first and foremost, a mechanism for competition between disparate interests among the ruling class."
+thread_id: "thread_0181"
+word_count: 407
+reading_time: 2
+primary_theme: "marxism_historical materialism"
+tags: ["marxism_historical materialism", "political economy", "imperialism_colonialism", "cultural criticism", "covid_public health politics", "organizational theory"]
+---
+
+
+# Bourgeois democracy
+
+Bourgeois democracy is, first and foremost, a mechanism for competition between disparate interests among the ruling class. Each bourgeois faction has its own party to advance its interests, despite their united goal of maintaining bourgeois hegemony. https://t.co/LsMMQAs4FY They tend to emerge out of -- and simultaneously help to create -- distinct constituencies, appealing to them in order to compete with each other. However, although these factions advance mutually exclusive visions of bourgeois hegemony, the fundamental project remains the same: That of capitalist exploitation, counter-revolution, imperial extraction, colonialism, and everything else that emerges from bourgeois property relations. They are each fully vested in defending the dictatorship of the bourgeoisie, which requires a constant expansion of violence. No bourgeois party can be said to be "harm reduction," especially as the empire strains at the seams, in the face of the expanded power of imperial enemies, the accelerating treadmill of environmental degradation, and the constant decline of the rate of profit. For those populations that must be overexploited in order to maintain the empire -- the periphery, indigenous peoples, internal colonies, etc. -- as well as those whose assimilation into cultural hegemony is deemed impossible, there is no salvation within bourgeois politics. It is primarily this latter category that "harm reduction voters" point to in their personal crusade to legitimize bourgeois elections, because a significant point of contention between bourgeois factions is the criteria for who can and who cannot be assimilated. Currently, trans people are the subject of this "debate," with the more regressive faction declaring no and the more "progressive" feebly taking the affirmative. The latter camp is clearly losing, and obviously have no intention of escalating the "fight" in our defense. And why would they? Again, their only goal is the maintenance of bourgeois hegemony. If the opposing faction successfully demonstrates that their vision of how to do that works, the consensus will be set, and even their passive moral posturing will fade. This process happens almost completely outside the electoral system anyway. To continue the example of trans acceptance, the attacks on our very existence have only ever accelerated in the past several years -- faster under Biden than under Trump. This is already getting long, so I'll just finish up by saying that the reason Republicans attempt to restrict voting rights is the same reason they (and the Democrats) do everything they do -- they want to win, and advance their *particular* vision of hegemony.
