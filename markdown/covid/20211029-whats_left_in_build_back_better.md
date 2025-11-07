@@ -1,14 +1,14 @@
 ---
-title: "s left in the "
+title: "What's left in the Build Back Better Act"
 date: 2021-10-29
-description: "Here is what's left in the 'Build Back Better' Act, and why it's essentially pointless: 1) Climate spending."
+description: "Here is what's left in the 'Build Back Better' Act, and why it's essentially pointless."
 thread_id: "thread_1190"
 word_count: 182
 reading_time: 1
 primary_theme: "covid_public health politics"
 tags: ["covid_public health politics"]
 ---
-# s left in the 
+# What's left in the Build Back Better Act 
 
 Here is what's left in the "Build Back Better" Act, and why it's essentially pointless:
 
