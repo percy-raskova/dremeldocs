@@ -3,6 +3,7 @@
 [![Python](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 [![MkDocs](https://img.shields.io/badge/mkdocs-material-blue.svg)](https://squidfunk.github.io/mkdocs-material/)
 [![Tests](https://img.shields.io/badge/tests-96.7%25-green.svg)](tests/)
+[![Deploy](https://github.com/percy-raskova/dremeldocs/actions/workflows/deploy.yml/badge.svg)](https://github.com/percy-raskova/dremeldocs/actions/workflows/deploy.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 A comprehensive archive of 21,723 tweets organized into 1,363 thematically classified threads on revolutionary theory, extracted from Twitter/X for preservation, study, and cross-analysis.
@@ -279,57 +280,74 @@ Please read our [Contributing Guide](CONTRIBUTING.md) for details.
 - [GitHub Issues](https://github.com/percy-raskova/dremeldocs/issues)
 - [Documentation](https://percy-raskova.github.io/dremeldocs/)
 
-## 🚀 Deployment
+## 🚀 CI/CD and Deployment
 
-### GitHub Pages Deployment
+DremelDocs uses GitHub Actions for continuous integration and deployment to GitHub Pages.
 
-This repository is configured for automatic deployment to GitHub Pages.
+### Deployment Workflow
 
-#### Automatic Deployment (Recommended)
+The site automatically deploys when:
+1. **Pull Request to `main` is approved** - Ensures code review before deployment
+2. **Direct push to `main`** - For emergency hotfixes (requires admin override)
+3. **Manual workflow dispatch** - From the Actions tab when needed
 
-1. **Enable GitHub Pages** in your repository settings:
-   - Go to Settings → Pages
-   - Source: GitHub Actions
-   - Branch: Not applicable (using Actions)
+**Live Site**: [https://percy-raskova.github.io/dremeldocs/](https://percy-raskova.github.io/dremeldocs/)
 
-2. **Push to main branch**:
-   ```bash
-   git add .
-   git commit -m "Deploy to GitHub Pages"
-   git push origin main
-   ```
+### Branch Strategy
 
-3. **Wait for deployment** (usually 2-3 minutes):
-   - Check Actions tab for build status
-   - Site will be available at: https://percy-raskova.github.io/dremeldocs/
+- **`main`** - Production branch with branch protection
+  - Requires PR approval before merge
+  - Requires passing CI build
+  - Triggers automatic deployment
+  
+- **`dev`** - Development branch for integration
+  - No branch protection
+  - No automatic deployments
+  - Used for testing before promoting to main
 
-#### Manual Deployment
+- **Feature branches** - Individual features or fixes
+  - Create from `dev`
+  - Merge to `dev` via PR
+  - Example: `feature/new-classifier`
 
-If you prefer to deploy manually using MkDocs:
+### Contributing Workflow
 
 ```bash
-# Build and deploy in one command
-mkdocs gh-deploy --force
+# 1. Create feature branch from dev
+git checkout dev
+git pull origin dev
+git checkout -b feature/your-feature
 
-# Or build first, then deploy
-mkdocs build --clean
-mkdocs gh-deploy --force --no-history
+# 2. Make changes and push
+git add .
+git commit -m "feat: your feature description"
+git push -u origin feature/your-feature
+
+# 3. Create PR: feature/your-feature → dev
+# 4. After testing, create PR: dev → main
+# 5. Get approval and merge to trigger deployment
 ```
 
-#### Local Preview
+### Local Preview
 
-Before deploying, always test locally:
+Before pushing, always test locally:
 
 ```bash
+# Serve locally
 make serve
-# Or
-uv run mkdocs serve
+# Or: uv run mkdocs serve
 # Browse to http://localhost:8000
+
+# Build to verify no errors
+uv run mkdocs build --clean
 ```
 
-### Deployment Status
+### Comprehensive Documentation
 
-[![Deploy to GitHub Pages](https://github.com/percy-raskova/dremeldocs/actions/workflows/deploy.yml/badge.svg)](https://github.com/percy-raskova/dremeldocs/actions/workflows/deploy.yml)
+For detailed information about the CI/CD pipeline, branch protection, and troubleshooting:
+
+- **[CI/CD Pipeline Documentation](docs/CICD_PIPELINE.md)** - Complete pipeline guide
+- **[Branch Protection Setup](docs/BRANCH_PROTECTION_SETUP.md)** - Setup instructions
 
 ## 📜 License
 
