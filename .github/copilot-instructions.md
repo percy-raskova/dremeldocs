@@ -5,7 +5,7 @@
 DremelDocs is a **completed** Twitter archive processing pipeline that transforms 21,723 tweets into 1,363 thematically classified threads on revolutionary theory. The project uses automated NLP-based theme classification with Marxist political vocabulary extraction, generating a navigable MkDocs documentation site.
 
 **Technology Stack:**
-- Python 3.8+ (3.12+ recommended, as documented in README)
+- Python 3.8+ (required per pyproject.toml, 3.12+ recommended)
 - `uv` package manager
 - SpaCy for NLP and text processing
 - MkDocs with Material theme for documentation
@@ -208,13 +208,14 @@ All PRs must:
 ### 8 Revolutionary Theory Themes
 
 1. **Marxism & Historical Materialism** (585 threads)
-2. **Political Economy** (418 threads)
-3. **Organizational Theory** (326 threads)
-4. **COVID & Public Health Politics** (297 threads)
-5. **Fascism Analysis** (246 threads)
-6. **Cultural Criticism** (237 threads)
-7. **Imperialism & Colonialism** (233 threads)
-8. **Dialectics** (70 threads)
+2. **Political Economy** (82 threads)
+3. **Organizational Theory** (40 threads)
+4. **COVID & Public Health Politics** (140 threads)
+5. **Fascism Analysis** (101 threads)
+6. **Cultural Criticism** (39 threads)
+7. **Imperialism & Colonialism** (44 threads)
+8. **Dialectics** (11 threads)
+9. **Uncategorized** (321 threads)
 
 ### Pattern-Based Classification
 
