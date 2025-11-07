@@ -343,8 +343,8 @@ data_dir = Path(__file__).parent.parent / "data"
 
 - **GitHub Issues:** https://github.com/percy-raskova/dremeldocs/issues
 - **Documentation:** https://percy-raskova.github.io/dremeldocs/
-- **SECURITY.md:** See for humorous take on surveillance and actual security notes
+- **Security Policy:** See [SECURITY.md](../SECURITY.md) for security reporting guidelines and project scope clarifications
 
 ---
 
-*Last updated: 2025-11 | For Copilot Coding Agent guidance*
+*Last updated: November 2025 | For GitHub Copilot Coding Agent guidance*
