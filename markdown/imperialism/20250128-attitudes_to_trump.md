@@ -2,12 +2,13 @@
 title: "On attitudes towards Donald Trump"
 date: 2025-01-28
 description: "I think it's hilarious how the three main attitudes toward Trump are basically..."
-thread_id: thread_0336
+thread_id: "thread_0336"
 word_count: 218
 reading_time: 1
-primary_theme: imperialism_colonialism
+primary_theme: "imperialism_colonialism"
 tags: ["imperialism_colonialism"]
 ---
+
 
 # On attitudes towards Donald Trump
 

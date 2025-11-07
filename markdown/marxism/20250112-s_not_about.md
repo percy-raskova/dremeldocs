@@ -1,0 +1,21 @@
+---
+title: "s not about "
+date: 2025-01-12
+description: "It's not about 'original sin' or 'ontological good and evil.' It's about social forces and contextual dynamics."
+thread_id: "thread_0740"
+word_count: 364
+reading_time: 2
+primary_theme: "marxism_historical materialism"
+tags: ["marxism_historical materialism", "political economy", "organizational theory"]
+---
+# s not about 
+
+It's not about "original sin" or "ontological good and evil." It's about social forces and contextual dynamics.
+
+Communists work to A) analyze the forces that drive oppression, and B) directly counteract and destroy them.
+
+"America" is a construct -- a lynchpin of those forces. https://t.co/anx4OfzCpc "Americans" are not evil because of some eternal spiritual essence. *America* itself is not a physical object, cursed by sin. It is a political, economic project. A collective term for all the actions that are taken by the various classes and fractions contained within it. And yes, that includes the actions taken by you and me. We didn't "choose" to be here or to take part in this project that extracts and exploits and oppresses. We were handed a lifestyle and told we deserved it as a matter of course. And that indoctrination is part of "America." You can be exploited and still exploit, without any evil intent behind it. Your "goodness" or "badness" are irrelevant. You make choices to advance your own survival and comfort -- nothing inherently wrong with that! A liberated world will certainly bring survival and comfort. But the "Americanness" of it all makes it so it is necessarily IMPOSSIBLE to improve your material position without those gains coming directly out of the exploitation of others. "There is no ethical consumption under capitalism" is not moral absolution -- it is condemnation. So yes, "America is bad," and "Americans are bad" -- because what America *does* is bad. That doesn't mean you are spiritually doomed to face some "proletarian perdition."
+
+It simply means the task is clear: end America. Put a stop to the engine that burns the world for fuel. When there is no America -- no project that exploits billions of people, ravages biospheres, and funnels everything through the meat grinder of capital -- there will be no Americans. You will simply be a person. Without "sin." Doing what you already try to do: live a good life. Will you actively pursue that goal? Will you sit back and passively watch history progress around you? Or will you fight to maintain your Americanness?
+
+*That* is the fundamental question of "goodness." Make that choice wisely.

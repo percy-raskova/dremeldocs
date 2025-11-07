@@ -1,0 +1,15 @@
+---
+title: "free or minimal-cost housing"
+date: 2024-06-11
+description: "I am currently in the planning stages of building an org in Baltimore to provide people with free or minimal-cost housing by taking advantage of the glut of..."
+thread_id: "thread_0318"
+word_count: 433
+reading_time: 2
+primary_theme: "marxism_historical materialism"
+tags: ["marxism_historical materialism", "political economy", "covid_public health politics", "organizational theory"]
+---
+
+
+# free or minimal-cost housing
+
+I am currently in the planning stages of building an org in Baltimore to provide people with free or minimal-cost housing by taking advantage of the glut of vacant properties. There are over 14,000 such properties, most of which are "owned" by absentee owners. 🧵 We would rely primarily on dues and labor provided by members -- as well as donations and volunteer work from supporters -- as a means of purchasing, rehabilitating, and maintaining vacant properties. We need to be able to provide them to community members without charging rent. Where possible, we may make use of grants provided by the city for rehabbing dilapidated buildings in our neighborhoods. The city has a vested interest in reducing "urban blight" and claims to have multiple programs in the works to address vacant properties. Notably, they want to "utilize the private market to maximize the repair and rehabilitation of blighted properties." In other words, they want to sell off our city piecemeal to developers and gentrifiers. This will only worsen the economic despair of our communities. By transferring as many of these properties as possible into the control of a working class organization, whose membership is open to the public, and whose governance is democratic, we can act as a bulwark against the expungement of our city's poorest residents. We will simultaneously be able to provide stability and safety for our community -- thereby strengthening the entire working class --  while working to draw people into an organization aimed at educating and developing its members into professional revolutionaries. We will be organized under the principle of democratic centralism, aimed toward expanding our scope as we build out a Marxist-Leninist organization that provides for and educates our community in an increasingly holistic and sustainable way. We will hold community meetings and conduct investigations to ensure our actions are always aligned with the needs of the communities in which we operate. It will require a good deal of investment from our members, in terms of time, money, and expertise. This is not a non-profit. If this sounds interesting to you, please reach out by DM, and share with anyone you think can help. At the current stage, we specifically need people in the area committed to building this org from the ground up, as well as advice from communists everywhere. If you cannot commit to assisting at the formation stage, please still reach out to let us know you're interested in supporting us once we're up and running. Membership will be restricted to Baltimore residents, but we will welcome support from anyone who shares our principles.

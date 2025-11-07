@@ -1,8 +1,8 @@
 ---
-title: Usage Guide
+title: "Usage Guide"
+description: "This is not a museum. This is an armory."
 ---
-
-# Usage Guide: Wielding Revolutionary Theory as a Weapon
+# Usage Guide
 
 ## The Purpose of This Archive
 

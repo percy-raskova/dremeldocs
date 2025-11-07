@@ -1,0 +1,15 @@
+---
+title: "hegemonic notions"
+date: 2025-03-26
+description: "'Edgy' is, in practice, a description of the boundary of hegemonic notions of 'acceptability.'"
+thread_id: "thread_0103"
+word_count: 389
+reading_time: 2
+primary_theme: "marxism_historical materialism"
+tags: ["marxism_historical materialism", "fascism analysis", "political economy", "dialectics", "cultural criticism", "covid_public health politics", "organizational theory"]
+---
+
+
+# hegemonic notions
+
+"Edgy" is, in practice, a description of the boundary of hegemonic notions of "acceptability." They indicate cultural vectors; directions in which social forces exist which could pull that hegemony in one direction or another. https://t.co/yTcxCShPzF Dialectically, "edginess" in humor, art, theory, even technical or legal formulations, are both reflective of and contribute to movement in particular directions. We can characterize this movement as "progressive" or "regressive," but the motion happens regardless. The propagation of "the edge" isn't random, it's not unidirectional, and it certainly isn't about "speaking truth to power." It acts as a form of social experimentation, channeling and filtering existing social forces behind particular formulations as they emerge. On the scale of whole societies, this is mediated by class: access, distribution, "stickiness" (i.e. how persistent the authors of the edge cases are in the public consciousness), and more, are all pushed along by capital and those who hold it. The investment of this capital is a calculation, part of a feedback loop of attention, social penetration, reinvestment, and further propagation. The calculation can be more or less intentional, taking the form of explicit culturecraft (e.g. the "alt right pipeline"). In fact, it is often shockingly intentional, *especially* on the regressive edge. There is a vast propaganda apparatus arrayed very deliberately to workshop which particular formulations are most useful for propagating regressive notions in our particular cultural context. While edginess *can* be a way to push society past regressive notions, this is *also* a mechanism of hegemony continuously reinventing itself. The type of "edginess" that can be propagated at all necessarily contains elements that prevent it from being a revolutionary departure. That is, "progressive edginess" (insofar as it is able to exist in the mainstream consciousness) necessarily takes the form of irreverence toward regressive *aspects* of the hegemonic regime, without truly challenging the foundation on which it rests. For example, comedians poking fun at the "hypocrisy" of regressive leaders and policies, such as Trump's approach to immigration, while reifying the underlying logic of "sensible border policy." Theirs is an edginess of *form*, but the content conveys its own fascist tendency. Edginess is always still attached to hegemonic culture. It is useful for advancing particular currents *within* the existing culture, but it is not "radical." In the context of a repressive culture, edginess is best suited to fetishizing repression.
