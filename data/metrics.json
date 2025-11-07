@@ -1,0 +1,91 @@
+{
+  "last_updated": "2025-11-07",
+  "repository": {
+    "name": "dremeldocs",
+    "version": "0.8.1",
+    "status": "production_ready"
+  },
+  "tweets": {
+    "total_processed": 0,
+    "source_file_size_mb": 37
+  },
+  "threads": {
+    "total": 1363,
+    "classified": 1363,
+    "unclassified": 0
+  },
+  "themes": {
+    "count": 8,
+    "details": {
+      "cultural criticism": {
+        "classified_threads": 237,
+        "markdown_files": 0
+      },
+      "fascism analysis": {
+        "classified_threads": 246,
+        "markdown_files": 0
+      },
+      "marxism_historical materialism": {
+        "classified_threads": 585,
+        "markdown_files": 0
+      },
+      "covid_public health politics": {
+        "classified_threads": 297,
+        "markdown_files": 0
+      },
+      "political economy": {
+        "classified_threads": 418,
+        "markdown_files": 0
+      },
+      "imperialism": {
+        "classified_threads": 233,
+        "markdown_files": 16
+      },
+      "organizational theory": {
+        "classified_threads": 326,
+        "markdown_files": 0
+      },
+      "dialectics": {
+        "classified_threads": 70,
+        "markdown_files": 3
+      },
+      "uncategorized": {
+        "classified_threads": -1049,
+        "markdown_files": 65
+      }
+    }
+  },
+  "vocabulary": {
+    "total_terms": 0,
+    "extracted": true
+  },
+  "markdown": {
+    "total_files": 551,
+    "by_theme": {
+      "culture": 13,
+      "marxism": 307,
+      "covid": 49,
+      "economy": 44,
+      "uncategorized": 65,
+      "organizing": 11,
+      "dialectics": 3,
+      "fascism": 42,
+      "imperialism": 16
+    }
+  },
+  "documentation": {
+    "site_url": "https://percy-raskova.github.io/dremeldocs/",
+    "mkdocs_theme": "material"
+  },
+  "testing": {
+    "coverage_target": 96.7,
+    "framework": "pytest"
+  },
+  "technology": {
+    "python_required": "3.8",
+    "python_recommended": "3.12",
+    "package_manager": "uv",
+    "nlp_library": "spacy",
+    "nlp_model": "en_core_web_lg"
+  }
+}
