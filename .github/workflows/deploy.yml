@@ -42,10 +42,21 @@ jobs:
           version: "latest"
           enable-cache: true
 
+      - name: Cache virtual environment
+        uses: actions/cache@v4
+        id: cache-venv
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/requirements.txt', '**/pyproject.toml') }}
+          restore-keys: |
+            venv-${{ runner.os }}-
+
       - name: Create virtual environment
+        if: steps.cache-venv.outputs.cache-hit != 'true'
         run: uv venv
 
       - name: Install MkDocs dependencies
+        if: steps.cache-venv.outputs.cache-hit != 'true'
         run: |
           # Install only MkDocs and required plugins (no NLP dependencies)
           uv pip install mkdocs mkdocs-material pymdown-extensions mkdocs-minify-plugin
