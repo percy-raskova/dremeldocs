@@ -1,0 +1,9 @@
+# CI/CD dependencies for GitHub Actions deployment
+# This file contains only the dependencies needed to build and deploy the MkDocs site
+# Extracted from requirements.txt for faster CI/CD builds
+
+# MkDocs and documentation
+mkdocs>=1.5.3             # Static site generator
+mkdocs-material>=9.4.0    # Material theme for MkDocs
+mkdocs-minify-plugin>=0.7.1  # Minification plugin
+pymdown-extensions>=10.4  # Markdown extensions
