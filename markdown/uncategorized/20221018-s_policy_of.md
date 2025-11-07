@@ -1,0 +1,24 @@
+---
+title: "s policy of "
+date: 2022-10-18
+description: "Israel's policy of 'tactical ambiguity' around its nuclear weapons leads me to believe that they are the most likely state on the planet to actually use them."
+thread_id: "thread_0241"
+word_count: 390
+reading_time: 2
+primary_theme: "uncategorized"
+---
+# s policy of 
+
+Israel's policy of "tactical ambiguity" around its nuclear weapons leads me to believe that they are the most likely state on the planet to actually use them.
+
+To be clear: Israel DOES have nuclear weapons. This is recognized as fact by Israel's allies, such as the US. Along with India and Pakistan, Israel is the only nuclear-armed nation never to sign the non-proliferation treaty. North Korea had signed on, but has since backed out.
+
+So why is Israel alone among non-signatories in refusing to acknowledge its nuclear stockpile? The concept of mutually-assured destruction (MAD) has long governed nations' nuclear policies. Simply *having* nuclear weapons and the rockets to deliver them is a form of protection against other nuclear powers. That is why, for example, North Korea does not hide it. Every nuclear and rocket test done by North Korea is a way to reaffirm that attacking them would be disastrous. Whether or not you agree with the "morality" of nuclear proliferation, it still remains an irrevocable form of deterrence. But only if everyone knows you have nukes. Israel has nuclear weapons, but refuses to admit it.
+
+In combat, it's generally proper strategy to hide your true capabilities from your enemies. Let them underestimate you, then overwhelm them with something they failed to account for. Israel understands this concept well. However, this strategy only applies when the greater tactical advantage comes from *using* the hidden capability. In certain cases, revealing your capabilities yields better results. For example, shouting "We have you surrounded!" rather than rushing in and creating chaos. Nuclear weapons are the ultimate "We have you surrounded." The destruction they cause is so complete as to negate any other tactical advantages held by the target.
+
+Actually *deploying* them is also the greatest evil one could commit in the service of war. By constructing and maintaining its nuclear arsenal without revealing it, Israel is essentially "surrounding" the enemy and not actually announcing their position. They are not seeking surrender.
+
+They are primed to storm in, chaos and bloodshed be damned. I don't think they're crazy enough to actually break with the accepted norm of "don't bathe the world in fallout."
+
+But of all the nuclear powers, they are the only one that clearly prizes the tactical advantage of the fog of war over a clear warning not to mess with them.

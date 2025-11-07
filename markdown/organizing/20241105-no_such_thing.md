@@ -1,0 +1,23 @@
+---
+title: "no such thing"
+date: 2024-11-05
+description: "There is no such thing as a protest vote. There is no such thing as a protest non-vote. There is no such thing as a begrudging, tactical vote."
+thread_id: "thread_0276"
+word_count: 147
+reading_time: 1
+primary_theme: "organizational theory"
+tags: ["organizational theory"]
+---
+
+
+# no such thing
+
+There is no such thing as a protest vote.
+
+There is no such thing as a protest non-vote.
+
+There is no such thing as a begrudging, tactical vote.
+
+There is only action -&gt; outcome. Voting is not an action that achieves an outcome we desire, so it's irrelevant. We should be long past the impulse to come up with symbolic gestures, to "make our voices heard," to feebly assuage our guilt-by-proximity with prayers and vibes. No more gluing hands to walls, no more snappy slogans on poster board, no more third party votes.
+
+It. Doesn't. Work. You can continue with these tactics of demonstrating discontent all you want, but in the end, we already know what works. We know where change comes from. You can keep believing it's impossible, and our only option is protest, as long as it means you don't have to take the risk.
