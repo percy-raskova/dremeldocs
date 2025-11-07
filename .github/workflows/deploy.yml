@@ -47,19 +47,19 @@ jobs:
         id: cache-venv
         with:
           path: .venv
-          key: venv-${{ runner.os }}-mkdocs-${{ hashFiles('.github/workflows/deploy.yml') }}
+          key: venv-${{ runner.os }}-${{ hashFiles('requirements-cicd.txt') }}
           restore-keys: |
-            venv-${{ runner.os }}-mkdocs-
+            venv-${{ runner.os }}-
 
       - name: Create virtual environment
         if: steps.cache-venv.outputs.cache-hit != 'true'
         run: uv venv
 
-      - name: Install MkDocs dependencies
+      - name: Install dependencies
         if: steps.cache-venv.outputs.cache-hit != 'true'
         run: |
-          # Install only MkDocs and required plugins (no NLP dependencies)
-          uv pip install mkdocs mkdocs-material pymdown-extensions mkdocs-minify-plugin
+          # Install CI/CD dependencies for MkDocs deployment
+          uv pip install -r requirements-cicd.txt
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
