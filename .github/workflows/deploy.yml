@@ -4,8 +4,6 @@ on:
   # Trigger on direct push to main
   push:
     branches: [ main ]
-    # Exclude dev branch from deployments
-    branches-ignore: [ dev ]
   
   # Trigger on PR approval to main
   pull_request_review:
