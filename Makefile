@@ -276,6 +276,25 @@ docs-deploy: docs-build ## Deploy documentation (configure deployment first)
 	$(MKDOCS) gh-deploy --force
 
 # ==============================================================================
+# METRICS & DOCUMENTATION CONSISTENCY
+# ==============================================================================
+
+.PHONY: metrics
+metrics: ## Extract repository metrics to data/metrics.json
+	@echo "Extracting repository metrics..."
+	$(PYTHON) scripts/extract_metrics.py
+
+.PHONY: metrics-update
+metrics-update: metrics ## Update documentation files with latest metrics
+	@echo "Updating documentation with metrics..."
+	$(PYTHON) scripts/update_docs_metrics.py
+
+.PHONY: metrics-check
+metrics-check: ## Preview documentation metric updates (dry-run)
+	@echo "Checking which files would be updated..."
+	$(PYTHON) scripts/update_docs_metrics.py --dry-run
+
+# ==============================================================================
 # MAINTENANCE & CLEANUP
 # ==============================================================================
 

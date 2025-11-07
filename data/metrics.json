@@ -1,0 +1,106 @@
+{
+  "generated_at": "2025-11-07",
+  "version": "0.8.1",
+  "repository": {
+    "name": "dremeldocs",
+    "status": "production_ready",
+    "description": "Twitter archive processing pipeline for revolutionary theory analysis"
+  },
+  "source_data": {
+    "total_tweets_processed": 21723,
+    "original_archive_size_mb": 37,
+    "note": "Original tweets.js file in source/ directory (not in git)"
+  },
+  "threads": {
+    "total_in_metadata": 1363,
+    "note": "Threads can be classified into multiple themes"
+  },
+  "content": {
+    "total_markdown_files": 559,
+    "total_words": 187886,
+    "average_words_per_file": 336
+  },
+  "themes": {
+    "marxism": {
+      "name": "Marxism & Historical Materialism",
+      "markdown_files": 308,
+      "words": 118446,
+      "directory": "marxism"
+    },
+    "economy": {
+      "name": "Political Economy",
+      "markdown_files": 45,
+      "words": 14742,
+      "directory": "economy"
+    },
+    "organizing": {
+      "name": "Organizational Theory",
+      "markdown_files": 12,
+      "words": 3166,
+      "directory": "organizing"
+    },
+    "covid": {
+      "name": "COVID & Public Health Politics",
+      "markdown_files": 50,
+      "words": 13457,
+      "directory": "covid"
+    },
+    "fascism": {
+      "name": "Fascism Analysis",
+      "markdown_files": 43,
+      "words": 14057,
+      "directory": "fascism"
+    },
+    "culture": {
+      "name": "Cultural Criticism",
+      "markdown_files": 14,
+      "words": 3072,
+      "directory": "culture"
+    },
+    "imperialism": {
+      "name": "Imperialism & Colonialism",
+      "markdown_files": 17,
+      "words": 4926,
+      "directory": "imperialism"
+    },
+    "dialectics": {
+      "name": "Dialectics",
+      "markdown_files": 4,
+      "words": 1150,
+      "directory": "dialectics"
+    },
+    "uncategorized": {
+      "name": "Uncategorized",
+      "markdown_files": 66,
+      "words": 14870,
+      "directory": "uncategorized"
+    }
+  },
+  "technology": {
+    "python": {
+      "required": "3.8",
+      "recommended": "3.12"
+    },
+    "package_manager": "uv",
+    "nlp": {
+      "library": "spacy",
+      "model": "en_core_web_lg"
+    },
+    "documentation": {
+      "generator": "mkdocs",
+      "theme": "material"
+    },
+    "testing": {
+      "framework": "pytest",
+      "coverage_target": 96.7
+    },
+    "code_quality": {
+      "linter": "ruff",
+      "formatter": "black"
+    }
+  },
+  "deployment": {
+    "live_site": "https://percy-raskova.github.io/dremeldocs/",
+    "ci_cd": "GitHub Actions"
+  }
+}
