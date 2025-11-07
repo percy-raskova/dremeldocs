@@ -47,9 +47,9 @@ jobs:
         id: cache-venv
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/requirements.txt', '**/pyproject.toml') }}
+          key: venv-${{ runner.os }}-mkdocs-${{ hashFiles('.github/workflows/deploy.yml') }}
           restore-keys: |
-            venv-${{ runner.os }}-
+            venv-${{ runner.os }}-mkdocs-
 
       - name: Create virtual environment
         if: steps.cache-venv.outputs.cache-hit != 'true'
