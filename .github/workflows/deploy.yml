@@ -42,6 +42,9 @@ jobs:
           version: "latest"
           enable-cache: true
 
+      - name: Create virtual environment
+        run: uv venv
+
       - name: Install MkDocs dependencies
         run: |
           # Install only MkDocs and required plugins (no NLP dependencies)
