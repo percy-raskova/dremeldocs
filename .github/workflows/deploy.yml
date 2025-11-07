@@ -1,10 +1,17 @@
 name: Deploy to GitHub Pages
 
 on:
+  # Trigger on direct push to main
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
+    # Exclude dev branch from deployments
+    branches-ignore: [ dev ]
+  
+  # Trigger on PR approval to main
+  pull_request_review:
+    types: [ submitted ]
+    branches: [ main ]
+  
   # Allow manual workflow dispatch
   workflow_dispatch:
 
@@ -37,35 +44,19 @@ jobs:
           version: "latest"
           enable-cache: true
 
-      # Cache the SpaCy model to speed up builds
-      - name: Cache SpaCy model
-        id: cache-spacy
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/spacy
-          key: spacy-model-en_core_web_lg-3.8.0-${{ runner.os }}
-
-      - name: Install dependencies
+      - name: Install MkDocs dependencies
         run: |
-          # Install project dependencies in virtual environment
-          uv sync --frozen
-          # Install SpaCy model in the same virtual environment
-          uv pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl
-
-      - name: Generate markdown (if needed)
-        run: |
-          if [ ! -f "data/classified_threads.json" ]; then
-            echo "No classified threads found, running full pipeline..."
-            uv run python scripts/vocabulary_builder.py
-            uv run python scripts/theme_classifier.py
-          fi
-          uv run python scripts/generate_themed_markdown.py
+          # Install only MkDocs and required plugins (no NLP dependencies)
+          uv pip install mkdocs mkdocs-material pymdown-extensions mkdocs-minify-plugin
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Build with MkDocs
         run: |
+          # Build static site from markdown/ directory
+          # The markdown/ directory must be committed to the repository
+          # This does NOT run NLP processing - that's a separate pipeline
           uv run mkdocs build --clean
 
       - name: Upload artifact
@@ -79,8 +70,12 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
-    # Only deploy on push to main/master, not on PRs
-    if: github.event_name != 'pull_request'
+    # Deploy on push to main or when PR is approved
+    # Do NOT deploy on regular PR events or when review is not approved
+    if: |
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request_review' && github.event.review.state == 'approved')
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
