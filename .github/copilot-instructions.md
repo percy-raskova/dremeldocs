@@ -5,7 +5,8 @@
 DremelDocs is a **completed** Twitter archive processing pipeline that transforms 21,723 tweets into 1,363 thematically classified threads on revolutionary theory. The project uses automated NLP-based theme classification with Marxist political vocabulary extraction, generating a navigable MkDocs documentation site.
 
 **Technology Stack:**
-- Python 3.12+ with `uv` package manager
+- Python 3.8+ (3.12+ recommended, as documented in README)
+- `uv` package manager
 - SpaCy for NLP and text processing
 - MkDocs with Material theme for documentation
 - pytest for testing (96.7% coverage)
@@ -42,7 +43,6 @@ DremelDocs is a **completed** Twitter archive processing pipeline that transform
 ### Directory Structure
 
 - `scripts/` - Production pipeline scripts
-- `scripts/archived_experiments/` - Historical code, do NOT use or modify
 - `data/` - Processed data files and vocabularies
 - `markdown/` - Generated MkDocs content organized by theme
 - `tests/` - Comprehensive test suite (unit + integration)
@@ -120,9 +120,9 @@ uv run mkdocs build --clean
 make pipeline
 
 # Individual steps
-make extract-vocabulary   # Extract revolutionary vocabulary
-make classify            # Classify threads by theme
-make generate           # Generate markdown files
+make filter              # Filter Twitter archive threads
+make heavy-hitters      # Generate heavy hitter documents
+make classify           # Classify threads by theme
 ```
 
 ## Coding Standards
@@ -186,7 +186,6 @@ All PRs must:
 
 ### Do NOT Modify
 
-- **`scripts/archived_experiments/`** - Historical code, superseded by production scripts
 - **`.github/workflows/deploy.yml`** - CI/CD pipeline (changes require maintainer review)
 - **`data/classified_threads.json`** - Production classification data (regenerate via pipeline if needed)
 - **`source/` directory** - Original archive data (gitignored, user-specific)
