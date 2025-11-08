@@ -15,16 +15,16 @@ This archive contains the **Greatest Hits** of Twitter theorist and revolutionar
 
 ## Navigate by Subject Matter
 
-- [Pandemic Eugenics](/covid/index.md): The ongoing pandemic as fascist eugenics program
-- [Popular Culture](/analysis/index.md): A systematic investigation of how popular culture reinforces bourgeois fascist hegemony
-- [Dialectical Materialism](/dialectics/index.md): The foundation of scientific Marxism
-- [Political Economy](/economy/index.md): `TODO: come up with slogan. Only for @human to work on, @AI do not work on this!`
-- [Fascism](/fascism/index.md): You're living in it! Learn about it so you can fight it.
-- [Imperialism](/imperialism/index.md): `TODO: come up with slogan. Only for @human to work on, @AI do not work on this!`
-- [Marxism](/marxism/index.md): `TODO: come up with slogan. Only for @human to work on, @AI do not work on this!`
-- [Organizing](/organizing/index.md): `TODO: come up with slogan. Only for @human to work on, @AI do not work on this!`
-- [Uncategorized](/uncategorized/index.md): `TODO: come up with slogan. Only for @human to work on, @AI do not work on this!`
-- [About This Website](/about/index.md): In which my beautiful wife Persephone explains the technical details of how this website was created
+- [Pandemic Eugenics](covid/index.md): The ongoing pandemic as fascist eugenics program
+- [Popular Culture](analysis/index.md): A systematic investigation of how popular culture reinforces bourgeois fascist hegemony
+- [Dialectical Materialism](dialectics/index.md): The foundation of scientific Marxism
+- [Political Economy](economy/index.md): `TODO: come up with slogan. Only for @human to work on, @AI do not work on this!`
+- [Fascism](fascism/index.md): You're living in it! Learn about it so you can fight it.
+- [Imperialism](imperialism/index.md): `TODO: come up with slogan. Only for @human to work on, @AI do not work on this!`
+- [Marxism](marxism/index.md): `TODO: come up with slogan. Only for @human to work on, @AI do not work on this!`
+- [Organizing](organizing/index.md): `TODO: come up with slogan. Only for @human to work on, @AI do not work on this!`
+- [Uncategorized](uncategorized/index.md): `TODO: come up with slogan. Only for @human to work on, @AI do not work on this!`
+- [About This Website](about/index.md): In which my beautiful wife Persephone explains the technical details of how this website was created
 
 ## Preservation as Revolutionary Infrastructure
 
